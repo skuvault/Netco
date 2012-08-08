@@ -80,7 +80,7 @@ task Package  {
 # Set $script:Version = assembly version
 task Version {
 	assert (( Get-Item $build_artifacts_dir\Netco.dll ).VersionInfo.FileVersion -match '^(\d+\.\d+\.\d+)')
-	$script:Version = $matches[1]+"-rc"
+	$script:Version = $matches[1]+"-pre"
 }
 
 task Archive {
@@ -122,7 +122,7 @@ task NuGet Package, Version, {
 </package>
 "@
 	# pack
-	exec { NuGet pack $build_output_dir\Netco\Netco.nuspec -Symbols -Output $build_dir }
+	exec { NuGet pack $build_output_dir\Netco\Netco.nuspec -Output $build_dir }
 	
 	Write-Host ================= Preparing Netco NLog Integration Nuget package =================
 	$text = "Integrates Netco to work with NLog platform."
@@ -150,7 +150,13 @@ task NuGet Package, Version, {
 </package>
 "@
 	# pack
-	exec { NuGet pack $build_output_dir\Netco.NLog\Netco.NLog.nuspec -Symbols -Output $build_dir }
+	exec { NuGet pack $build_output_dir\Netco.NLog\Netco.NLog.nuspec -Output $build_dir }
+	
+	$pushNetco = Read-Host 'Push Netco ' $Version ' to NuGet? (Y/N)'
+	Write-Host $pushNetco
+	if( $pushNetco -eq "y" -or $pushNetco -eq "Y" )	{
+		Get-ChildItem $build_dir\*.nupkg |% { exec { NuGet push  $_.FullName }}
+	}
 }
 
 task . Init, Build, Package, Zip, NuGet
