@@ -112,7 +112,9 @@ task NuGet Package, Version, {
 		<authors>Slav Ivanyuk</authors>
 		<owners>Slav Ivanyuk</owners>
 		<projectUrl>https://github.com/slav/Netco</projectUrl>
+		<licenseUrl>https://raw.github.com/slav/Netco/master/License.txt</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<copyright>Copyright (C) Bitnox LLC 2012</copyright>
 		<summary>$text</summary>
 		<description>$text</description>
 		<tags></tags>
@@ -134,7 +136,9 @@ task NuGet Package, Version, {
 		<authors>Slav Ivanyuk</authors>
 		<owners>Slav Ivanyuk</owners>
 		<projectUrl>https://github.com/slav/Netco</projectUrl>
+		<licenseUrl>https://raw.github.com/slav/Netco/master/License.txt</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<copyright>Copyright (C) Bitnox LLC 2012</copyright>
 		<summary>$text</summary>
 		<description>$text</description>
 		<tags></tags>
