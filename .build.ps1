@@ -80,7 +80,7 @@ task Package  {
 # Set $script:Version = assembly version
 task Version {
 	assert (( Get-Item $build_artifacts_dir\Netco.dll ).VersionInfo.FileVersion -match '^(\d+\.\d+\.\d+)')
-	$script:Version = $matches[1]+"-pre"
+	$script:Version = $matches[1]
 }
 
 task Archive {
@@ -159,7 +159,7 @@ task NuGet Package, Version, {
 	}
 }
 
-task . Init, Build, Package, Zip, NuGet
+task . Init, Build, RunSpecs, Package, Zip, NuGet
 
 
 #///////////////////////////////////////////////////////////////////////////////////////////
