@@ -122,5 +122,17 @@ namespace Netco.Logging
 		{
 			return _nullLogger;
 		}
+
+		/// <summary>
+		/// Gets the logger to log message for the specified type.
+		/// </summary>
+		/// <param name="loggerName">Name of the logger.</param>
+		/// <returns>
+		/// Logger to log messages for the specified type.
+		/// </returns>
+		public ILogger GetLogger( string loggerName )
+		{
+			return _nullLogger;
+		}
 	}
 }

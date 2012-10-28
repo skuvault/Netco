@@ -13,18 +13,21 @@ namespace Netco.Logging
 		/// </summary>
 		/// <param name="message">The message.</param>
 		void Trace( string message );
+
 		/// <summary>
 		/// Logs the trace message.
 		/// </summary>
 		/// <param name="exception">The exception.</param>
 		/// <param name="message">The message.</param>
 		void Trace( Exception exception, string message );
+
 		/// <summary>
 		/// Logs the trace message.
 		/// </summary>
 		/// <param name="format">The format string.</param>
 		/// <param name="args">The format arguments.</param>
 		void Trace( string format, params object[] args );
+
 		/// <summary>
 		/// Logs the trace message.
 		/// </summary>
@@ -38,18 +41,21 @@ namespace Netco.Logging
 		/// </summary>
 		/// <param name="message">The message.</param>
 		void Debug( string message );
+
 		/// <summary>
 		/// Logs the debug message.
 		/// </summary>
 		/// <param name="exception">The exception.</param>
 		/// <param name="message">The message.</param>
 		void Debug( Exception exception, string message );
+
 		/// <summary>
 		/// Logs the debug message.
 		/// </summary>
 		/// <param name="format">The format string.</param>
 		/// <param name="args">The format arguments.</param>
 		void Debug( string format, params object[] args );
+
 		/// <summary>
 		/// Logs the debug message.
 		/// </summary>
@@ -63,18 +69,21 @@ namespace Netco.Logging
 		/// </summary>
 		/// <param name="message">The message.</param>
 		void Info( string message );
+
 		/// <summary>
 		/// Logs the info message.
 		/// </summary>
 		/// <param name="exception">The exception.</param>
 		/// <param name="message">The message.</param>
 		void Info( Exception exception, string message );
+
 		/// <summary>
 		/// Logs the info message.
 		/// </summary>
 		/// <param name="format">The format string.</param>
 		/// <param name="args">The format arguments.</param>
 		void Info( string format, params object[] args );
+
 		/// <summary>
 		/// Logs the info message.
 		/// </summary>
@@ -102,6 +111,7 @@ namespace Netco.Logging
 		/// <param name="format">The format string.</param>
 		/// <param name="args">The format arguments.</param>
 		void Warn( string format, params object[] args );
+
 		/// <summary>
 		/// Logs the warn message.
 		/// </summary>
@@ -115,18 +125,21 @@ namespace Netco.Logging
 		/// </summary>
 		/// <param name="message">The message.</param>
 		void Error( string message );
+
 		/// <summary>
 		/// Logs the error message.
 		/// </summary>
 		/// <param name="exception">The exception.</param>
 		/// <param name="message">The message.</param>
 		void Error( Exception exception, string message );
+
 		/// <summary>
 		/// Logs the error message.
 		/// </summary>
 		/// <param name="format">The format string.</param>
 		/// <param name="args">The format arguments.</param>
 		void Error( string format, params object[] args );
+
 		/// <summary>
 		/// Logs the error message.
 		/// </summary>
@@ -140,18 +153,21 @@ namespace Netco.Logging
 		/// </summary>
 		/// <param name="message">The message.</param>
 		void Fatal( string message );
+
 		/// <summary>
 		/// Logs the fatal message.
 		/// </summary>
 		/// <param name="exception">The exception.</param>
 		/// <param name="message">The message.</param>
 		void Fatal( Exception exception, string message );
+
 		/// <summary>
 		/// Logs the fatal message.
 		/// </summary>
 		/// <param name="format">The format string.</param>
 		/// <param name="args">The format arguments.</param>
 		void Fatal( string format, params object[] args );
+
 		/// <summary>
 		/// Logs the fatal message.
 		/// </summary>
@@ -173,6 +189,13 @@ namespace Netco.Logging
 		/// <param name="objectToLogType">Type of the object to log.</param>
 		/// <returns>Logger to log messages for the specified type.</returns>
 		ILogger GetLogger( Type objectToLogType );
+
+		/// <summary>
+		/// Gets the logger to log message for the specified type.
+		/// </summary>
+		/// <param name="loggerName">Name of the logger.</param>
+		/// <returns> Logger to log messages for the specified type.</returns>
+		ILogger GetLogger( string loggerName );
 	}
 
 	/// <summary>
@@ -184,11 +207,23 @@ namespace Netco.Logging
 		/// Gets the logger for the specified object.
 		/// </summary>
 		/// <typeparam name="T">Type of the object for which to get the logger.</typeparam>
-		/// <param name="needToLogObj">The need to log obj.</param>
+		/// <param name="needToLogObj">Object to log for.</param>
 		/// <returns>The logger for the specified object.</returns>
 		public static ILogger Log< T >( this T needToLogObj )
 		{
-			return NetcoLogger.GetLogger( typeof( T ));
+			return NetcoLogger.GetLogger( typeof( T ) );
+		}
+
+		/// <summary>
+		/// Gets the logger with the specified logger name.
+		/// </summary>
+		/// <typeparam name="T">Type of the object for which to get the logger.</typeparam>
+		/// <param name="needToLogObj">Object to log for.</param>
+		/// <param name="loggerName">Name of the logger.</param>
+		/// <returns>The logger with the specified name.</returns>
+		public static ILogger Log< T >( this T needToLogObj, string loggerName )
+		{
+			return NetcoLogger.GetLogger( loggerName );
 		}
 	}
 
@@ -201,20 +236,37 @@ namespace Netco.Logging
 		{
 			LoggerFactory = new NullLoggerFactory();
 		}
+
 		/// <summary>
 		/// Gets or sets the logger factory.
 		/// </summary>
-		/// <value>The logger factory that will supply the logger.</value>
-		public static ILoggerFactory LoggerFactory{ get; set; }
+		/// <value>
+		/// The logger factory that will supply the logger.
+		/// </value>
+		public static ILoggerFactory LoggerFactory { get; set; }
 
 		/// <summary>
 		/// Gets the logger.
 		/// </summary>
 		/// <param name="objectToLogType">Type of the object to log.</param>
-		/// <returns>Logger to log messages for the specified object type.</returns>
+		/// <returns>
+		/// Logger to log messages for the specified object type.
+		/// </returns>
 		public static ILogger GetLogger( Type objectToLogType )
 		{
 			return LoggerFactory.GetLogger( objectToLogType );
+		}
+
+		/// <summary>
+		/// Gets the logger.
+		/// </summary>
+		/// <param name="loggerName">Name of the logger.</param>
+		/// <returns>
+		/// Logger to log messages for the specified object type.
+		/// </returns>
+		public static ILogger GetLogger( string loggerName )
+		{
+			return LoggerFactory.GetLogger( loggerName );
 		}
 	}
 }

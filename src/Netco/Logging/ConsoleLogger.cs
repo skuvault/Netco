@@ -9,14 +9,15 @@ namespace Netco.Logging
 	/// </summary>
 	internal sealed class ConsoleLogger : ILogger
 	{
-		private readonly Type _type;
+		private readonly string _name;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ConsoleLogger"/> class.
 		/// </summary>
-		/// <param name="type">The type.</param>
-		public ConsoleLogger( Type type )
+		/// <param name="name">The logger name.</param>
+		public ConsoleLogger( string name )
 		{
-			this._type = type;
+			this._name = name;
 		}
 
 		/// <summary>
@@ -24,145 +25,145 @@ namespace Netco.Logging
 		/// </summary>
 		/// <value><c>true</c> if separate log entries with new line; otherwise, <c>false</c>.</value>
 		/// <remarks>When entries are separated, they are easier to read, but take up more space.</remarks>
-		public bool SeparateLogEntries{ get; set; }
+		public bool SeparateLogEntries { get; set; }
 
 		/// <summary>
 		/// Logs the specified message.
 		/// </summary>
 		/// <param name="messages">All message to log.</param>
-		private void LM( params string[] messages  )
+		private void LM( params string[] messages )
 		{
 			var sb = new StringBuilder();
-			for( int i = 0; i < messages.Length; i++ )
+			for( var i = 0; i < messages.Length; i++ )
 			{
 				sb.AppendLine( messages[ i ] );
 				if( i < messages.Length - 1 )
 					sb.Append( "\t" );
 			}
-			if( SeparateLogEntries )
+			if( this.SeparateLogEntries )
 				sb.AppendLine();
 
-			Console.Write( "{0} - {1}", _type.Name, sb );
+			Console.Write( "{0} - {1}", _name, sb );
 		}
 
 		public void Trace( string message )
 		{
-			LM( message );
+			this.LM( message );
 		}
 
 		public void Trace( Exception exception, string message )
 		{
-			LM( message, exception.Message, exception.StackTrace );
+			this.LM( message, exception.Message, exception.StackTrace );
 		}
 
 		public void Trace( string messageWithFormatting, params object[] args )
 		{
-			LM( string.Format( messageWithFormatting, args ) );
+			this.LM( string.Format( messageWithFormatting, args ) );
 		}
 
 		public void Trace( Exception exception, string messageWithFormatting, params object[] args )
 		{
-			LM( string.Format( messageWithFormatting, args ), exception.Message, exception.StackTrace );
+			this.LM( string.Format( messageWithFormatting, args ), exception.Message, exception.StackTrace );
 		}
 
 		public void Debug( string message )
 		{
-			LM( message );
+			this.LM( message );
 		}
 
 		public void Debug( Exception exception, string message )
 		{
-			LM( message, exception.Message, exception.StackTrace );
+			this.LM( message, exception.Message, exception.StackTrace );
 		}
 
 		public void Debug( string format, params object[] args )
 		{
-			LM( string.Format( format, args ) );
+			this.LM( string.Format( format, args ) );
 		}
 
 		public void Debug( Exception exception, string format, params object[] args )
 		{
-			LM( string.Format( format, args ), exception.Message, exception.StackTrace );
+			this.LM( string.Format( format, args ), exception.Message, exception.StackTrace );
 		}
 
 		public void Info( string message )
 		{
-			LM( message );
+			this.LM( message );
 		}
 
 		public void Info( Exception exception, string message )
 		{
-			LM( message, exception.Message, exception.StackTrace );
+			this.LM( message, exception.Message, exception.StackTrace );
 		}
 
 		public void Info( string format, params object[] args )
 		{
-			LM( string.Format( format, args ) );
+			this.LM( string.Format( format, args ) );
 		}
 
 		public void Info( Exception exception, string format, params object[] args )
 		{
-			LM( string.Format( format, args ), exception.Message, exception.StackTrace );
+			this.LM( string.Format( format, args ), exception.Message, exception.StackTrace );
 		}
 
 		public void Warn( string message )
 		{
-			LM( message );
+			this.LM( message );
 		}
 
 		public void Warn( Exception exception, string message )
 		{
-			LM( message, exception.Message, exception.StackTrace );
+			this.LM( message, exception.Message, exception.StackTrace );
 		}
 
 		public void Warn( string format, params object[] args )
 		{
-			LM( string.Format( format, args ) );
+			this.LM( string.Format( format, args ) );
 		}
 
 		public void Warn( Exception exception, string format, params object[] args )
 		{
-			LM( string.Format( format, args ), exception.Message, exception.StackTrace );
+			this.LM( string.Format( format, args ), exception.Message, exception.StackTrace );
 		}
 
 		public void Error( string message )
 		{
-			LM( message );
+			this.LM( message );
 		}
 
 		public void Error( Exception exception, string message )
 		{
-			LM( message, exception.Message, exception.StackTrace );
+			this.LM( message, exception.Message, exception.StackTrace );
 		}
 
 		public void Error( string format, params object[] args )
 		{
-			LM( string.Format( format, args ) );
+			this.LM( string.Format( format, args ) );
 		}
 
 		public void Error( Exception exception, string format, params object[] args )
 		{
-			LM( string.Format( format, args ), exception.Message, exception.StackTrace );
+			this.LM( string.Format( format, args ), exception.Message, exception.StackTrace );
 		}
 
 		public void Fatal( string message )
 		{
-			LM( message );
+			this.LM( message );
 		}
 
 		public void Fatal( Exception exception, string message )
 		{
-			LM( message, exception.Message, exception.StackTrace );
+			this.LM( message, exception.Message, exception.StackTrace );
 		}
 
 		public void Fatal( string format, params object[] args )
 		{
-			LM( string.Format( format, args ) );
+			this.LM( string.Format( format, args ) );
 		}
 
 		public void Fatal( Exception exception, string format, params object[] args )
 		{
-			LM( string.Format( format, args ), exception.Message, exception.StackTrace );
+			this.LM( string.Format( format, args ), exception.Message, exception.StackTrace );
 		}
 	}
 
@@ -176,9 +177,10 @@ namespace Netco.Logging
 		/// </summary>
 		/// <value><c>true</c> if separate log entries with new line; otherwise, <c>false</c>.</value>
 		/// <remarks>When entries are separated, they are easier to read, but take up more space.</remarks>
-		public bool SeparateLogEntries{ get; set; }
+		public bool SeparateLogEntries { get; set; }
 
-		private readonly Dictionary< Type, ILogger > _loggers = new Dictionary< Type, ILogger >();
+		private readonly Dictionary< Type, ILogger > _typeLoggers = new Dictionary< Type, ILogger >();
+		private readonly Dictionary< string, ILogger > _loggers = new Dictionary< string, ILogger >();
 
 		/// <summary>
 		/// Gets the logger to log message for the specified type.
@@ -189,12 +191,29 @@ namespace Netco.Logging
 		/// </returns>
 		public ILogger GetLogger( Type objectToLogType )
 		{
-			if( !_loggers.ContainsKey( objectToLogType ) )
+			if( !this._typeLoggers.ContainsKey( objectToLogType ) )
 			{
-				_loggers[ objectToLogType ] = new ConsoleLogger( objectToLogType )
-					{ SeparateLogEntries = SeparateLogEntries };
+				this._typeLoggers[ objectToLogType ] = new ConsoleLogger( objectToLogType.Name )
+					{ SeparateLogEntries = this.SeparateLogEntries };
 			}
-			return _loggers[ objectToLogType ];
+			return this._typeLoggers[ objectToLogType ];
+		}
+		
+		/// <summary>
+		/// Gets the logger to log message with the specified name.
+		/// </summary>
+		/// <param name="loggerName">The logger name.</param>
+		/// <returns>
+		/// Named logger to log messages.
+		/// </returns>
+		public ILogger GetLogger( string loggerName )
+		{
+			if( !this._loggers.ContainsKey( loggerName ) )
+			{
+				this._loggers[ loggerName ] = new ConsoleLogger( loggerName )
+					{ SeparateLogEntries = this.SeparateLogEntries };
+			}
+			return this._loggers[ loggerName ];
 		}
 	}
 }

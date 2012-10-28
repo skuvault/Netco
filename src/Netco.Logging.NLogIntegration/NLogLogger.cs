@@ -139,7 +139,8 @@ namespace Netco.Logging.NLogIntegration
 	/// </summary>
 	public class NLogLoggerFactory : ILoggerFactory
 	{
-		private readonly Dictionary< Type, ILogger > _loggers = new Dictionary< Type, ILogger >();
+		private readonly Dictionary< Type, ILogger > _typeLoggers = new Dictionary< Type, ILogger >();
+		private readonly Dictionary< string, ILogger > _loggers = new Dictionary< string, ILogger >();
 
 		/// <summary>
 		/// Gets the logger to log message for the specified type.
@@ -150,9 +151,23 @@ namespace Netco.Logging.NLogIntegration
 		/// </returns>
 		public ILogger GetLogger( Type objectToLogType )
 		{
-			if( !this._loggers.ContainsKey( objectToLogType ) )
-				this._loggers[ objectToLogType ] = new NLogLogger( LogManager.GetLogger( objectToLogType.Name ) );
-			return this._loggers[ objectToLogType ];
+			if( !this._typeLoggers.ContainsKey( objectToLogType ) )
+				this._typeLoggers[ objectToLogType ] = new NLogLogger( LogManager.GetLogger( objectToLogType.Name ) );
+			return this._typeLoggers[ objectToLogType ];
+		}
+
+		/// <summary>
+		/// Gets the logger to log message with the specified name.
+		/// </summary>
+		/// <param name="loggerName">The logger name.</param>
+		/// <returns>
+		/// Named logger to log messages.
+		/// </returns>
+		public ILogger GetLogger( string loggerName )
+		{
+			if( !this._loggers.ContainsKey( loggerName ) )
+				this._loggers[ loggerName ] = new NLogLogger( LogManager.GetLogger( loggerName ) );
+			return this._loggers[ loggerName ];
 		}
 	}
 }
