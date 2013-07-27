@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Netco.ActionPolicyServices.Exceptions
 {
@@ -20,6 +21,48 @@ namespace Netco.ActionPolicyServices.Exceptions
 						throw;
 
 					if( !state.CanRetry( ex ) )
+						throw;
+				}
+			}
+		}
+		
+		internal static async Task ImplementationAsync( Func< Task > action, ExceptionHandler canRetry, Func< IRetryState > stateBuilder )
+		{
+			var state = stateBuilder();
+			while( true )
+			{
+				try
+				{
+					await action();
+					return;
+				}
+				catch( Exception ex )
+				{
+					if( !canRetry( ex ) )
+						throw;
+
+					if( !state.CanRetry( ex ) )
+						throw;
+				}
+			}
+		}
+
+		internal static async Task ImplementationAsync( Func< Task > action, ExceptionHandler canRetry, Func< IRetryStateAsync > stateBuilder )
+		{
+			var state = stateBuilder();
+			while( true )
+			{
+				try
+				{
+					await action();
+					return;
+				}
+				catch( Exception ex )
+				{
+					if( !canRetry( ex ) )
+						throw;
+
+					if( !state.CanRetry( ex ).Result )
 						throw;
 				}
 			}

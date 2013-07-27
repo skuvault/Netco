@@ -142,7 +142,7 @@ namespace Netco.Monads
 
 			else if( ex.Body is NewExpression )
 			{
-//				var newExp = ( NewExpression )ex.Body;
+				//				var newExp = ( NewExpression )ex.Body;
 
 				return ex.Compile()( t );
 			}
@@ -182,7 +182,7 @@ namespace Netco.Monads
 				ex = memberExpression.Expression;
 
 			// A Generic method retrieves the "Maybe"
-			MethodInfo methodInfo = _maybeMethod;
+			var methodInfo = _maybeMethod;
 			Type type;
 
 			//default case is a property

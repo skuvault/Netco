@@ -16,19 +16,13 @@ namespace Netco.Events
 		/// <param name="item">The item.</param>
 		public EventArgs( T item )
 		{
-			this._item = item;
+			this.Item = item;
 		}
-
-		private T _item;
 
 		/// <summary>
 		/// Gets or sets the item.
 		/// </summary>
 		/// <value>The item.</value>
-		public T Item
-		{
-			get { return this._item; }
-			set { this._item = value; }
-		}
+		public T Item { get; set; }
 	}
 }

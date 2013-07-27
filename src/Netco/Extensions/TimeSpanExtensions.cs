@@ -15,7 +15,7 @@ namespace Netco.Extensions
 		/// <remarks>Converts "1.5h", "30m", or "1" (default hour) to <see cref="TimeSpan"/>.</remarks>
 		public static TimeSpan ToTimeSpan( this string s )
 		{
-			if( string.IsNullOrEmpty( s ))
+			if( string.IsNullOrEmpty( s ) )
 				return TimeSpan.Zero;
 
 			if( s.EndsWith( "m" ) )
@@ -29,10 +29,10 @@ namespace Netco.Extensions
 		/// </summary>
 		/// <param name="timeSpan">The time span.</param>
 		/// <returns>String representing time span.</returns>
-            public static string ToStringFormat( this TimeSpan timeSpan )
-            {
-            	return ToStringFormat( timeSpan, null ); 
-            }
+		public static string ToStringFormat( this TimeSpan timeSpan )
+		{
+			return ToStringFormat( timeSpan, null );
+		}
 
 		/// <summary>
 		/// Converts <see cref="TimeSpan"/> to string.
@@ -45,7 +45,7 @@ namespace Netco.Extensions
 		/// Otherwise total hours are shown followed by "h" (<b>1.5h</b>).</para></remarks>
 		public static string ToStringFormat( this TimeSpan timeSpan, string format )
 		{
-			if( !string.IsNullOrEmpty( format ))
+			if( !string.IsNullOrEmpty( format ) )
 			{
 				if( timeSpan < TimeSpan.Zero )
 					timeSpan = TimeSpan.Zero;
@@ -60,5 +60,6 @@ namespace Netco.Extensions
 				else
 					return Math.Floor( timeSpan.TotalMinutes ) + "m";
 			}
-		}}
+		}
+	}
 }

@@ -18,7 +18,7 @@ namespace Netco.Extensions
 		/// Gets or sets the local time zone used by <see cref="ToPresetLocal"/>.
 		/// </summary>
 		/// <value>The local time zone.</value>
-		public static TimeZoneInfo LocalTimeZone{ get; set; }
+		public static TimeZoneInfo LocalTimeZone { get; set; }
 
 		/// <summary>
 		/// Converts <see cref="DateTime"/> to local time zone.
@@ -40,13 +40,13 @@ namespace Netco.Extensions
 			LocalTimeZone = _commonTimeZones[ timeZone ];
 		}
 
-		private static readonly Dictionary< CommonTimeZone, TimeZoneInfo > _commonTimeZones = new Dictionary< CommonTimeZone, TimeZoneInfo >{
-			{ CommonTimeZone.PST, TimeZoneInfo.FindSystemTimeZoneById( "Pacific Standard Time" )},
-			{ CommonTimeZone.MST, TimeZoneInfo.FindSystemTimeZoneById( "Mountain Standard Time" )},
-			{ CommonTimeZone.CST, TimeZoneInfo.FindSystemTimeZoneById( "Central Standard Time" )},
-			{ CommonTimeZone.EST, TimeZoneInfo.FindSystemTimeZoneById( "Eastern Standard Time" )}
-		};
-
+		private static readonly Dictionary< CommonTimeZone, TimeZoneInfo > _commonTimeZones = new Dictionary< CommonTimeZone, TimeZoneInfo >
+			{
+				{ CommonTimeZone.PST, TimeZoneInfo.FindSystemTimeZoneById( "Pacific Standard Time" ) },
+				{ CommonTimeZone.MST, TimeZoneInfo.FindSystemTimeZoneById( "Mountain Standard Time" ) },
+				{ CommonTimeZone.CST, TimeZoneInfo.FindSystemTimeZoneById( "Central Standard Time" ) },
+				{ CommonTimeZone.EST, TimeZoneInfo.FindSystemTimeZoneById( "Eastern Standard Time" ) }
+			};
 
 		/// <summary>
 		/// Commonly supported time zones.
@@ -59,16 +59,19 @@ namespace Netco.Extensions
 			/// </summary>
 			/// <remarks>UTC - 8 hours, EST - 3 hours</remarks>
 			PST,
+
 			/// <summary>
 			/// Mountain Standard Time
 			/// </summary>
 			/// <remarks>UTC - 7 hours, EST - 2 hours, PST + 1 hour</remarks>
 			MST,
+
 			/// <summary>
 			/// Central Standard Time
 			/// </summary>
 			/// <remarks>UTC - 6 hours, EST - 1 hour, PST + 2 hours</remarks>
 			CST,
+
 			/// <summary>
 			/// Eastern Standard Time
 			/// </summary>

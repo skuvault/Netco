@@ -43,7 +43,7 @@ namespace Netco.Logging
 			if( this.SeparateLogEntries )
 				sb.AppendLine();
 
-			Console.Write( "{0} - {1}", _name, sb );
+			Console.Write( "{0} - {1}", this._name, sb );
 		}
 
 		public void Trace( string message )
@@ -198,7 +198,7 @@ namespace Netco.Logging
 			}
 			return this._typeLoggers[ objectToLogType ];
 		}
-		
+
 		/// <summary>
 		/// Gets the logger to log message with the specified name.
 		/// </summary>

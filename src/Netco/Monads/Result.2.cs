@@ -1,5 +1,5 @@
 using System;
-using System.Diagnostics.Contracts;
+using CuttingEdge.Conditions;
 
 namespace Netco.Monads
 {
@@ -30,7 +30,8 @@ namespace Netco.Monads
 		public static Result< TValue, TError > CreateSuccess( TValue value )
 		{
 			// ReSharper disable CompareNonConstrainedGenericWithNull
-			Contract.Requires< ArgumentNullException >( value != null, "value" );
+			if( value == null )
+				throw new ArgumentNullException( "value" );
 			// ReSharper restore CompareNonConstrainedGenericWithNull
 
 			return new Result< TValue, TError >( true, value, default( TError ) );
@@ -45,7 +46,8 @@ namespace Netco.Monads
 		public static Result< TValue, TError > CreateError( TError error )
 		{
 			// ReSharper disable CompareNonConstrainedGenericWithNull
-			Contract.Requires< ArgumentNullException >( error != null, "error" );
+			if( error == null )
+				throw new ArgumentNullException( "error" );
 			// ReSharper restore CompareNonConstrainedGenericWithNull
 
 			return new Result< TValue, TError >( false, default( TValue ), error );
@@ -58,7 +60,7 @@ namespace Netco.Monads
 		{
 			get
 			{
-				Contract.Requires< InvalidOperationException >( this.IsSuccess, "Code should not access value when the result has failed." );
+				Condition.WithExceptionOnFailure< InvalidOperationException >().Requires( this.IsSuccess, "IsSuccess" ).IsTrue( "Code should not access value when the result has failed." );
 				return this._value;
 			}
 		}
@@ -70,7 +72,7 @@ namespace Netco.Monads
 		{
 			get
 			{
-				Contract.Requires< InvalidOperationException >( !this.IsSuccess, "Code should not access error message when the result is valid." );
+				Condition.WithExceptionOnFailure< InvalidOperationException >().Requires( this.IsSuccess, "IsSuccess" ).IsFalse( "Code should not access error message when the result is valid." );
 				return this._error;
 			}
 		}
@@ -90,7 +92,8 @@ namespace Netco.Monads
 		public static implicit operator Result< TValue, TError >( TValue value )
 		{
 			// ReSharper disable CompareNonConstrainedGenericWithNull
-			Contract.Requires< ArgumentNullException >( value != null, "value" );
+			if( value == null )
+				throw new ArgumentNullException( "value" );
 			// ReSharper restore CompareNonConstrainedGenericWithNull
 			return CreateSuccess( value );
 		}
@@ -104,7 +107,8 @@ namespace Netco.Monads
 		public static implicit operator Result< TValue, TError >( TError error )
 		{
 			// ReSharper disable CompareNonConstrainedGenericWithNull
-			Contract.Requires< ArgumentNullException >( error != null, "error" );
+			if( error == null )
+				throw new ArgumentNullException( "error" );
 			// ReSharper restore CompareNonConstrainedGenericWithNull
 			return CreateError( error );
 		}
@@ -134,7 +138,7 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException">if <paramref name="action"/> is null</exception>
 		public Result< TValue, TError > Apply( Action< TValue > action )
 		{
-			Contract.Requires< ArgumentNullException >( action != null, "action" );
+			Condition.Requires( action, "action" ).IsNotNull();
 			if( this.IsSuccess )
 				action( this._value );
 
@@ -148,8 +152,7 @@ namespace Netco.Monads
 		/// <returns>same instance for the inlining</returns>
 		public Result< TValue, TError > Handle( Action< TError > handler )
 		{
-			Contract.Requires< ArgumentNullException >( handler != null, "handler" );
-
+			Condition.Requires( handler, "handler" ).IsNotNull();
 			if( !this.IsSuccess )
 				handler( this._error );
 
@@ -166,7 +169,7 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException"> if <paramref name="converter"/> is null</exception>
 		public Result< TTarget, TError > Convert< TTarget >( Func< TValue, TTarget > converter )
 		{
-			Contract.Requires< ArgumentNullException >( converter != null, "converter" );
+			Condition.Requires( converter, "converter" ).IsNotNull();
 			if( !this.IsSuccess )
 				return Result< TTarget, TError >.CreateError( this._error );
 
@@ -222,7 +225,7 @@ namespace Netco.Monads
 		/// <returns>Combined result.</returns>
 		public Result< TTarget, TError > Combine< TTarget >( Func< TValue, Result< TTarget, TError > > converter )
 		{
-			Contract.Requires< ArgumentNullException >( converter != null, "converter" );
+			Condition.Requires( converter, "converter" ).IsNotNull();
 			if( !this.IsSuccess )
 				return Result< TTarget, TError >.CreateError( this._error );
 
@@ -238,7 +241,7 @@ namespace Netco.Monads
 		/// <returns><see cref="Maybe{T}"/> that represents the original value behind the <see cref="Result{T}"/> after the conversion</returns>
 		public Maybe< TTarget > ToMaybe< TTarget >( Func< TValue, TTarget > converter )
 		{
-			Contract.Requires< ArgumentNullException >( converter != null, "converter" );
+			Condition.Requires( converter, "converter" ).IsNotNull();
 			if( !this.IsSuccess )
 				return Maybe< TTarget >.Empty;
 
@@ -265,7 +268,7 @@ namespace Netco.Monads
 		/// <returns>result value</returns>
 		public TValue ExposeException( Func< TError, Exception > exception )
 		{
-			Contract.Requires< ArgumentNullException >( exception != null, "exception" );
+			Condition.Requires( exception, "exception" ).IsNotNull();
 			if( !this.IsSuccess )
 				throw exception( this.Error );
 

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+using CuttingEdge.Conditions;
 
 namespace Netco.Monads
 {
@@ -22,7 +22,8 @@ namespace Netco.Monads
 		internal Maybe( T value ) : this( value, true )
 		{
 			// ReSharper disable CompareNonConstrainedGenericWithNull
-			Contract.Requires< ArgumentNullException >( value != null, "value" );
+			if( value == null )
+				throw new ArgumentNullException( "value" );
 			// ReSharper restore CompareNonConstrainedGenericWithNull
 		}
 
@@ -43,7 +44,7 @@ namespace Netco.Monads
 		{
 			get
 			{
-				Contract.Requires< InvalidOperationException >( this.HasValue, "Code should not access value when it is not available." );
+				Condition.WithExceptionOnFailure< InvalidOperationException >().Requires( this.HasValue, "HasValue" ).IsTrue( "Code should not access value when it is not available." );
 				return this._value;
 			}
 		}
@@ -167,8 +168,7 @@ namespace Netco.Monads
 		/// <exception cref="InvalidOperationException">if maybe does not have value</exception>
 		public T ExposeException( string message, params object[] args )
 		{
-			Contract.Requires< ArgumentNullException >( message != null, "message" );
-			Contract.Requires< ArgumentException >( !string.IsNullOrWhiteSpace( message ), "message is a zero-length string or contains only white space" );
+			Condition.Requires( message, "message" ).IsNotNullOrWhiteSpace();
 			if( !this.HasValue )
 				throw new InvalidOperationException( string.Format( message, args ) );
 
@@ -176,25 +176,25 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		/// Combines this optional with the pipeline function
+		/// Binds value to the specified function.
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
-		/// <param name="combinator">The combinator (pipeline funcion).</param>
-		/// <returns>optional result</returns>
-		public Maybe< TTarget > Combine< TTarget >( Func< T, Maybe< TTarget > > combinator )
+		/// <param name="function">The function to bind to (pipeline funcion).</param>
+		/// <returns>Optional result.</returns>
+		public Maybe< TTarget > Bind< TTarget >( Func< T, Maybe< TTarget > > function )
 		{
-			return this.HasValue ? combinator( this._value ) : Maybe< TTarget >.Empty;
+			return this.HasValue ? function( this._value ) : Maybe< TTarget >.Empty;
 		}
 
 		/// <summary>
-		/// Combines this optional with the pipeline function, providing MetaData
+		/// Binds value to the specified function, providing metadata.
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
-		/// <param name="combinator">The combinator (pipeline funcion).</param>
-		/// <returns>optional result</returns>
-		public Maybe< TTarget > Combine< TTarget >( Func< T, MetaData, Maybe< TTarget > > combinator )
+		/// <param name="function">The function to bind to (pipeline funcion).</param>
+		/// <returns>Optional result.</returns>
+		public Maybe< TTarget > Bind< TTarget >( Func< T, MetaData, Maybe< TTarget > > function )
 		{
-			return this.HasValue ? combinator( this._value, this.MetaData ) : Maybe< TTarget >.Empty;
+			return this.HasValue ? function( this._value, this.MetaData ) : Maybe< TTarget >.Empty;
 		}
 
 		/// <summary>
@@ -361,7 +361,8 @@ namespace Netco.Monads
 		public static implicit operator Maybe< T >( T item )
 		{
 			// ReSharper disable CompareNonConstrainedGenericWithNull
-			Contract.Requires< ArgumentNullException >( item != null, "item" );
+			if( item == null )
+				throw new ArgumentNullException( "item" );
 			// ReSharper restore CompareNonConstrainedGenericWithNull
 
 			return new Maybe< T >( item );
@@ -374,8 +375,8 @@ namespace Netco.Monads
 		/// <returns>The result of the conversion.</returns>
 		public static explicit operator T( Maybe< T > item )
 		{
-			Contract.Requires< ArgumentNullException >( item != null, "item" );
-			Contract.Requires< ArgumentException >( item.HasValue, "item must have value." );
+			Condition.Requires( item, "item" ).IsNotNull();
+			Condition.Requires( item.HasValue, "item.HasValue" ).IsTrue();
 
 			return item.Value;
 		}

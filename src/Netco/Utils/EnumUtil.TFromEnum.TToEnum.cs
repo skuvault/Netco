@@ -46,10 +46,10 @@ namespace Netco.Utils
 		{
 			if( _unmatched.Length > 0 )
 			{
-				var list = string.Join( ", ", _unmatched.Select( e => e.ToString() ));
+				var list = string.Join( ", ", _unmatched.Select( e => e.ToString() ) );
 				var message = string.Format( CultureInfo.InvariantCulture,
-				                             "Can't convert from {0} to {1} because of unmatched entries: {2}",
-				                             typeof( TFromEnum ), typeof( TToEnum ), list );
+					"Can't convert from {0} to {1} because of unmatched entries: {2}",
+					typeof( TFromEnum ), typeof( TToEnum ), list );
 				throw new ArgumentException( message );
 			}
 		}

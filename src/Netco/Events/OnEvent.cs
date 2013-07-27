@@ -18,6 +18,7 @@ namespace Netco.Events
 			if( eventHandler != null )
 				eventHandler( source, new EventArgs() );
 		}
+
 		/// <summary>
 		/// Call to raise event with specific event arguments.
 		/// </summary>
@@ -25,7 +26,7 @@ namespace Netco.Events
 		/// <param name="eventHandler">The event handler.</param>
 		/// <param name="source">The source.</param>
 		/// <param name="e">The event arguments.</param>
-		public static void Raise< T >( this EventHandler< T > eventHandler, object source, T e ) where T: EventArgs
+		public static void Raise< T >( this EventHandler< T > eventHandler, object source, T e ) where T : EventArgs
 		{
 			if( eventHandler != null )
 				eventHandler( source, e );
@@ -40,7 +41,7 @@ namespace Netco.Events
 		public static void Raise( this PropertyChangedEventHandler eventHandler, object source, string propertyName )
 		{
 			if( eventHandler != null )
-				eventHandler( source, new PropertyChangedEventArgs( propertyName )); 
+				eventHandler( source, new PropertyChangedEventArgs( propertyName ) );
 		}
 	}
 }

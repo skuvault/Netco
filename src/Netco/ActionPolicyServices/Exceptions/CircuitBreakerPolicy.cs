@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Netco.ActionPolicyServices.Exceptions
 {
@@ -12,6 +13,25 @@ namespace Netco.ActionPolicyServices.Exceptions
 			try
 			{
 				action();
+				breaker.Reset();
+			}
+			catch( Exception ex )
+			{
+				if( !canHandle( ex ) )
+					throw;
+				breaker.TryBreak( ex );
+				throw;
+			}
+		}
+
+		internal static async Task ImplementationAsync( Func< Task > action, ExceptionHandler canHandle, ICircuitBreakerState breaker )
+		{
+			if( breaker.IsBroken )
+				throw breaker.LastException;
+
+			try
+			{
+				await action();
 				breaker.Reset();
 			}
 			catch( Exception ex )

@@ -7,16 +7,17 @@ namespace Netco.Syntaxis
 	/// Helper class for creating fluent APIs
 	/// </summary>
 	/// <typeparam name="TTarget">underlying type</typeparam>
+	/// <remarks>Similar to <see cref="Syntax{T}"/> but for use with async methods.</remarks>
 	[ Serializable ]
-	public sealed class Syntax< TTarget > : Syntax, ISyntax< TTarget >
+	public sealed class SyntaxAsync< TTarget > : Syntax, ISyntax< TTarget >
 	{
 		private readonly TTarget _inner;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Syntax{T}"/> class.
+		/// Initializes a new instance of the <see cref="SyntaxAsync{T}"/> class.
 		/// </summary>
 		/// <param name="inner">The underlying instance.</param>
-		public Syntax( TTarget inner )
+		public SyntaxAsync( TTarget inner )
 		{
 			this._inner = inner;
 		}
@@ -33,9 +34,9 @@ namespace Netco.Syntaxis
 		}
 		#endregion
 
-		internal static Syntax< TTarget > For( TTarget item )
+		internal static SyntaxAsync< TTarget > For( TTarget item )
 		{
-			return new Syntax< TTarget >( item );
+			return new SyntaxAsync< TTarget >( item );
 		}
 	}
 }

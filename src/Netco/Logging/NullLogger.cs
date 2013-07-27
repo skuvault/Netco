@@ -120,7 +120,7 @@ namespace Netco.Logging
 		/// </returns>
 		public ILogger GetLogger( Type objectToLogType )
 		{
-			return _nullLogger;
+			return this._nullLogger;
 		}
 
 		/// <summary>
@@ -132,7 +132,7 @@ namespace Netco.Logging
 		/// </returns>
 		public ILogger GetLogger( string loggerName )
 		{
-			return _nullLogger;
+			return this._nullLogger;
 		}
 	}
 }

@@ -28,7 +28,7 @@ namespace Netco.Monads
 		/// <returns>Meta data casted to the specified type.</returns>
 		public TMetaValue GetValue< TMetaValue >( object metaKey )
 		{
-			return ( TMetaValue ) this._data[ metaKey ];
+			return ( TMetaValue )this._data[ metaKey ];
 		}
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace Netco.Monads
 			if( this._data.TryGetValue( metaKey, out value ) )
 			{
 				if( value is TMetaValue )
-					return ( TMetaValue ) value;
+					return ( TMetaValue )value;
 			}
 			return Maybe< TMetaValue >.Empty;
 		}

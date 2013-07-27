@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 
 namespace Netco.Monads
 {
@@ -32,7 +31,8 @@ namespace Netco.Monads
 		public static Maybe< TSource > From< TSource >( TSource item )
 		{
 			// ReSharper disable CompareNonConstrainedGenericWithNull
-			Contract.Requires< ArgumentNullException >( item != null, "item" );
+			if( item == null )
+				throw new ArgumentNullException( "item" );
 			// ReSharper restore CompareNonConstrainedGenericWithNull
 
 			return new Maybe< TSource >( item );

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Netco.Extensions
 {
@@ -15,13 +16,13 @@ namespace Netco.Extensions
 		/// <returns>Original location of the assembly.</returns>
 		/// <remarks>Original location or <see cref="string.Empty"/> if location couldn't be determined (because assembly was loaded
 		/// from byte array for example).</remarks>
-		public static string GetOriginalLocation( this System.Reflection.Assembly assembly )
+		public static string GetOriginalLocation( this Assembly assembly )
 		{
 			if( assembly == null )
 				return string.Empty;
 			var codeBase = assembly.CodeBase;
-			if( string.IsNullOrEmpty( codeBase ))
- 				return string.Empty;
+			if( string.IsNullOrEmpty( codeBase ) )
+				return string.Empty;
 
 			try
 			{

@@ -1,5 +1,5 @@
 using System;
-using System.Diagnostics.Contracts;
+using CuttingEdge.Conditions;
 
 namespace Netco.Utils
 {
@@ -17,7 +17,7 @@ namespace Netco.Utils
 		/// <exception cref="ArgumentNullException">If <paramref name="value"/> is null</exception>
 		public static TEnum Parse< TEnum >( string value ) where TEnum : struct, IComparable
 		{
-			Contract.Requires< ArgumentNullException >( value != null, "value" );
+			Condition.Requires( value, "value" ).IsNotNull();
 			return Parse< TEnum >( value, true );
 		}
 
@@ -31,7 +31,7 @@ namespace Netco.Utils
 		/// <exception cref="ArgumentNullException">If <paramref name="value"/> is null</exception>
 		public static TEnum Parse< TEnum >( string value, bool ignoreCase ) where TEnum : struct, IComparable
 		{
-			Contract.Requires< ArgumentNullException >( value != null, "value" );
+			Condition.Requires( value, "value" ).IsNotNull();
 
 			var dict = ignoreCase ? EnumUtil< TEnum >.IgnoreCaseDict : EnumUtil< TEnum >.CaseDict;
 

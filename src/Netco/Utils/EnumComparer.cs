@@ -99,9 +99,9 @@ namespace Netco.Utils
 				return;
 
 			var message = string.Format( "The underlying type of the type parameter {0} is {1}. " +
-			                             "LcgEnumComparer only supports Enums with underlying type of " +
-			                             "byte, sbyte, short, ushort, int, uint, long, or ulong.",
-			                             typeof( TEnum ), underlyingType );
+				"LcgEnumComparer only supports Enums with underlying type of " +
+				"byte, sbyte, short, ushort, int, uint, long, or ulong.",
+				typeof( TEnum ), underlyingType );
 			throw new NotSupportedException( message );
 		}
 

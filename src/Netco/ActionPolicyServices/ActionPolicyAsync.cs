@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using CuttingEdge.Conditions;
 using Netco.Syntaxis;
 
@@ -10,15 +11,15 @@ namespace Netco.ActionPolicyServices
 	/// augment their behavior (i.e. to retry on problems)
 	/// </summary>
 	[ Serializable ]
-	public class ActionPolicy
+	public class ActionPolicyAsync
 	{
-		private readonly Action< Action > _policy;
+		private readonly Func< Func< Task >, Task > _policy;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ActionPolicy"/> class.
+		/// Initializes a new instance of the <see cref="ActionPolicyAsync"/> class.
 		/// </summary>
 		/// <param name="policy">The policy.</param>
-		public ActionPolicy( Action< Action > policy )
+		public ActionPolicyAsync( Func< Func< Task >, Task > policy )
 		{
 			Condition.Requires( policy, "policy" ).IsNotNull();
 
@@ -30,9 +31,9 @@ namespace Netco.ActionPolicyServices
 		/// </summary>
 		/// <param name="action">The action to perform.</param>
 		[ DebuggerNonUserCode ]
-		public void Do( Action action )
+		public async Task Do( Func< Task > action )
 		{
-			this._policy( action );
+			await this._policy( action );
 		}
 
 		/// <summary>
@@ -42,12 +43,12 @@ namespace Netco.ActionPolicyServices
 		/// <param name="action">The action to perform.</param>
 		/// <returns>result returned by <paramref name="action"/></returns>
 		[ DebuggerNonUserCode ]
-		public TResult Get< TResult >( Func< TResult > action )
+		public async Task< TResult > Get< TResult >( Func< Task< TResult > > action )
 		{
 			var result = default( TResult );
-			this._policy( () =>
+			await this._policy( async () =>
 				{
-					result = action();
+					result = await action();
 				} );
 			return result;
 		}
@@ -55,68 +56,68 @@ namespace Netco.ActionPolicyServices
 		/// <summary>
 		/// Action policy that does not do anything
 		/// </summary>
-		public static readonly ActionPolicy Null = new ActionPolicy( action => action() );
+		public static readonly ActionPolicyAsync Null = new ActionPolicyAsync( action => action() );
 
-		/// <summary> Starts building <see cref="ActionPolicy"/> 
+		/// <summary> Starts building <see cref="ActionPolicyAsync"/> 
 		/// that can handle exceptions, as determined by 
 		/// <paramref name="handler"/> </summary>
 		/// <param name="handler">The exception handler.</param>
 		/// <returns>syntax</returns>
-		public static Syntax< ExceptionHandler > With( ExceptionHandler handler )
+		public static SyntaxAsync< ExceptionHandler > With( ExceptionHandler handler )
 		{
 			Condition.Requires( handler, "handler" ).IsNotNull();
-			return Syntax.For( handler );
+			return Syntax.ForAsync( handler );
 		}
 
-		/// <summary> Starts building <see cref="ActionPolicy"/> 
+		/// <summary> Starts building <see cref="ActionPolicyAsync"/> 
 		/// that can handle exceptions, as determined by 
 		/// <paramref name="doWeHandle"/> function</summary>
 		/// <param name="doWeHandle"> function that returns <em>true</em> if we can hande the specified exception.</param>
 		/// <returns>syntax</returns>
-		public static Syntax< ExceptionHandler > From( Func< Exception, bool > doWeHandle )
+		public static SyntaxAsync< ExceptionHandler > From( Func< Exception, bool > doWeHandle )
 		{
 			Condition.Requires( doWeHandle, "doWeHandle" ).IsNotNull();
 
 			ExceptionHandler handler = exception => doWeHandle( exception );
-			return Syntax.For( handler );
+			return Syntax.ForAsync( handler );
 		}
 
-		/// <summary> Starts building simple <see cref="ActionPolicy"/>
+		/// <summary> Starts building simple <see cref="ActionPolicyAsync"/>
 		/// that can handle <typeparamref name="TException"/> </summary>
 		/// <typeparam name="TException">The type of the exception to handle.</typeparam>
 		/// <returns>syntax</returns>
-		public static Syntax< ExceptionHandler > Handle< TException >()
+		public static SyntaxAsync< ExceptionHandler > Handle< TException >()
 			where TException : Exception
 		{
-			return Syntax.For< ExceptionHandler >( ex => ex is TException );
+			return Syntax.ForAsync< ExceptionHandler >( ex => ex is TException );
 		}
 
-		/// <summary> Starts building simple <see cref="ActionPolicy"/>
+		/// <summary> Starts building simple <see cref="ActionPolicyAsync"/>
 		/// that can handle <typeparamref name="TEx1"/> or <typeparamref name="TEx1"/>
 		/// </summary>
 		/// <typeparam name="TEx1">The type of the exception to handle.</typeparam>
 		/// <typeparam name="TEx2">The type of the exception to handle.</typeparam>
 		/// <returns>syntax</returns>
-		public static Syntax< ExceptionHandler > Handle< TEx1, TEx2 >()
+		public static SyntaxAsync< ExceptionHandler > Handle< TEx1, TEx2 >()
 			where TEx1 : Exception
 			where TEx2 : Exception
 		{
-			return Syntax.For< ExceptionHandler >( ex => ( ex is TEx1 ) || ( ex is TEx2 ) );
+			return Syntax.ForAsync< ExceptionHandler >( ex => ( ex is TEx1 ) || ( ex is TEx2 ) );
 		}
 
-		/// <summary> Starts building simple <see cref="ActionPolicy"/>
+		/// <summary> Starts building simple <see cref="ActionPolicyAsync"/>
 		/// that can handle <typeparamref name="TEx1"/> or <typeparamref name="TEx1"/>
 		/// </summary>
 		/// <typeparam name="TEx1">The first type of the exception to handle.</typeparam>
 		/// <typeparam name="TEx2">The second of the exception to handle.</typeparam>
 		/// <typeparam name="TEx3">The third of the exception to handle.</typeparam>
 		/// <returns>syntax</returns>
-		public static Syntax< ExceptionHandler > Handle< TEx1, TEx2, TEx3 >()
+		public static SyntaxAsync< ExceptionHandler > Handle< TEx1, TEx2, TEx3 >()
 			where TEx1 : Exception
 			where TEx2 : Exception
 			where TEx3 : Exception
 		{
-			return Syntax.For< ExceptionHandler >( ex => ( ex is TEx1 ) || ( ex is TEx2 ) || ( ex is TEx3 ) );
+			return Syntax.ForAsync< ExceptionHandler >( ex => ( ex is TEx1 ) || ( ex is TEx2 ) || ( ex is TEx3 ) );
 		}
 	}
 }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+using CuttingEdge.Conditions;
 using Netco.ActionPolicyServices.Exceptions;
 using Netco.Syntaxis;
 
@@ -33,7 +33,7 @@ namespace Netco.ActionPolicyServices
 		/// <returns>reusable instance of policy</returns>
 		public static ActionPolicy Retry( this Syntax< ExceptionHandler > syntax, int retryCount )
 		{
-			Contract.Requires< ArgumentNullException >( syntax != null, "syntax" );
+			Condition.Requires( syntax, "syntax" ).IsNotNull();
 
 			Func< IRetryState > state = () => new RetryStateWithCount( retryCount, DoNothing2 );
 			return new ActionPolicy( action => RetryPolicy.Implementation( action, syntax.Target, state ) );
@@ -50,9 +50,9 @@ namespace Netco.ActionPolicyServices
 		/// <returns>reusable policy instance </returns>
 		public static ActionPolicy Retry( this Syntax< ExceptionHandler > syntax, int retryCount, Action< Exception, int > onRetry )
 		{
-			Contract.Requires< ArgumentNullException >( syntax != null, "syntax" );
-			Contract.Requires< ArgumentNullException >( onRetry != null, "onRetry" );
-			Contract.Requires< ArgumentException >( retryCount > 0, "retryCount must be greater than 0" );
+			Condition.Requires( syntax, "syntax" ).IsNotNull();
+			Condition.Requires( onRetry, "onRetry" ).IsNotNull();
+			Condition.Requires( retryCount, "retryCount" ).IsGreaterThan( 0 );
 
 			Func< IRetryState > state = () => new RetryStateWithCount( retryCount, onRetry );
 			return new ActionPolicy( action => RetryPolicy.Implementation( action, syntax.Target, state ) );
@@ -64,8 +64,8 @@ namespace Netco.ActionPolicyServices
 		/// <returns> reusable instance of policy</returns>
 		public static ActionPolicy RetryForever( this Syntax< ExceptionHandler > syntax, Action< Exception > onRetry )
 		{
-			Contract.Requires< ArgumentNullException >( syntax != null, "syntax" );
-			Contract.Requires< ArgumentNullException >( onRetry != null, "onRetry" );
+			Condition.Requires( syntax, "syntax" ).IsNotNull();
+			Condition.Requires( onRetry, "onRetry" ).IsNotNull();
 
 			var state = new RetryState( onRetry );
 			return new ActionPolicy( action => RetryPolicy.Implementation( action, syntax.Target, () => state ) );
@@ -82,11 +82,11 @@ namespace Netco.ActionPolicyServices
 		/// First parameter is the exception and second one is the planned sleep duration. </param>
 		/// <returns>new policy instance</returns>
 		public static ActionPolicy WaitAndRetry( this Syntax< ExceptionHandler > syntax, IEnumerable< TimeSpan > sleepDurations,
-		                                         Action< Exception, TimeSpan > onRetry )
+			Action< Exception, TimeSpan > onRetry )
 		{
-			Contract.Requires< ArgumentNullException >( syntax != null, "syntax" );
-			Contract.Requires< ArgumentNullException >( sleepDurations != null, "sleepDurations" );
-			Contract.Requires< ArgumentNullException >( onRetry != null, "onRetry" );
+			Condition.Requires( syntax, "syntax" ).IsNotNull();
+			Condition.Requires( sleepDurations, "sleepDurations" ).IsNotNull();
+			Condition.Requires( onRetry, "onRetry" ).IsNotNull();
 
 			Func< IRetryState > state = () => new RetryStateWithSleep( sleepDurations, onRetry );
 			return new ActionPolicy( action => RetryPolicy.Implementation( action, syntax.Target, state ) );
@@ -102,8 +102,8 @@ namespace Netco.ActionPolicyServices
 		/// <returns>new policy instance</returns>
 		public static ActionPolicy WaitAndRetry( this Syntax< ExceptionHandler > syntax, IEnumerable< TimeSpan > sleepDurations )
 		{
-			Contract.Requires< ArgumentNullException >( syntax != null, "syntax" );
-			Contract.Requires< ArgumentNullException >( sleepDurations != null, "sleepDurations" );
+			Condition.Requires( syntax, "syntax" ).IsNotNull();
+			Condition.Requires( sleepDurations, "sleepDurations" ).IsNotNull();
 
 			Func< IRetryState > state = () => new RetryStateWithSleep( sleepDurations, DoNothing2 );
 			return new ActionPolicy( action => RetryPolicy.Implementation( action, syntax.Target, state ) );
@@ -128,9 +128,9 @@ namespace Netco.ActionPolicyServices
 		/// <remarks>(see "ReleaseIT!" for the details)</remarks>
 		public static ActionPolicyWithState CircuitBreaker( this Syntax< ExceptionHandler > syntax, TimeSpan duration, int countBeforeBreaking )
 		{
-			Contract.Requires< ArgumentNullException >( syntax != null, "syntax" );
-			Contract.Requires< ArgumentException >( duration != TimeSpan.MinValue, "duration is not defined" );
-			Contract.Requires< ArgumentException >( countBeforeBreaking > 0, "countBeforeBreaking must be greater than 0" );
+			Condition.Requires( syntax, "syntax" ).IsNotNull();
+			Condition.Requires( duration, "duration" ).IsNotEqualTo( TimeSpan.MinValue, "{0} should be defined" );
+			Condition.Requires( countBeforeBreaking, "countBeforeBreaking" ).IsGreaterThan( 0, "{0} should be greater than 0" );
 
 			var state = new CircuitBreakerState( duration, countBeforeBreaking );
 			var syncLock = new CircuitBreakerStateLock( state );

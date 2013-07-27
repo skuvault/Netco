@@ -19,9 +19,9 @@ namespace Netco.Monads
 		/// <seealso href="http://jystic.com/2009/09/08/whats-with-nullreferenceexceptions-anyway/"/>
 		public static Maybe< TResult > SelectMany< TSource, TResult >( this Maybe< TSource > source, Func< TSource, Maybe< TResult > > sourceToMaybeResult )
 		{
-			return source.Combine( sourceToMaybeResult );
+			return source.Bind( sourceToMaybeResult );
 		}
-		
+
 		/// <summary>
 		/// Selects <typeparamref name="TA"/> using <paramref name="aToMaybeB"/> and <paramref name="abToMaybeC"/>.
 		/// </summary>
@@ -41,7 +41,7 @@ namespace Netco.Monads
 		/// </example>
 		public static Maybe< TC > SelectMany< TA, TB, TC >( this Maybe< TA > maybeA, Func< TA, Maybe< TB > > aToMaybeB, Func< TA, TB, Maybe< TC > > abToMaybeC )
 		{
-			return maybeA.Combine( a => (aToMaybeB( a ) ?? Maybe< TB >.Empty).Combine( b => abToMaybeC( a, b ) ));
+			return maybeA.Bind( a => ( aToMaybeB( a ) ?? Maybe< TB >.Empty ).Bind( b => abToMaybeC( a, b ) ) );
 		}
 
 		/// <summary>

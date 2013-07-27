@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
+using CuttingEdge.Conditions;
 using Netco.Monads;
 
 namespace Netco.Extensions
@@ -18,16 +18,36 @@ namespace Netco.Extensions
 		/// <param name="enumerable">Enumerable to extend</param>
 		/// <param name="action">Action to perform; second parameter represents the index</param>
 		/// <exception cref="ArgumentNullException">When any parameter is null</exception>
-		public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T, int> action)
+		public static void ForEach< T >( this IEnumerable< T > enumerable, Action< T, int > action )
 		{
-			if (enumerable == null) throw new ArgumentNullException("enumerable");
-			if (action == null) throw new ArgumentNullException("action");
+			if( enumerable == null )
+				throw new ArgumentNullException( "enumerable" );
+			if( action == null )
+				throw new ArgumentNullException( "action" );
 
-			int i = 0;
-			foreach (var t in enumerable)
+			var i = 0;
+			foreach( var t in enumerable )
 			{
-				action(t, i);
+				action( t, i );
 				i += 1;
+			}
+		}
+
+		/// <summary>
+		/// Performs the specified <see cref="Action{T}"/> on each element in the source sequence.
+		/// </summary>
+		/// <typeparam name="T">The type of the elements in the sequence</typeparam>
+		/// <param name="enumerable">The sequence of elements</param>
+		/// <param name="action">The action to execute on each element</param>
+		public static void ForEach< T >( this IEnumerable< T > enumerable, Action< T > action )
+		{
+			if( enumerable == null )
+				throw new ArgumentNullException( "enumerable" );
+			if( action == null )
+				throw new ArgumentNullException( "action" );
+			foreach( var element in enumerable )
+			{
+				action( element );
 			}
 		}
 
@@ -40,8 +60,8 @@ namespace Netco.Extensions
 		/// <returns>first value</returns>
 		public static Maybe< TSource > FirstOrEmpty< TSource >( this IEnumerable< TSource > sequence, Func< TSource, bool > predicate )
 		{
-			Contract.Requires< ArgumentNullException >( sequence != null, "sequence" );
-			Contract.Requires< ArgumentNullException >( predicate != null, "predicate" );
+			Condition.Requires( sequence, "sequence" ).IsNotNull();
+			Condition.Requires( predicate, "predicate" ).IsNotNull();
 
 			foreach( var source in sequence )
 			{
@@ -59,7 +79,7 @@ namespace Netco.Extensions
 		/// <returns>first value or empty result, if it is not found</returns>
 		public static Maybe< TSource > FirstOrEmpty< TSource >( this IEnumerable< TSource > sequence )
 		{
-			Contract.Requires< ArgumentNullException >( sequence != null, "sequence" );
+			Condition.Requires( sequence, "sequence" ).IsNotNull();
 			if( sequence == null )
 				throw new ArgumentNullException( "sequence" );
 			foreach( var source in sequence )
@@ -77,14 +97,16 @@ namespace Netco.Extensions
 		/// <param name="action">The action to execute against every item.</param>
 		/// <returns>enumerator</returns>
 		/// <exception cref="ArgumentNullException">when one of the values is null</exception>
-		public static IEnumerable<T> Apply<T>(this IEnumerable<T> enumerable, Action<T> action)
+		public static IEnumerable< T > Apply< T >( this IEnumerable< T > enumerable, Action< T > action )
 		{
-			if (enumerable == null) throw new ArgumentNullException("enumerable");
-			if (action == null) throw new ArgumentNullException("action");
+			if( enumerable == null )
+				throw new ArgumentNullException( "enumerable" );
+			if( action == null )
+				throw new ArgumentNullException( "action" );
 
-			foreach (var t in enumerable)
+			foreach( var t in enumerable )
 			{
-				action(t);
+				action( t );
 				yield return t;
 			}
 		}
@@ -98,15 +120,17 @@ namespace Netco.Extensions
 		/// parameter represents the index.</param>
 		/// <returns>enumerator</returns>
 		/// <exception cref="ArgumentNullException">when one of the values is null</exception>
-		public static IEnumerable<TSource> Apply<TSource>(this IEnumerable<TSource> enumerable, Action<TSource, int> action)
+		public static IEnumerable< TSource > Apply< TSource >( this IEnumerable< TSource > enumerable, Action< TSource, int > action )
 		{
-			if (enumerable == null) throw new ArgumentNullException("enumerable");
-			if (action == null) throw new ArgumentNullException("action");
+			if( enumerable == null )
+				throw new ArgumentNullException( "enumerable" );
+			if( action == null )
+				throw new ArgumentNullException( "action" );
 
-			int i = 0;
-			foreach (var t in enumerable)
+			var i = 0;
+			foreach( var t in enumerable )
 			{
-				action(t, i);
+				action( t, i );
 				yield return t;
 				i += 1;
 			}
@@ -121,17 +145,17 @@ namespace Netco.Extensions
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>true if the <paramref name="enumerable"/> contains any elements
 		/// matching <paramref name="predicate"/></returns>
-		public static bool Exists<TSource>(this IEnumerable<TSource> enumerable, Predicate<TSource> predicate)
+		public static bool Exists< TSource >( this IEnumerable< TSource > enumerable, Predicate< TSource > predicate )
 		{
-			if (enumerable == null) throw new ArgumentNullException("enumerable");
-			if (predicate == null) throw new ArgumentNullException("predicate");
+			if( enumerable == null )
+				throw new ArgumentNullException( "enumerable" );
+			if( predicate == null )
+				throw new ArgumentNullException( "predicate" );
 
-			foreach (var t in enumerable)
+			foreach( var t in enumerable )
 			{
-				if (predicate(t))
-				{
+				if( predicate( t ) )
 					return true;
-				}
 			}
 			return false;
 		}
@@ -142,9 +166,10 @@ namespace Netco.Extensions
 		/// <typeparam name="TSource">Type of the elements in <paramref name="enumerable"/></typeparam>
 		/// <param name="enumerable">The enumerable.</param>
 		/// <returns>true if the sequence contains any elements</returns>
-		public static bool Exists<TSource>(this IEnumerable<TSource> enumerable)
+		public static bool Exists< TSource >( this IEnumerable< TSource > enumerable )
 		{
-			if (enumerable == null) throw new ArgumentNullException("enumerable");
+			if( enumerable == null )
+				throw new ArgumentNullException( "enumerable" );
 
 			return enumerable.Any();
 		}
@@ -155,11 +180,12 @@ namespace Netco.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="enumerable">The enumerable.</param>
 		/// <returns>hashset instance</returns>
-		public static HashSet<T> ToSet<T>(this IEnumerable<T> enumerable)
+		public static HashSet< T > ToSet< T >( this IEnumerable< T > enumerable )
 		{
-			if (enumerable == null) throw new ArgumentNullException("enumerable");
+			if( enumerable == null )
+				throw new ArgumentNullException( "enumerable" );
 
-			return new HashSet<T>(enumerable);
+			return new HashSet< T >( enumerable );
 		}
 
 		/// <summary>
@@ -170,12 +196,14 @@ namespace Netco.Extensions
 		/// <param name="enumerable">The enumerable.</param>
 		/// <param name="selector">The selector.</param>
 		/// <returns>hashset instance</returns>
-		public static HashSet<TKey> ToSet<TKey, TItem>(this IEnumerable<TItem> enumerable, Func<TItem, TKey> selector)
+		public static HashSet< TKey > ToSet< TKey, TItem >( this IEnumerable< TItem > enumerable, Func< TItem, TKey > selector )
 		{
-			if (enumerable == null) throw new ArgumentNullException("enumerable");
-			if (selector == null) throw new ArgumentNullException("selector");
+			if( enumerable == null )
+				throw new ArgumentNullException( "enumerable" );
+			if( selector == null )
+				throw new ArgumentNullException( "selector" );
 
-			return new HashSet<TKey>(enumerable.Select(selector));
+			return new HashSet< TKey >( enumerable.Select( selector ) );
 		}
 
 		/// <summary>
@@ -188,38 +216,39 @@ namespace Netco.Extensions
 		/// <param name="weightDelegate">Function to calculate <em>weight</em> of each item in the collection</param>
 		/// <param name="maxSliceWeight">The max item weight.</param>
 		/// <returns>enumerator over the results</returns>
-		public static IEnumerable<TItem[]> Slice<TItem>(this IEnumerable<TItem> source, int sliceLength,
-			Func<TItem, int> weightDelegate, int maxSliceWeight)
+		public static IEnumerable< TItem[] > Slice< TItem >( this IEnumerable< TItem > source, int sliceLength,
+			Func< TItem, int > weightDelegate, int maxSliceWeight )
 		{
-			if (source == null) throw new ArgumentNullException("source");
-			if (weightDelegate == null) throw new ArgumentNullException("weightDelegate");
+			if( source == null )
+				throw new ArgumentNullException( "source" );
+			if( weightDelegate == null )
+				throw new ArgumentNullException( "weightDelegate" );
 
-			if (sliceLength <= 0)
-				throw new ArgumentOutOfRangeException("sliceLength", "value must be greater than 0");
+			if( sliceLength <= 0 )
+				throw new ArgumentOutOfRangeException( "sliceLength", "value must be greater than 0" );
 
-			if (maxSliceWeight <= 0)
-				throw new ArgumentOutOfRangeException("sliceLength", "value must be greater than 0");
+			if( maxSliceWeight <= 0 )
+				throw new ArgumentOutOfRangeException( "sliceLength", "value must be greater than 0" );
 
-
-			var list = new List<TItem>(sliceLength);
+			var list = new List< TItem >( sliceLength );
 			var accumulatedWeight = 0;
-			foreach (var item in source)
+			foreach( var item in source )
 			{
-				var currentWeight = weightDelegate(item);
-				if (currentWeight > maxSliceWeight)
-					throw new InvalidOperationException("Impossible to slice this collection");
+				var currentWeight = weightDelegate( item );
+				if( currentWeight > maxSliceWeight )
+					throw new InvalidOperationException( "Impossible to slice this collection" );
 
-				var weightOverload = (currentWeight + accumulatedWeight) > maxSliceWeight;
-				if ((sliceLength == list.Count) || weightOverload)
+				var weightOverload = ( currentWeight + accumulatedWeight ) > maxSliceWeight;
+				if( ( sliceLength == list.Count ) || weightOverload )
 				{
 					accumulatedWeight = 0;
 					yield return list.ToArray();
 					list.Clear();
 				}
-				list.Add(item);
+				list.Add( item );
 				accumulatedWeight += currentWeight;
 			}
-			if (list.Count > 0)
+			if( list.Count > 0 )
 				yield return list.ToArray();
 		}
 
@@ -230,24 +259,25 @@ namespace Netco.Extensions
 		/// <param name="source">The source.</param>
 		/// <param name="sliceLength">Maximum length of the slice.</param>
 		/// <returns>lazy enumerator of the collection of arrays</returns>
-		public static IEnumerable<TItem[]> Slice<TItem>(this IEnumerable<TItem> source, int sliceLength)
+		public static IEnumerable< TItem[] > Slice< TItem >( this IEnumerable< TItem > source, int sliceLength )
 		{
-			if (source == null) throw new ArgumentNullException("source");
-			if (sliceLength <= 0)
-				throw new ArgumentOutOfRangeException("sliceLength", "value must be greater than 0");
+			if( source == null )
+				throw new ArgumentNullException( "source" );
+			if( sliceLength <= 0 )
+				throw new ArgumentOutOfRangeException( "sliceLength", "value must be greater than 0" );
 
-			var list = new List<TItem>(sliceLength);
-			foreach (var item in source)
+			var list = new List< TItem >( sliceLength );
+			foreach( var item in source )
 			{
-				list.Add(item);
-				if (sliceLength == list.Count)
+				list.Add( item );
+				if( sliceLength == list.Count )
 				{
 					yield return list.ToArray();
 					list.Clear();
 				}
 			}
 
-			if (list.Count > 0)
+			if( list.Count > 0 )
 				yield return list.ToArray();
 		}
 
@@ -257,11 +287,13 @@ namespace Netco.Extensions
 		/// <typeparam name="T">type of the items in collection</typeparam>
 		/// <param name="collection">The collection.</param>
 		/// <returns>jagged array</returns>
-		public static T[][] ToJaggedArray<T>(this IEnumerable<IEnumerable<T>> collection)
+		public static T[][] ToJaggedArray< T >( this IEnumerable< IEnumerable< T > > collection )
 		{
-			if (collection == null) throw new ArgumentNullException("collection");
-			return collection.Select(i => i.ToArray()).ToArray();
+			if( collection == null )
+				throw new ArgumentNullException( "collection" );
+			return collection.Select( i => i.ToArray() ).ToArray();
 		}
+
 		/// <summary>
 		/// Applies the integral indexer to the sequence in a lazy manner
 		/// </summary>
@@ -269,14 +301,15 @@ namespace Netco.Extensions
 		/// <param name="source">The sequence.</param>
 		/// <returns>indexed sequence</returns>
 		/// <exception cref="ArgumentNullException"> if <paramref name="source"/> is null</exception>
-		public static IEnumerable<Indexer<TSource>> ToIndexed<TSource>( this IEnumerable<TSource> source)
+		public static IEnumerable< Indexer< TSource > > ToIndexed< TSource >( this IEnumerable< TSource > source )
 		{
-			if (source == null) throw new ArgumentNullException("source");
+			if( source == null )
+				throw new ArgumentNullException( "source" );
 			var index = 0;
 
-			foreach (var item in source)
+			foreach( var item in source )
 			{
-				yield return new Indexer<TSource>(index, item);
+				yield return new Indexer< TSource >( index, item );
 				index += 1;
 			}
 		}
@@ -296,18 +329,17 @@ namespace Netco.Extensions
 		/// 
 		/// </remarks>
 		/// 
-		public static IDictionary<TSource, int> ToIndexDictionary<TSource>( this IEnumerable<TSource> source)
+		public static IDictionary< TSource, int > ToIndexDictionary< TSource >( this IEnumerable< TSource > source )
 		{
-			if (source == null) throw new ArgumentNullException("source");
-			var dic = new Dictionary<TSource, int>(source.Count());
+			if( source == null )
+				throw new ArgumentNullException( "source" );
+			var dic = new Dictionary< TSource, int >( source.Count() );
 
 			var index = 0;
-			foreach (var x in source)
+			foreach( var x in source )
 			{
-				if (!dic.ContainsKey(x))
-				{
-					dic.Add(x, index);
-				}
+				if( !dic.ContainsKey( x ) )
+					dic.Add( x, index );
 				index += 1;
 			}
 
@@ -320,9 +352,9 @@ namespace Netco.Extensions
 		/// <typeparam name="TValue">The type of the value.</typeparam>
 		/// <param name="sequence">The sequence.</param>
 		/// <returns>enumerable that contains values</returns>
-		public static IEnumerable<TValue> SelectValues<TValue>(this IEnumerable<Maybe<TValue>> sequence)
+		public static IEnumerable< TValue > SelectValues< TValue >( this IEnumerable< Maybe< TValue > > sequence )
 		{
-			return sequence.Where(s => s.HasValue).Select(s => s.Value);
+			return sequence.Where( s => s.HasValue ).Select( s => s.Value );
 		}
 	}
 
@@ -330,11 +362,11 @@ namespace Netco.Extensions
 	/// Indexing wrapper that contains value and its integral position.
 	/// </summary>
 	/// <typeparam name="TSource">type of the underlying item</typeparam>
-	public struct Indexer<TSource>
+	public struct Indexer< TSource >
 	{
-		readonly int _index;
-		readonly TSource _value;
-		readonly bool _isFirst;
+		private readonly int _index;
+		private readonly TSource _value;
+		private readonly bool _isFirst;
 
 		/// <summary>
 		/// Gets the integral position of the item.
@@ -342,7 +374,7 @@ namespace Netco.Extensions
 		/// <value>The integral position of the item.</value>
 		public int Index
 		{
-			get { return _index; }
+			get { return this._index; }
 		}
 
 		/// <summary>
@@ -351,7 +383,7 @@ namespace Netco.Extensions
 		/// <value><c>true</c> if this instance is first; otherwise, <c>false</c>.</value>
 		public bool IsFirst
 		{
-			get { return _isFirst; }
+			get { return this._isFirst; }
 		}
 
 		/// <summary>
@@ -360,14 +392,14 @@ namespace Netco.Extensions
 		/// <value>The value.</value>
 		public TSource Value
 		{
-			get { return _value; }
+			get { return this._value; }
 		}
 
-		internal Indexer(int index, TSource value)
+		internal Indexer( int index, TSource value )
 		{
-			_index = index;
-			_isFirst = index == 0;
-			_value = value;
+			this._index = index;
+			this._isFirst = index == 0;
+			this._value = value;
 		}
 	}
 }

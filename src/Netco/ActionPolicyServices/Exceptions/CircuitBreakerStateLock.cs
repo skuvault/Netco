@@ -48,7 +48,7 @@ namespace Netco.ActionPolicyServices.Exceptions
 
 		public void Dispose()
 		{
-			_lock.Dispose();
+			this._lock.Dispose();
 		}
 	}
 }

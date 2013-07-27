@@ -8,13 +8,13 @@ namespace Netco.Syntaxis
 	/// unnecessary members from the IntelliSense.
 	/// </summary>
 	/// <typeparam name="TTarget">syntax target</typeparam>
-	public interface ISyntax<out TTarget>
+	public interface ISyntax< out TTarget >
 	{
 		/// <summary>
 		/// Gets the underlying object.
 		/// </summary>
 		/// <value>The underlying object.</value>
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
+		[ EditorBrowsable( EditorBrowsableState.Advanced ) ]
 		TTarget Target { get; }
 
 		/// <summary>
@@ -23,7 +23,7 @@ namespace Netco.Syntaxis
 		/// <returns>
 		/// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
 		/// </returns>
-		[EditorBrowsable(EditorBrowsableState.Never)]
+		[ EditorBrowsable( EditorBrowsableState.Never ) ]
 		string ToString();
 
 		/// <summary>
@@ -36,8 +36,8 @@ namespace Netco.Syntaxis
 		/// <exception cref="T:System.NullReferenceException">
 		/// The <paramref name="obj"/> parameter is null.
 		/// </exception>
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		bool Equals(object obj);
+		[ EditorBrowsable( EditorBrowsableState.Never ) ]
+		bool Equals( object obj );
 
 		/// <summary>
 		/// Serves as a hash function for a particular type.
@@ -45,7 +45,7 @@ namespace Netco.Syntaxis
 		/// <returns>
 		/// A hash code for the current <see cref="T:System.Object"/>.
 		/// </returns>
-		[EditorBrowsable(EditorBrowsableState.Never)]
+		[ EditorBrowsable( EditorBrowsableState.Never ) ]
 		int GetHashCode();
 
 		/// <summary>
@@ -54,7 +54,7 @@ namespace Netco.Syntaxis
 		/// <returns>
 		/// The <see cref="T:System.Type"/> instance that represents the exact runtime type of the current instance.
 		/// </returns>
-		[EditorBrowsable(EditorBrowsableState.Never)]
+		[ EditorBrowsable( EditorBrowsableState.Never ) ]
 		Type GetType();
 	}
 }
