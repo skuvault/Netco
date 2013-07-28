@@ -64,9 +64,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Netco">
-      <HintPath>..\packages\Netco.1.1.0\lib\net40\Netco.dll</HintPath>
-    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.0.1.2\lib\net40\NLog.dll</HintPath>
     </Reference>
@@ -109,6 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Netco\Netco.csproj">
+      <Project>{ca47d9a0-42ac-4f03-9c60-25f48f01489b}</Project>
+      <Name>Netco</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

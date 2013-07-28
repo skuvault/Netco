@@ -36,6 +36,7 @@ $project_name = "Netco"
 # \release\archive - Contains files archived from the previous builds
 # \src - Contains all source code
 $build_dir = "$BuildRoot\build"
+$log_dir = "$BuildRoot\log"
 $build_artifacts_dir = "$build_dir\artifacts"
 $build_output_dir = "$build_dir\output"
 $release_dir = "$BuildRoot\release"
@@ -63,18 +64,20 @@ task Build {
 }
 
 task RunSpecs Build, {
-	$runner = Get-ChildItem -recurse $src_dir\packages -include mspec-clr4.exe | Sort-Object LastWriteTime -descending | Select-Object -First 1 
+	$mrunner = Get-ChildItem -recurse $src_dir\packages -include mspec-clr4.exe | Sort-Object LastWriteTime -descending | Select-Object -First 1 
+	$urunner = Get-ChildItem -recurse $src_dir\packages -include nunit-console.exe | Sort-Object LastWriteTime -descending | Select-Object -First 1
 	$specs = Get-ChildItem -recurse $build_artifacts_dir\*.Specs.dll
 		
-	exec { . $runner.FullName $specs }
+	exec { . $mrunner.FullName $specs }
+	exec { . $urunner.FullName $specs /result=$log_dir\Test.Results.xml /process=Multiple /framework:net-4.5 }
 }
 
 task Package  {
-	New-Item $build_output_dir\Netco\lib\net40 -itemType directory -force | Out-Null
-	Copy-Item $build_artifacts_dir\Netco.??? $build_output_dir\Netco\lib\net40 -PassThru |% { Write-Host "Copied " $_.FullName }
+	New-Item $build_output_dir\Netco\lib\net45 -itemType directory -force | Out-Null
+	Copy-Item $build_artifacts_dir\Netco.??? $build_output_dir\Netco\lib\net45 -PassThru |% { Write-Host "Copied " $_.FullName }
 	
-	New-Item $build_output_dir\Netco.NLog\lib\net40 -itemType directory -force | Out-Null
-	Copy-Item $build_artifacts_dir\Netco.*.NLog*.* $build_output_dir\Netco.NLog\lib\net40 -PassThru |% { Write-Host "Copied " $_.FullName }
+	New-Item $build_output_dir\Netco.NLog\lib\net45 -itemType directory -force | Out-Null
+	Copy-Item $build_artifacts_dir\Netco.*.NLog*.* $build_output_dir\Netco.NLog\lib\net45 -PassThru |% { Write-Host "Copied " $_.FullName }
 }
 
 # Set $script:Version = assembly version
@@ -94,8 +97,8 @@ task Zip Version, {
 	
 	Write-Host "Zipping release to: " $release_zip_file
 	
-	exec { & 7za.exe a $release_zip_file $build_output_dir\Netco\lib\net40\* -mx9 }
-	exec { & 7za.exe a $release_zip_file $build_output_dir\Netco.NLog\lib\net40\* -mx9 }
+	exec { & 7za.exe a $release_zip_file $build_output_dir\Netco\lib\net45\* -mx9 }
+	exec { & 7za.exe a $release_zip_file $build_output_dir\Netco.NLog\lib\net45\* -mx9 }
 }
 
 task NuGet Package, Version, {
@@ -114,10 +117,13 @@ task NuGet Package, Version, {
 		<projectUrl>https://github.com/slav/Netco</projectUrl>
 		<licenseUrl>https://raw.github.com/slav/Netco/master/License.txt</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<copyright>Copyright (C) Bitnox LLC 2012</copyright>
+		<copyright>Copyright (C) Agile Harbor LLC 2013</copyright>
 		<summary>$text</summary>
 		<description>$text</description>
 		<tags></tags>
+		<dependencies> 
+			<dependency id="CuttingEdge.Conditions" version="1.2.0.0" />
+		</dependencies>
 	</metadata>
 </package>
 "@
@@ -138,13 +144,13 @@ task NuGet Package, Version, {
 		<projectUrl>https://github.com/slav/Netco</projectUrl>
 		<licenseUrl>https://raw.github.com/slav/Netco/master/License.txt</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<copyright>Copyright (C) Bitnox LLC 2012</copyright>
+		<copyright>Copyright (C) Agile Harbor LLC 2013</copyright>
 		<summary>$text</summary>
 		<description>$text</description>
 		<tags></tags>
 		<dependencies> 
 			<dependency id="Netco" version="$Version" />
-			<dependency id="NLog" version="2.0.0.2000" />
+			<dependency id="NLog" version="2.0.1.2" />
 		</dependencies>
 	</metadata>
 </package>
@@ -160,53 +166,3 @@ task NuGet Package, Version, {
 }
 
 task . Init, Build, RunSpecs, Package, Zip, NuGet
-
-
-#///////////////////////////////////////////////////////////////////////////////////////////
-
-function Enter-BuildScript {
-	if($logfile) {
-		if( $Host -and $Host.UI -and $Host.UI.RawUI ) {
-			$rawUI = $Host.UI.RawUI
-			$oldBufferSize = $rawUI.BufferSize
-			$typeName = $oldBufferSize.GetType().FullName
-			$newSize = New-Object $typeName (128, $oldBufferSize.Height)
-			$rawUI.BufferSize = $newSize
-		}
-		
-		$logfolder = Split-Path $logfile -Parent
-		New-Item $logfolder -Type directory -Force  | Out-Null
-		
-		$transcribing = $true
-		Start-Transcript $logfile
-	}
-}
-
-function Exit-BuildScript {
-	if( $transcribing ) {
-		Write-Host @'
-
----------- Transcript Build Summary ----------
-
-'@
-		
-		foreach($_ in $Result.AllTasks) {
-			Write-Host ('{0,-16} {1} {2}:{3}' -f $_.Elapsed, $_.Name, $_.InvocationInfo.ScriptName, $_.InvocationInfo.ScriptLineNumber)
-			if ($_.Error) {
-				Write-Host -ForegroundColor Red (*Err* $_.Error $_.Error.InvocationInfo)
-			}
-		}
-	
-		if( $oldBufferSize -ne $null ) {
-			$host.UI.RawUI.BufferSize = $oldBufferSize
-		}
-
-		Stop-Transcript
-		
-		Write-Host @'
-		
-***********************************************************
-	
-'@
-	}
-}

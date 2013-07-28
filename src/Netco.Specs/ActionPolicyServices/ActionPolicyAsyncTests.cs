@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable 1998
+using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
@@ -105,3 +106,4 @@ namespace Netco.Specs.ActionPolicyServices
 		}
 	}
 }
+#pragma warning restore 1998
