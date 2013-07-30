@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿#pragma warning disable 1998
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -202,3 +203,4 @@ namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
 		}
 	}
 }
+#pragma warning restore 1998
