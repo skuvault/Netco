@@ -31,7 +31,7 @@ namespace Netco.ActionPolicyServices.Exceptions
 
 			try
 			{
-				await action();
+				await action().ConfigureAwait( false );
 				breaker.Reset();
 			}
 			catch( Exception ex )

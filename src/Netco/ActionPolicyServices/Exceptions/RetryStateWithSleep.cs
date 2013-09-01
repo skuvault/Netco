@@ -53,8 +53,8 @@ namespace Netco.ActionPolicyServices.Exceptions
 			if( this._enumerator.MoveNext() )
 			{
 				var current = this._enumerator.Current;
-				await this._onRetry( ex, current );
-				await Task.Delay( current, _token );
+				await this._onRetry( ex, current ).ConfigureAwait( false );
+				await Task.Delay( current, _token ).ConfigureAwait( false );
 				return true;
 			}
 			return false;

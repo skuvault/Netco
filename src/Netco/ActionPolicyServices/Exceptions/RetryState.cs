@@ -30,7 +30,7 @@ namespace Netco.ActionPolicyServices.Exceptions
 
 		async Task< bool > IRetryStateAsync.CanRetry( Exception ex )
 		{
-			await this._onRetry( ex );
+			await this._onRetry( ex ).ConfigureAwait( false );
 			return true;
 		}
 	}

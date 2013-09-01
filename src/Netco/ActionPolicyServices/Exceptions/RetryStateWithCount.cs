@@ -44,7 +44,7 @@ namespace Netco.ActionPolicyServices.Exceptions
 
 			var result = this._canRetry( this._errorCount );
 			if( result )
-				await this._onRetry( ex, this._errorCount - 1 );
+				await this._onRetry( ex, this._errorCount - 1 ).ConfigureAwait( false );
 			return result;
 		}
 	}

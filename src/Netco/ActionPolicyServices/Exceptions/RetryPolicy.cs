@@ -33,7 +33,7 @@ namespace Netco.ActionPolicyServices.Exceptions
 			{
 				try
 				{
-					await action();
+					await action().ConfigureAwait( false );
 					return;
 				}
 				catch( Exception ex )
@@ -54,7 +54,7 @@ namespace Netco.ActionPolicyServices.Exceptions
 			{
 				try
 				{
-					await action();
+					await action().ConfigureAwait( false );
 					return;
 				}
 				catch( Exception ex )

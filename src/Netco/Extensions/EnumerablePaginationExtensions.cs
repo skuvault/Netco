@@ -66,7 +66,7 @@ namespace Netco.Extensions
 				pageTasks[ pageNumber ] = pageTask;
 			}
 
-			var resultPages = await Task.WhenAll( pageTasks );
+			var resultPages = await Task.WhenAll( pageTasks ).ConfigureAwait( false );
 
 			// NOTE: force ToList to avoid possible multiple redownloads to reiterate over the list
 			return resultPages.Where( r => r != null ).SelectMany( r => r ).ToList();
@@ -112,7 +112,7 @@ namespace Netco.Extensions
 				pageTasks[ pageNumber ] = pageAction( dataPage );
 			}
 
-			await Task.WhenAll( pageTasks );
+			await Task.WhenAll( pageTasks ).ConfigureAwait( false );
 		}
 	}
 }

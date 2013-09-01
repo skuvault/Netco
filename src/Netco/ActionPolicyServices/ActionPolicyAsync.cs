@@ -31,9 +31,9 @@ namespace Netco.ActionPolicyServices
 		/// </summary>
 		/// <param name="action">The action to perform.</param>
 		[ DebuggerNonUserCode ]
-		public async Task Do( Func< Task > action )
+		public Task Do( Func< Task > action )
 		{
-			await this._policy( action );
+			return this._policy( action );
 		}
 
 		/// <summary>
@@ -48,8 +48,8 @@ namespace Netco.ActionPolicyServices
 			var result = default( TResult );
 			await this._policy( async () =>
 				{
-					result = await action();
-				} );
+					result = await action().ConfigureAwait( false );
+				} ).ConfigureAwait( false );
 			return result;
 		}
 
