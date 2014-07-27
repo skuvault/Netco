@@ -243,7 +243,7 @@ namespace Netco.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="enumerable">The enumerable.</param>
 		/// <returns>hashset instance</returns>
-		public static HashSet< T > ToSet< T >( this IEnumerable< T > enumerable )
+		public static HashSet< T > ToHashSet< T >( this IEnumerable< T > enumerable )
 		{
 			if( enumerable == null )
 				throw new ArgumentNullException( "enumerable" );
@@ -259,7 +259,7 @@ namespace Netco.Extensions
 		/// <param name="enumerable">The enumerable.</param>
 		/// <param name="selector">The selector.</param>
 		/// <returns>hashset instance</returns>
-		public static HashSet< TKey > ToSet< TKey, TItem >( this IEnumerable< TItem > enumerable, Func< TItem, TKey > selector )
+		public static HashSet< TKey > ToHashSet< TKey, TItem >( this IEnumerable< TItem > enumerable, Func< TItem, TKey > selector )
 		{
 			if( enumerable == null )
 				throw new ArgumentNullException( "enumerable" );
