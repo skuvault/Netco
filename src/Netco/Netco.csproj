@@ -167,7 +167,12 @@
     <Compile Include="ActionPolicyServices\Exceptions\RetryState.cs" />
     <Compile Include="ActionPolicyServices\Exceptions\RetryStateWithCount.cs" />
     <Compile Include="ActionPolicyServices\Exceptions\RetryStateWithSleep.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EnumerablePaginationExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TaskHelper.cs" />
     <Compile Include="Syntaxis\SyntaxAsync.TTarget.cs" />
     <Compile Include="Threading\DisposableAction.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />

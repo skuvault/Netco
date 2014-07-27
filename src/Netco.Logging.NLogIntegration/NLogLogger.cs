@@ -20,7 +20,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Trace( Exception exception, string message )
 		{
-			this._logger.TraceException( message, exception );
+			this._logger.Trace( message, exception );
 		}
 
 		public void Trace( string format, params object[] args )
@@ -30,7 +30,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Trace( Exception exception, string format, params object[] args )
 		{
-			this._logger.TraceException( string.Format( format, args ), exception );
+			this._logger.Trace( string.Format( format, args ), exception );
 		}
 
 		public void Debug( string message )
@@ -40,7 +40,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Debug( Exception exception, string message )
 		{
-			this._logger.DebugException( message, exception );
+			this._logger.Debug( message, exception );
 		}
 
 		public void Debug( string format, params object[] args )
@@ -50,7 +50,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Debug( Exception exception, string format, params object[] args )
 		{
-			this._logger.DebugException( string.Format( format, args ), exception );
+			this._logger.Debug( string.Format( format, args ), exception );
 		}
 
 		public void Info( string message )
@@ -60,7 +60,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Info( Exception exception, string message )
 		{
-			this._logger.InfoException( message, exception );
+			this._logger.Info( message, exception );
 		}
 
 		public void Info( string format, params object[] args )
@@ -70,7 +70,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Info( Exception exception, string format, params object[] args )
 		{
-			this._logger.InfoException( string.Format( format, args ), exception );
+			this._logger.Info( string.Format( format, args ), exception );
 		}
 
 		public void Warn( string message )
@@ -80,7 +80,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Warn( Exception exception, string message )
 		{
-			this._logger.WarnException( message, exception );
+			this._logger.Warn( message, exception );
 		}
 
 		public void Warn( string format, params object[] args )
@@ -90,7 +90,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Warn( Exception exception, string format, params object[] args )
 		{
-			this._logger.WarnException( string.Format( format, args ), exception );
+			this._logger.Warn( string.Format( format, args ), exception );
 		}
 
 		public void Error( string message )
@@ -100,7 +100,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Error( Exception exception, string message )
 		{
-			this._logger.ErrorException( message, exception );
+			this._logger.Error( message, exception );
 		}
 
 		public void Error( string format, params object[] args )
@@ -110,7 +110,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Error( Exception exception, string format, params object[] args )
 		{
-			this._logger.ErrorException( string.Format( format, args ), exception );
+			this._logger.Error( string.Format( format, args ), exception );
 		}
 
 		public void Fatal( string message )
@@ -120,7 +120,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Fatal( Exception exception, string message )
 		{
-			this._logger.FatalException( message, exception );
+			this._logger.Fatal( message, exception );
 		}
 
 		public void Fatal( string format, params object[] args )
@@ -130,7 +130,7 @@ namespace Netco.Logging.NLogIntegration
 
 		public void Fatal( Exception exception, string format, params object[] args )
 		{
-			this._logger.FatalException( string.Format( format, args ), exception );
+			this._logger.Fatal( string.Format( format, args ), exception );
 		}
 	}
 

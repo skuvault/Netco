@@ -117,7 +117,7 @@ task NuGet Package, Version, {
 		<projectUrl>https://github.com/slav/Netco</projectUrl>
 		<licenseUrl>https://raw.github.com/slav/Netco/master/License.txt</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<copyright>Copyright (C) Agile Harbor LLC 2013</copyright>
+		<copyright>Copyright (C) Agile Harbor LLC</copyright>
 		<summary>$text</summary>
 		<description>$text</description>
 		<tags></tags>
@@ -144,13 +144,13 @@ task NuGet Package, Version, {
 		<projectUrl>https://github.com/slav/Netco</projectUrl>
 		<licenseUrl>https://raw.github.com/slav/Netco/master/License.txt</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<copyright>Copyright (C) Agile Harbor LLC 2013</copyright>
+		<copyright>Copyright (C) Agile Harbor LLC</copyright>
 		<summary>$text</summary>
 		<description>$text</description>
 		<tags></tags>
 		<dependencies> 
 			<dependency id="Netco" version="$Version" />
-			<dependency id="NLog" version="2.0.1.2" />
+			<dependency id="NLog" version="3.1.0.0" />
 		</dependencies>
 	</metadata>
 </package>

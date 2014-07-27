@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Netco.Monads
 {
 	///<summary>
-	///Provides extension methods for Maybe monad.
+	/// Provides extension methods for Maybe monad.
 	///</summary>
 	public static class MaybeExtensions
 	{

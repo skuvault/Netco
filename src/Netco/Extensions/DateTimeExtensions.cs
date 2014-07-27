@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Netco.Extensions
 {
@@ -13,12 +14,33 @@ namespace Netco.Extensions
 			LocalTimeZone = TimeZoneInfo.Local;
 		}
 
+		/// <summary>
+		/// Parses string to <see cref="DateTime"/> keeping it in UTC format.
+		/// </summary>
+		/// <param name="dateTimeString">The date time string.</param>
+		/// <returns><see cref="DateTime"/> in UTC.</returns>
+		public static DateTime ParseToUtc( this string dateTimeString )
+		{
+			return DateTime.Parse( dateTimeString, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal );
+		}
+
+		/// <summary>
+		/// Subtracts from <see cref="DateTime"/> to minimum value to avoid going beyoind <see cref="DateTime.MinValue"/>.
+		/// </summary>
+		/// <param name="dateTime">The date time.</param>
+		/// <param name="value">The value.</param>
+		/// <returns>New <see cref="DateTime"/> value.</returns>
+		public static DateTime SubtractToMinValue( this DateTime dateTime, TimeSpan value )
+		{
+			return dateTime.Ticks > value.Ticks ? dateTime.Subtract( value ) : DateTime.MinValue;
+		}
+
 		#region TimeZone
 		/// <summary>
 		/// Gets or sets the local time zone used by <see cref="ToPresetLocal"/>.
 		/// </summary>
 		/// <value>The local time zone.</value>
-		public static TimeZoneInfo LocalTimeZone { get; set; }
+		public static TimeZoneInfo LocalTimeZone{ get; set; }
 
 		/// <summary>
 		/// Converts <see cref="DateTime"/> to local time zone.
@@ -41,12 +63,12 @@ namespace Netco.Extensions
 		}
 
 		private static readonly Dictionary< CommonTimeZone, TimeZoneInfo > _commonTimeZones = new Dictionary< CommonTimeZone, TimeZoneInfo >
-			{
-				{ CommonTimeZone.PST, TimeZoneInfo.FindSystemTimeZoneById( "Pacific Standard Time" ) },
-				{ CommonTimeZone.MST, TimeZoneInfo.FindSystemTimeZoneById( "Mountain Standard Time" ) },
-				{ CommonTimeZone.CST, TimeZoneInfo.FindSystemTimeZoneById( "Central Standard Time" ) },
-				{ CommonTimeZone.EST, TimeZoneInfo.FindSystemTimeZoneById( "Eastern Standard Time" ) }
-			};
+		{
+			{ CommonTimeZone.PST, TimeZoneInfo.FindSystemTimeZoneById( "Pacific Standard Time" ) },
+			{ CommonTimeZone.MST, TimeZoneInfo.FindSystemTimeZoneById( "Mountain Standard Time" ) },
+			{ CommonTimeZone.CST, TimeZoneInfo.FindSystemTimeZoneById( "Central Standard Time" ) },
+			{ CommonTimeZone.EST, TimeZoneInfo.FindSystemTimeZoneById( "Eastern Standard Time" ) }
+		};
 
 		/// <summary>
 		/// Commonly supported time zones.

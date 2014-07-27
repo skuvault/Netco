@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Machine.Specifications;
 using Netco.Extensions;
 using DateTimeExtensions = Netco.Extensions.DateTimeExtensions;
@@ -16,7 +17,7 @@ namespace Netco.Specs.Extensions
 
 		private Because of = () => _result = _testDateTime.ToPresetLocal();
 
-		private It should_convert_to_eastern_time = () => _result.ShouldEqual( _testDateTime - TimeSpan.FromHours( _result.IsDaylightSavingTime() ? 4 : 5 ) );
+		private It should_convert_to_eastern_time = () => _result.Should().Be( _testDateTime - TimeSpan.FromHours( _result.IsDaylightSavingTime() ? 4 : 5 ) );
 
 		private static DateTime _testDateTime;
 		private static DateTime _result;

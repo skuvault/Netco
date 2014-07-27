@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CuttingEdge.Conditions;
 using Netco.Monads;
 
 namespace Netco.Extensions
 {
 	/// <summary>
-	/// Provides extensions for <see cref="IEnumerable{T}"/>
+	/// Provides extensions for <see cref="IEnumerable{T}" />
 	/// </summary>
 	public static class EnumerableExtensions
 	{
@@ -49,6 +51,22 @@ namespace Netco.Extensions
 			{
 				action( element );
 			}
+		}
+
+		/// <summary>
+		/// Checks whether two enumerables are equal, even if they're null.
+		/// </summary>
+		/// <typeparam name="TSource">The type of the source.</typeparam>
+		/// <param name="first">The first.</param>
+		/// <param name="second">The second.</param>
+		/// <returns><c>true</c> if they're equal, <c>false</c> otherwise.</returns>
+		public static bool ListEqual< TSource >( this IEnumerable< TSource > first, IEnumerable< TSource > second )
+		{
+			if( first == second )
+				return true;
+			if( first == null || second == null )
+				return false;
+			return first.SequenceEqual( second );
 		}
 
 		/// <summary>
@@ -137,6 +155,38 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
+		/// Gets the enumerable hash code computed based on the items in enumerable.
+		/// </summary>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <returns>Hash code computed based on the items in enumerable</returns>
+		public static int GetEnumerableHashCode( this IEnumerable enumerable )
+		{
+			var hashCode = 0;
+			if( enumerable == null )
+				return hashCode;
+
+			unchecked
+			{
+				foreach( var value in enumerable )
+				{
+					hashCode = ( hashCode * 397 ) ^ ( value != null ? value.GetHashCode() : 0 );
+				}
+			}
+
+			return hashCode;
+		}
+
+		/// <summary>
+		/// Gets the enumerable hash code.
+		/// </summary>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <returns>Hash code computed based on the items in enumerable</returns>
+		public static int GetEnumerableHashCode( params Object[] enumerable )
+		{
+			return enumerable.GetEnumerableHashCode();
+		}
+
+		/// <summary>
 		/// Returns <em>True</em> as soon as the first member of <paramref name="enumerable"/>
 		/// mathes <paramref name="predicate"/>
 		/// </summary>
@@ -172,6 +222,19 @@ namespace Netco.Extensions
 				throw new ArgumentNullException( "enumerable" );
 
 			return enumerable.Any();
+		}
+
+		/// <summary>
+		/// Gets the specific page.
+		/// </summary>
+		/// <typeparam name="T">Type of the elements in <paramref name="enumerable"/></typeparam>
+		/// <param name="enumerable">The source.</param>
+		/// <param name="pageNumber">The page number.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <returns>Page with elements.</returns>
+		public static IEnumerable< T > GetPage< T >( this IEnumerable< T > enumerable, int pageNumber, int pageSize )
+		{
+			return enumerable.Skip( pageNumber * pageSize ).Take( pageSize );
 		}
 
 		/// <summary>
@@ -282,6 +345,52 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
+		/// Clumps items into same size lots.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="source">The source list of items.</param>
+		/// <param name="size">The maximum size of the clumps to make.</param>
+		/// <returns>A list of list of items, where each list of items is no bigger than the size given.</returns>
+		public static IEnumerable< IEnumerable< T > > Clump< T >( this IEnumerable< T > source, int size )
+		{
+			Condition.Requires( source, "source" ).IsNotNull();
+			Condition.Requires( size, "size" ).IsGreaterOrEqual( 1 );
+
+			return ClumpIterator( source, size );
+		}
+
+		private static IEnumerable< IEnumerable< T > > ClumpIterator< T >( IEnumerable< T > source, int size )
+		{
+			Condition.Requires( source, "source" ).IsNotNull();
+
+			var items = new T[ size ];
+			var count = 0;
+			foreach( var item in source )
+			{
+				items[ count ] = item;
+				count++;
+
+				if( count == size )
+				{
+					yield return items;
+					items = new T[ size ];
+					count = 0;
+				}
+			}
+			if( count > 0 )
+			{
+				if( count == size )
+					yield return items;
+				else
+				{
+					var tempItems = new T[ count ];
+					Array.Copy( items, tempItems, count );
+					yield return tempItems;
+				}
+			}
+		}
+
+		/// <summary>
 		/// Converts collection of collections to jagged array
 		/// </summary>
 		/// <typeparam name="T">type of the items in collection</typeparam>
@@ -356,6 +465,85 @@ namespace Netco.Extensions
 		{
 			return sequence.Where( s => s.HasValue ).Select( s => s.Value );
 		}
+
+		#region Async
+		/// <summary>
+		/// Processes elements asynchronously the in batch of the specified size.
+		/// </summary>
+		/// <typeparam name="TInput">The type of the input.</typeparam>
+		/// <typeparam name="TResult">The type of the result.</typeparam>
+		/// <param name="inputEnumerable">The input enumerable.</param>
+		/// <param name="batchSize">Size of the batch.</param>
+		/// <param name="processor">The processor.</param>
+		/// <param name="ignoreNull">if set to <c>true</c> and <paramref name="processor"/> returns <c>null</c> the result is ignored.</param>
+		/// <returns>Result of processing.</returns>
+		public static async Task< IEnumerable< TResult > > ProcessInBatchAsync< TInput, TResult >( this IEnumerable< TInput > inputEnumerable, int batchSize, Func< TInput, Task< TResult > > processor, bool ignoreNull = true )
+		{
+			if( inputEnumerable == null )
+				return Enumerable.Empty< TResult >();
+
+			Condition.Requires( batchSize, "batchSize" ).IsGreaterOrEqual( 1 );
+			Condition.Requires( processor, "processor" ).IsNotNull();
+
+			var result = new List< TResult >( inputEnumerable.Count() );
+			var processingTasks = new List< Task< TResult > >( batchSize );
+
+			foreach( var input in inputEnumerable )
+			{
+				processingTasks.Add( processor( input ) );
+
+				if( processingTasks.Count == batchSize ) // batch size reached, wait for completion and process
+				{
+					AddResultToList( await Task.WhenAll( processingTasks ).ConfigureAwait( false ), result, ignoreNull );
+					processingTasks.Clear();
+				}
+			}
+			AddResultToList( await Task.WhenAll( processingTasks ).ConfigureAwait( false ), result, ignoreNull );
+			return result;
+		}
+
+		/// <summary>
+		/// Performs an asynchronous action on each element of enumerable in a batch.
+		/// </summary>
+		/// <typeparam name="TInput">The type of the input.</typeparam>
+		/// <param name="inputEnumerable">The input enumerable.</param>
+		/// <param name="batchSize">Size of the batch.</param>
+		/// <param name="processor">The processor.</param>
+		/// <returns>Task indicating when all action have been performed.</returns>
+		public static async Task DoInBatchAsync< TInput >( this IEnumerable< TInput > inputEnumerable, int batchSize, Func< TInput, Task > processor )
+		{
+			if( inputEnumerable == null )
+				return;
+
+			Condition.Requires( batchSize, "batchSize" ).IsGreaterOrEqual( 1 );
+			Condition.Requires( processor, "processor" ).IsNotNull();
+
+			var processingTasks = new List< Task >( batchSize );
+
+			foreach( var input in inputEnumerable )
+			{
+				processingTasks.Add( processor( input ) );
+
+				if( processingTasks.Count == batchSize ) // batch size reached, wait for completion and process
+				{
+					await Task.WhenAll( processingTasks ).ConfigureAwait( false );
+					processingTasks.Clear();
+				}
+			}
+			await Task.WhenAll( processingTasks ).ConfigureAwait( false );
+		}
+
+		private static void AddResultToList< TResult >( IEnumerable< TResult > intermidiateResult, List< TResult > endResult, bool ignoreNull )
+		{
+			foreach( var value in intermidiateResult )
+			{
+				if( ignoreNull && Equals( value, default( TResult ) ) )
+					continue;
+
+				endResult.Add( value );
+			}
+		}
+		#endregion
 	}
 
 	/// <summary>

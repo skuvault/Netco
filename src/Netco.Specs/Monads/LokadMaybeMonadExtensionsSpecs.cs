@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FluentAssertions;
 using Machine.Specifications;
 using Netco.Monads;
 
@@ -17,7 +18,7 @@ namespace Netco.Specs.Monads
 							     from o in _orange
 							     select Maybe.From( System.Tuple.Create( a, o ));
 
-		private It should_have_result_with_value = () => _salad.HasValue.ShouldBeTrue();
+		private It should_have_result_with_value = () => _salad.HasValue.Should().BeTrue();
 
 		static Maybe< object > _apple;
 		static Maybe< object > _orange;
@@ -37,7 +38,7 @@ namespace Netco.Specs.Monads
 							     from o in _orange
 							     select Maybe.From( System.Tuple.Create( a, o ));
 
-		private It should_have_result_without_value = () => _salad.HasValue.ShouldBeFalse();
+		private It should_have_result_without_value = () => _salad.HasValue.Should().BeFalse();
 
 		static Maybe< object > _apple;
 		static Maybe< object > _orange;
@@ -60,7 +61,7 @@ namespace Netco.Specs.Monads
 				         select Maybe.From( System.Tuple.Create( a, o ) );
 			};
 
-		private It should_have_result_without_value = () => _salad.HasValue.ShouldBeFalse();
+		private It should_have_result_without_value = () => _salad.HasValue.Should().BeFalse();
 
 		static Maybe< object > _apple;
 		static Maybe< object > _orange;
@@ -77,7 +78,7 @@ namespace Netco.Specs.Monads
 
 		private Because of = () => _result = _dictionary.TryGetValue( Key );
 
-		private It should_get_value_corresponding_to_key = () => _result.Value.ShouldBeTheSameAs( _value );
+		private It should_get_value_corresponding_to_key = () => _result.Value.Should().BeSameAs( _value );
 
 		private const string Key = "key";
 		private static readonly object _value = new object();
@@ -95,7 +96,7 @@ namespace Netco.Specs.Monads
 
 		private Because of = () => _result = _dictionary.TryGetValue( "someKey" );
 
-		private It should_get_empty_value = () => _result.HasValue.ShouldBeFalse();
+		private It should_get_empty_value = () => _result.HasValue.Should().BeFalse();
 
 		private static Dictionary< string, object > _dictionary;
 		private static Maybe< object > _result;
