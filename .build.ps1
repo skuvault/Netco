@@ -22,8 +22,7 @@
 
 param
 (
-	$Configuration = 'Release',
-	$logfile = $null
+	$Configuration = 'Release'
 )
 
 $project_name = "Netco"
@@ -44,6 +43,7 @@ $archive_dir = "$release_dir\archive"
 
 $src_dir = "$BuildRoot\src"
 $solution_file = "$src_dir\Netco.sln"
+$nuget = "$src_dir\.nuget\NuGet.exe"
 	
 # Use MSBuild.
 use Framework\v4.0.30319 MSBuild
@@ -54,9 +54,13 @@ task Clean {
 }
 
 task Init Clean, { 
-    New-Item $build_dir -itemType directory | Out-Null
-    New-Item $build_artifacts_dir -itemType directory | Out-Null
-    New-Item $build_output_dir -itemType directory | Out-Null
+	New-Item $build_dir -itemType directory | Out-Null
+	New-Item $build_artifacts_dir -itemType directory | Out-Null
+	New-Item $build_output_dir -itemType directory | Out-Null
+}, NuGetRestore
+
+task NuGetRestore {
+	exec{ . $nuget restore $solution_file }
 }
 
 task Build {
@@ -64,12 +68,10 @@ task Build {
 }
 
 task RunSpecs Build, {
-	$mrunner = Get-ChildItem -recurse $src_dir\packages -include mspec-clr4.exe | Sort-Object LastWriteTime -descending | Select-Object -First 1 
-	$urunner = Get-ChildItem -recurse $src_dir\packages -include nunit-console.exe | Sort-Object LastWriteTime -descending | Select-Object -First 1
+	$nurunner = Get-ChildItem -recurse $src_dir\packages -include nunit-console.exe | Sort-Object LastWriteTime -descending | Select-Object -First 1
 	$specs = Get-ChildItem -recurse $build_artifacts_dir\*.Specs.dll
 		
-	exec { . $mrunner.FullName $specs }
-	exec { . $urunner.FullName $specs /result=$log_dir\Test.Results.xml /process=Multiple /framework:net-4.5 }
+	exec { . $nurunner.FullName $specs /result=$log_dir\Test.Results.xml /process=Multiple /framework:net-4.5 }
 }
 
 task Package  {
@@ -93,12 +95,13 @@ task Archive {
 }
 
 task Zip Version, {
+	$7z = Get-ChildItem -recurse $src_dir\packages -include 7za.exe | Sort-Object LastWriteTime -descending | Select-Object -First 1
 	$release_zip_file = "$release_dir\$project_name.$Version.zip"
 	
 	Write-Host "Zipping release to: " $release_zip_file
 	
-	exec { & 7za.exe a $release_zip_file $build_output_dir\Netco\lib\net45\* -mx9 }
-	exec { & 7za.exe a $release_zip_file $build_output_dir\Netco.NLog\lib\net45\* -mx9 }
+	exec { & $7z a $release_zip_file $build_output_dir\Netco\lib\net45\* -mx9 }
+	exec { & $7z a $release_zip_file $build_output_dir\Netco.NLog\lib\net45\* -mx9 }
 }
 
 task NuGet Package, Version, {
@@ -128,7 +131,7 @@ task NuGet Package, Version, {
 </package>
 "@
 	# pack
-	exec { NuGet pack $build_output_dir\Netco\Netco.nuspec -Output $build_dir }
+	exec { & $nuget pack $build_output_dir\Netco\Netco.nuspec -Output $build_dir }
 	
 	Write-Host ================= Preparing Netco NLog Integration Nuget package =================
 	$text = "Integrates Netco to work with NLog platform."
@@ -156,12 +159,12 @@ task NuGet Package, Version, {
 </package>
 "@
 	# pack
-	exec { NuGet pack $build_output_dir\Netco.NLog\Netco.NLog.nuspec -Output $build_dir }
+	exec { & $nuget pack $build_output_dir\Netco.NLog\Netco.NLog.nuspec -Output $build_dir }
 	
 	$pushNetco = Read-Host 'Push Netco ' $Version ' to NuGet? (Y/N)'
 	Write-Host $pushNetco
 	if( $pushNetco -eq "y" -or $pushNetco -eq "Y" )	{
-		Get-ChildItem $build_dir\*.nupkg |% { exec { NuGet push  $_.FullName }}
+		Get-ChildItem $build_dir\*.nupkg |% { exec { & $nuget push  $_.FullName }}
 	}
 }
 
