@@ -45,6 +45,26 @@ namespace Netco.Extensions
 		/// <typeparam name="T2">The type of the 2.</typeparam>
 		/// <typeparam name="T3">The type of the 3.</typeparam>
 		/// <typeparam name="T4">The type of the 4.</typeparam>
+		/// <param name="task1">The task1.</param>
+		/// <param name="task2">The task2.</param>
+		/// <param name="task3">The task3.</param>
+		/// <param name="task4">The task4.</param>
+		/// <returns>
+		/// Task which completes when all supplied tasks complete.
+		/// </returns>
+		public static async Task< Tuple< T1, T2, T3, T4 > > WhenAll< T1, T2, T3, T4 >( Task< T1 > task1, Task< T2 > task2, Task< T3 > task3, Task< T4 > task4 )
+		{
+			await Task.WhenAll( task1, task2, task3, task4 ).ConfigureAwait( false );
+			return Tuple.Create( task1.Result, task2.Result, task3.Result, task4.Result );
+		}
+
+		/// <summary>
+		/// Return task which completes when all supplied tasks complete.
+		/// </summary>
+		/// <typeparam name="T1">The type of the 1.</typeparam>
+		/// <typeparam name="T2">The type of the 2.</typeparam>
+		/// <typeparam name="T3">The type of the 3.</typeparam>
+		/// <typeparam name="T4">The type of the 4.</typeparam>
 		/// <typeparam name="T5">The type of the 5.</typeparam>
 		/// <param name="task1">The task1.</param>
 		/// <param name="task2">The task2.</param>
