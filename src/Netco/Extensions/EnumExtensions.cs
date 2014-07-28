@@ -17,6 +17,7 @@ namespace Netco.Extensions
 		/// <returns>Enum value.</returns>
 		public static T ToEnum< T >( this string value )
 		{
+			value = value.Replace( " ", "" );
 			return ( T )Enum.Parse( typeof( T ), value, true );
 		}
 
@@ -31,6 +32,8 @@ namespace Netco.Extensions
 		{
 			if( string.IsNullOrWhiteSpace( value ) )
 				return defaultValue;
+
+			value = value.Replace( " ", "" );
 			try
 			{
 				return ( T )Enum.Parse( typeof( T ), value, true );
