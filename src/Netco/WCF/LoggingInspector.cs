@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
 using Netco.Logging;
@@ -8,8 +9,10 @@ namespace Netco.WCF
 	/// <summary>
 	/// Inspects WCF messages and logs them into trace channel.
 	/// </summary>
-	public class LoggingInspector : IClientMessageInspector
+	public class LoggingInspector: IClientMessageInspector
 	{
+		readonly ILogger _logger = NetcoLogger.GetLogger< LoggingInspector >();
+
 		/// <summary>Enables inspection or modification of a message before a request message is sent to a service.</summary>
 		/// <param name="request">The message to be sent to the service.</param>
 		/// <param name="channel">The  client object channel.</param>
@@ -18,9 +21,10 @@ namespace Netco.WCF
 		/// </returns>
 		public object BeforeSendRequest( ref Message request, IClientChannel channel )
 		{
-			this.Log().Trace( @"Request message:
-{0}", request.ToString() );
-			return null;
+			var correlationState = Guid.NewGuid();
+			this._logger.Trace( @"Request {{{0}}}:
+{1}", correlationState.ToString(), request.ToString() );
+			return correlationState;
 		}
 
 		/// <summary>
@@ -30,7 +34,11 @@ namespace Netco.WCF
 		/// <param name="correlationState">Correlation state data.</param>
 		public void AfterReceiveReply( ref Message reply, object correlationState )
 		{
-			this.Log().Trace( @"Reply message:
+			if( correlationState != null )
+				this._logger.Trace( @"Response {{{0}}}:
+{1}", correlationState.ToString(), reply.ToString() );
+			else
+				this._logger.Trace( @"Response:
 {0}", reply.ToString() );
 		}
 	}
