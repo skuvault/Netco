@@ -243,7 +243,7 @@ namespace Netco.Logging
 		/// <value>
 		/// The logger factory that will supply the logger.
 		/// </value>
-		public static ILoggerFactory LoggerFactory { get; set; }
+		public static ILoggerFactory LoggerFactory{ get; set; }
 
 		/// <summary>
 		/// Gets the logger.
@@ -255,6 +255,18 @@ namespace Netco.Logging
 		public static ILogger GetLogger( Type objectToLogType )
 		{
 			return LoggerFactory.GetLogger( objectToLogType );
+		}
+
+		/// <summary>
+		/// Gets the logger.
+		/// </summary>
+		/// <typeparam name="T">Type of the object to log.</typeparam>
+		/// <returns>
+		/// Logger to log messages for the specified object type.
+		/// </returns>
+		public static ILogger GetLogger< T >()
+		{
+			return LoggerFactory.GetLogger( typeof( T ) );
 		}
 
 		/// <summary>

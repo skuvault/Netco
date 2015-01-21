@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netco", "Netco\Netco.csproj", "{CA47D9A0-42AC-4F03-9C60-25F48F01489B}"
 EndProject
@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{49FC82
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netco.Logging.SerilogIntegration", "Netco.Logging.SerilogIntegration\Netco.Logging.SerilogIntegration.csproj", "{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{A5EC0CF5-37A0-4548-A2E0-AB227A84EDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5EC0CF5-37A0-4548-A2E0-AB227A84EDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5EC0CF5-37A0-4548-A2E0-AB227A84EDA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
