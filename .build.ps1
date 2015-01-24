@@ -80,6 +80,9 @@ task Package  {
 	
 	New-Item $build_output_dir\Netco.NLog\lib\net45 -itemType directory -force | Out-Null
 	Copy-Item $build_artifacts_dir\Netco.*.NLog*.* $build_output_dir\Netco.NLog\lib\net45 -PassThru |% { Write-Host "Copied " $_.FullName }
+	
+	New-Item $build_output_dir\Netco.Serilog\lib\net45 -itemType directory -force | Out-Null
+	Copy-Item $build_artifacts_dir\Netco.*.Serilog*.* $build_output_dir\Netco.Serilog\lib\net45 -PassThru |% { Write-Host "Copied " $_.FullName }
 }
 
 # Set $script:Version = assembly version
@@ -102,6 +105,7 @@ task Zip Version, {
 	
 	exec { & $7z a $release_zip_file $build_output_dir\Netco\lib\net45\* -mx9 }
 	exec { & $7z a $release_zip_file $build_output_dir\Netco.NLog\lib\net45\* -mx9 }
+	exec { & $7z a $release_zip_file $build_output_dir\Netco.Serilog\lib\net45\* -mx9 }
 }
 
 task NuGet Package, Version, {
@@ -160,6 +164,34 @@ task NuGet Package, Version, {
 "@
 	# pack
 	exec { & $nuget pack $build_output_dir\Netco.NLog\Netco.NLog.nuspec -Output $build_dir }
+	
+	Write-Host ================= Preparing Netco Serilog Integration Nuget package =================
+	$text = "Integrates Netco to work with Serilog platform."
+	# nuspec
+	Set-Content $build_output_dir\Netco.Serilog\Netco.Serilog.nuspec @"
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>Netco.Serilog</id>
+		<version>$Version</version>
+		<authors>Slav Ivanyuk</authors>
+		<owners>Slav Ivanyuk</owners>
+		<projectUrl>https://github.com/slav/Netco</projectUrl>
+		<licenseUrl>https://raw.github.com/slav/Netco/master/License.txt</licenseUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<copyright>Copyright (C) Agile Harbor LLC</copyright>
+		<summary>$text</summary>
+		<description>$text</description>
+		<tags></tags>
+		<dependencies> 
+			<dependency id="Netco" version="$Version" />
+			<dependency id="Serilog" version="1.4.118" />
+		</dependencies>
+	</metadata>
+</package>
+"@
+	# pack
+	exec { & $nuget pack $build_output_dir\Netco.Serilog\Netco.Serilog.nuspec -Output $build_dir }
 	
 	$pushNetco = Read-Host 'Push Netco ' $Version ' to NuGet? (Y/N)'
 	Write-Host $pushNetco
