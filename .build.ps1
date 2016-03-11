@@ -157,7 +157,7 @@ task NuGet Package, Version, {
 		<tags></tags>
 		<dependencies> 
 			<dependency id="Netco" version="$Version" />
-			<dependency id="NLog" version="3.1.0.0" />
+			<dependency id="NLog" version="4.2.3" />
 		</dependencies>
 	</metadata>
 </package>
@@ -185,7 +185,7 @@ task NuGet Package, Version, {
 		<tags></tags>
 		<dependencies> 
 			<dependency id="Netco" version="$Version" />
-			<dependency id="Serilog" version="1.4.118" />
+			<dependency id="Serilog" version="1.5.14" />
 		</dependencies>
 	</metadata>
 </package>
