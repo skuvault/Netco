@@ -8,14 +8,26 @@ namespace Netco.Specs.ThrottlerServices
 {
 	internal class SimpleThrottlerTestsAsync : SimpleThrottlerTests
 	{
-		protected override bool IsAsyncVersion { get; set; } = true;
+		protected override bool IsAsyncVersion { get; set; }
+
+		public SimpleThrottlerTestsAsync()
+		{
+			IsAsyncVersion = true;
+		}
 	}
 
 	internal class SimpleThrottlerTests : ThrottlerTestsBase
 	{
-		protected override Func<Throttler> GetThrottlerFunc { get; set; } = () => new Throttler(5, 2, 1);
-		protected override Func<ThrottlerAsync> GetThrottlerFuncAsync { get; set; } = () => new ThrottlerAsync(5, 2, 1);
-		protected override bool IsAsyncVersion { get; set; } = false;
+		protected override Func<Throttler> GetThrottlerFunc { get; set; }
+		protected override Func<ThrottlerAsync> GetThrottlerFuncAsync { get; set; }
+		protected override bool IsAsyncVersion { get; set; }
+
+		public SimpleThrottlerTests()
+		{
+			IsAsyncVersion = false;
+			GetThrottlerFunc = () => new Throttler(5, 2, 1);
+			GetThrottlerFuncAsync = () => new ThrottlerAsync(5, 2, 1);
+		}
 
 		[Test]
 		public void NoDelayUntilLimitHit()

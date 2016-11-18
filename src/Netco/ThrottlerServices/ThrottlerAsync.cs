@@ -78,7 +78,7 @@ namespace Netco.ThrottlerServices
 
 					_remainingQuota = 0;
 					_requestTimer.Restart();
-					await DelayAsync(0).ConfigureAwait(false);
+					DelayAsync(0).Wait();
 					retryCount++;
 					// try again through loop
 				}
