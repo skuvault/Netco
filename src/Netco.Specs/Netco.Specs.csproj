@@ -75,6 +75,9 @@
     <Compile Include="Extensions\EnumerablePaginationExtensionsTests.cs" />
     <Compile Include="Monads\LokadMaybeMonadExtensionsSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThrottlerServices\AdvancedThrottlerTests.cs" />
+    <Compile Include="ThrottlerServices\SimpleThrottlerTests.cs" />
+    <Compile Include="ThrottlerServices\ThrottlerTestsBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

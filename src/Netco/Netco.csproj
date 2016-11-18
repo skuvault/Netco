@@ -202,6 +202,11 @@
     <Compile Include="Syntaxis\Syntax.TTarget.cs" />
     <Compile Include="Threading\ReaderWriterLockSlimExtensions.cs" />
     <Compile Include="Threading\WaitFor.cs" />
+    <Compile Include="ThrottlerServices\IThrottler.cs" />
+    <Compile Include="ThrottlerServices\IThrottlerAsync.cs" />
+    <Compile Include="ThrottlerServices\Throttler.cs" />
+    <Compile Include="ThrottlerServices\ThrottlerAsync.cs" />
+    <Compile Include="ThrottlerServices\ThrottlerException.cs" />
     <Compile Include="Utils\EnumComparer.cs" />
     <Compile Include="Utils\EnumUtil.cs" />
     <Compile Include="Utils\EnumUtil.TEnum.cs" />
