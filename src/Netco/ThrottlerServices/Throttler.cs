@@ -7,7 +7,7 @@ namespace Netco.ThrottlerServices
 	/// <summary>
 	/// Throttler
 	/// </summary>
-	public sealed class Throttler : IThrottler
+	public class Throttler : IThrottler
 	{
 		private readonly int _maxQuota;
 		private int _remainingQuota;
