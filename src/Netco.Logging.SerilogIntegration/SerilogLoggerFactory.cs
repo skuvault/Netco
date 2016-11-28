@@ -8,7 +8,10 @@ namespace Netco.Logging.SerilogIntegration
 		private readonly bool _logFullTypeName;
 		private readonly Serilog.ILogger _serilogger;
 
+		private readonly object _typeLoggersLock = new object();
 		private readonly Dictionary< Type, ILogger > _typeLoggers = new Dictionary< Type, ILogger >();
+
+		private readonly object _loggersLock = new object();
 		private readonly Dictionary< string, ILogger > _loggers = new Dictionary< string, ILogger >();
 
 		public SerilogLoggerFactory( Serilog.ILogger serilogger, bool logFullTypeName = false )
@@ -23,22 +26,29 @@ namespace Netco.Logging.SerilogIntegration
 		public ILogger GetLogger( Type objectToLogType )
 		{
 			ILogger logger;
-			if( this._typeLoggers.TryGetValue( objectToLogType, out logger ) )
-				return logger;
+			lock( this._typeLoggersLock )
+			{
+				if( this._typeLoggers.TryGetValue( objectToLogType, out logger ) )
+					return logger;
 
-			logger = this.CreateLogger( this._serilogger.ForContext( "SourceContext", this._logFullTypeName ? objectToLogType.FullName : objectToLogType.Name ) );
-			this._typeLoggers[ objectToLogType ] = logger;
+				logger = this.CreateLogger( this._serilogger.ForContext( "SourceContext", this._logFullTypeName ? objectToLogType.FullName : objectToLogType.Name ) );
+				this._typeLoggers[ objectToLogType ] = logger;
+			}
 			return logger;
 		}
 
 		public ILogger GetLogger( string loggerName )
 		{
 			ILogger logger;
-			if( this._loggers.TryGetValue( loggerName, out logger ) )
-				return logger;
+			lock( this._loggersLock )
+			{
+				if( this._loggers.TryGetValue( loggerName, out logger ) )
+					return logger;
 
-			logger = this.CreateLogger( this._serilogger.ForContext( "SourceContext", loggerName ) );
-			this._loggers[ loggerName ] = logger;
+				logger = this.CreateLogger( this._serilogger.ForContext( "SourceContext", loggerName ) );
+				this._loggers[ loggerName ] = logger;
+			}
+
 			return logger;
 		}
 
@@ -49,17 +59,26 @@ namespace Netco.Logging.SerilogIntegration
 
 		public void SetLoggerForType< T >( Serilog.ILogger logger )
 		{
-			this._typeLoggers[ typeof( T ) ] = this.CreateLogger( logger );
+			lock( this._typeLoggersLock )
+			{
+				this._typeLoggers[ typeof( T ) ] = this.CreateLogger( logger );
+			}
 		}
 
 		public void SetLoggerForType( Type objectToLogType, Serilog.ILogger logger )
 		{
-			this._typeLoggers[ objectToLogType ] = this.CreateLogger( logger );
+			lock( this._typeLoggersLock )
+			{
+				this._typeLoggers[ objectToLogType ] = this.CreateLogger( logger );
+			}
 		}
 
 		public void SetLoggerForType( string name, Serilog.ILogger logger )
 		{
-			this._loggers[ name ] = this.CreateLogger( logger );
+			lock( this._loggersLock )
+			{
+				this._loggers[ name ] = this.CreateLogger( logger );
+			}
 		}
 	}
 }
