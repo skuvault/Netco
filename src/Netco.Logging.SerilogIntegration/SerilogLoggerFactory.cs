@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace Netco.Logging.SerilogIntegration
 {
@@ -8,8 +8,8 @@ namespace Netco.Logging.SerilogIntegration
 		private readonly bool _logFullTypeName;
 		private readonly Serilog.ILogger _serilogger;
 
-		private readonly Dictionary< Type, ILogger > _typeLoggers = new Dictionary< Type, ILogger >();
-		private readonly Dictionary< string, ILogger > _loggers = new Dictionary< string, ILogger >();
+		private readonly ConcurrentDictionary< Type, ILogger > _typeLoggers = new ConcurrentDictionary< Type, ILogger >();
+		private readonly ConcurrentDictionary< string, ILogger > _loggers = new ConcurrentDictionary< string, ILogger >();
 
 		public SerilogLoggerFactory( Serilog.ILogger serilogger, bool logFullTypeName = false )
 		{
@@ -22,23 +22,14 @@ namespace Netco.Logging.SerilogIntegration
 
 		public ILogger GetLogger( Type objectToLogType )
 		{
-			ILogger logger;
-			if( this._typeLoggers.TryGetValue( objectToLogType, out logger ) )
-				return logger;
-
-			logger = this.CreateLogger( this._serilogger.ForContext( "SourceContext", this._logFullTypeName ? objectToLogType.FullName : objectToLogType.Name ) );
-			this._typeLoggers[ objectToLogType ] = logger;
+			var logger = this._typeLoggers.GetOrAdd( objectToLogType,
+				t => this.CreateLogger( this._serilogger.ForContext( "SourceContext", this._logFullTypeName ? objectToLogType.FullName : objectToLogType.Name ) ) );
 			return logger;
 		}
 
 		public ILogger GetLogger( string loggerName )
 		{
-			ILogger logger;
-			if( this._loggers.TryGetValue( loggerName, out logger ) )
-				return logger;
-
-			logger = this.CreateLogger( this._serilogger.ForContext( "SourceContext", loggerName ) );
-			this._loggers[ loggerName ] = logger;
+			var logger = this._loggers.GetOrAdd( loggerName, l => this.CreateLogger( this._serilogger.ForContext( "SourceContext", loggerName ) ) );
 			return logger;
 		}
 
