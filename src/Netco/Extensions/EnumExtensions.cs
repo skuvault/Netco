@@ -56,7 +56,7 @@ namespace Netco.Extensions
 			value = value.Replace( " ", "" );
 			T result;
 			if( !Enum.TryParse( value, true, out result ) || !Enum.IsDefined( typeof( T ), result ) )
-				throw new ArgumentException( "EnumType does not has a constant equal to value", nameof( value ) );
+				throw new ArgumentException( "EnumType does not has a constant equal to value", "value" );
 
 			return result;
 		}
