@@ -13,7 +13,7 @@ namespace Netco.Specs.Extensions
 			var str = "123";
 
 			//------------ Act
-			TestDelegate testDelegate = () => str.ToEnum< TestEnum >();
+			TestDelegate testDelegate = () => str.ToValidEnum< TestEnum >();
 
 			//------------ Assert	
 			Assert.Throws< ArgumentException >( testDelegate );
@@ -26,7 +26,7 @@ namespace Netco.Specs.Extensions
 			var str = "2";
 
 			//------------ Act
-			var parsed = str.ToEnum< TestEnum >();
+			var parsed = str.ToValidEnum< TestEnum >();
 
 			//------------ Assert	
 			Assert.IsTrue( parsed == TestEnum.Value2 );
@@ -39,7 +39,7 @@ namespace Netco.Specs.Extensions
 			var str = "value1df";
 
 			//------------ Act
-			TestDelegate testDelegate = () => str.ToEnum< TestEnum >();
+			TestDelegate testDelegate = () => str.ToValidEnum< TestEnum >();
 
 			//------------ Assert	
 			Assert.Throws< ArgumentException >( testDelegate );
@@ -52,7 +52,7 @@ namespace Netco.Specs.Extensions
 			var str = "value1";
 
 			//------------ Act
-			var parsed = str.ToEnum< TestEnum >();
+			var parsed = str.ToValidEnum< TestEnum >();
 
 			//------------ Assert	
 			Assert.IsTrue( parsed == TestEnum.Value1 );
@@ -65,7 +65,7 @@ namespace Netco.Specs.Extensions
 			var str = "123";
 
 			//------------ Act
-			var parsed = str.ToEnum( TestEnum.Undefined );
+			var parsed = str.ToValidEnum( TestEnum.Undefined );
 
 			//------------ Assert	
 			Assert.IsTrue( parsed == TestEnum.Undefined );
@@ -78,7 +78,7 @@ namespace Netco.Specs.Extensions
 			var str = "2";
 
 			//------------ Act
-			var parsed = str.ToEnum( TestEnum.Undefined );
+			var parsed = str.ToValidEnum( TestEnum.Undefined );
 
 			//------------ Assert	
 			Assert.IsTrue( parsed == TestEnum.Value2 );
@@ -91,7 +91,7 @@ namespace Netco.Specs.Extensions
 			var str = "value1df";
 
 			//------------ Act
-			var parsed = str.ToEnum( TestEnum.Undefined );
+			var parsed = str.ToValidEnum( TestEnum.Undefined );
 
 			//------------ Assert	
 			Assert.IsTrue( parsed == TestEnum.Undefined );
@@ -104,7 +104,7 @@ namespace Netco.Specs.Extensions
 			var str = "value1";
 
 			//------------ Act
-			var parsed = str.ToEnum( TestEnum.Undefined );
+			var parsed = str.ToValidEnum( TestEnum.Undefined );
 
 			//------------ Assert	
 			Assert.IsTrue( parsed == TestEnum.Value1 );
