@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="ActionPolicyServices\ActionPolicyAsyncTests.cs" />
     <Compile Include="ActionPolicyServices\ActionPolicyTests.cs" />
+    <Compile Include="Extensions\EnumExtensionsTests.cs" />
     <Compile Include="Extensions\DateTimeExtensionsSpecs.cs" />
     <Compile Include="Extensions\EnumerablePaginationExtensionsTests.cs" />
     <Compile Include="Monads\LokadMaybeMonadExtensionsSpecs.cs" />

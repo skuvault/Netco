@@ -15,10 +15,14 @@ namespace Netco.Extensions
 		/// <typeparam name="T">Type of enum</typeparam>
 		/// <param name="value">The value.</param>
 		/// <returns>Enum value.</returns>
-		public static T ToEnum< T >( this string value )
+		public static T ToEnum< T >( this string value ) where T : struct
 		{
 			value = value.Replace( " ", "" );
-			return ( T )Enum.Parse( typeof( T ), value, true );
+			T result;
+			if( !Enum.TryParse( value, true, out result ) || !Enum.IsDefined( typeof( T ), result ) )
+				throw new ArgumentException( "EnumType does not has a constant equal to value", nameof( value ) );
+
+			return result;
 		}
 
 		/// <summary>
@@ -28,20 +32,17 @@ namespace Netco.Extensions
 		/// <param name="value">The value.</param>
 		/// <param name="defaultValue">The default value.</param>
 		/// <returns>Enum value, or <paramref name="defaultValue"/> if conversion failed.</returns>
-		public static T ToEnum< T >( this string value, T defaultValue )
+		public static T ToEnum< T >( this string value, T defaultValue ) where T : struct
 		{
 			if( string.IsNullOrWhiteSpace( value ) )
 				return defaultValue;
 
 			value = value.Replace( " ", "" );
-			try
-			{
-				return ( T )Enum.Parse( typeof( T ), value, true );
-			}
-			catch
-			{
+			T result;
+			if( !Enum.TryParse( value, true, out result ) || !Enum.IsDefined( typeof( T ), result ) )
 				return defaultValue;
-			}
+
+			return result;
 		}
 
 		/// <summary>
