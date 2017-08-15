@@ -173,6 +173,7 @@
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskHelper.cs" />
+    <Compile Include="Logging\Mark.cs" />
     <Compile Include="Syntaxis\SyntaxAsync.TTarget.cs" />
     <Compile Include="Threading\DisposableAction.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
