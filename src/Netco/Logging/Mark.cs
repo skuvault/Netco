@@ -9,15 +9,18 @@ namespace Netco.Logging
 	/// </summary>
 	public class Mark
 	{
+		private readonly string _value;
+		private readonly Mark _parent;
+
 		/// <summary>
 		/// Unique value identifying this mark / workflow / unit in the stack trace
 		/// </summary>
-		public string MarkValue{ get; }
+		public string MarkValue{ get { return this._value; } }
 
 		/// <summary>
 		/// Represents parrent of the mark i.e. parent ubit in the stack trace
 		/// </summary>
-		public Mark Parent{ get; }
+		public Mark Parent { get { return this._parent; } }
 
 		/// <summary>
 		/// Create Mark with specified value without parent
@@ -26,8 +29,8 @@ namespace Netco.Logging
 		/// <param name="parent">Unique value identifying parent mark</param>
 		public Mark( string markValue, Mark parent = null )
 		{
-			this.MarkValue = markValue;
-			this.Parent = parent;
+			this._value = markValue;
+			this._parent = parent;
 		}
 
 		/// <summary>
