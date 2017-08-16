@@ -102,4 +102,50 @@ namespace Netco.Logging
 		}
 		#endregion
 	}
+
+	/// <summary>
+	/// Extensions for Mark class
+	/// </summary>
+	public static class MarkExtensions
+	{
+		/// <summary>
+		/// Check the Mark for blank value
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns>True if Mark is null or blank</returns>
+		public static bool IsBlank( this Mark source )
+		{
+			return source == null || string.IsNullOrWhiteSpace( source.MarkValue );
+		}
+
+		/// <summary>
+		/// Creates and returns a Mark with parent or returns null if parrent is null
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns>Null or new Mark with source as parent</returns>
+		public static Mark CreateChildOrNull( this Mark source )
+		{
+			return source != null ? Mark.CreateNew( source ) : null;
+		}
+
+		/// <summary>
+		/// Create Mark with parent from source
+		/// </summary>
+		/// <param name="source">Source, that will be a parent</param>
+		/// <returns>If source is not null return new mark with parent, else just new mark without parent</returns>
+		public static Mark CreateChild( this Mark source )
+		{
+			return source != null ? Mark.CreateNew( source ) : Mark.CreateNew();
+		}
+
+		/// <summary>
+		/// Converts mark to string
+		/// </summary>
+		/// <param name="source">Mark</param>
+		/// <returns>String representation of the mark</returns>
+		public static string ToStringSafe( this Mark source )
+		{
+			return IsBlank( source ) ? string.Empty : source.ToString();
+		}
+	}
 }
