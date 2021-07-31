@@ -45,6 +45,44 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
+		/// Converts string value enum of type T. 
+		/// It will additionally check result value. Use this method instead ToEnum
+		/// </summary>
+		/// <typeparam name="T">Type of enum</typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>Enum value.</returns>
+		public static T ToValidEnum< T >( this string value ) where T : struct
+		{
+			value = value.Replace( " ", "" );
+			T result;
+			if( !Enum.TryParse( value, true, out result ) || !Enum.IsDefined( typeof( T ), result ) )
+				throw new ArgumentException( "EnumType does not has a constant equal to value", "value" );
+
+			return result;
+		}
+
+		/// <summary>
+		/// Converts string value enum of type T, or uses <paramref name="defaultValue"/> if conversion cannot take place. 
+		/// It will additionally check result value. Use this method instead ToEnum
+		/// </summary>
+		/// <typeparam name="T">Type of enum</typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="defaultValue">The default value.</param>
+		/// <returns>Enum value, or <paramref name="defaultValue"/> if conversion failed.</returns>
+		public static T ToValidEnum< T >( this string value, T defaultValue ) where T : struct
+		{
+			if( string.IsNullOrWhiteSpace( value ) )
+				return defaultValue;
+
+			value = value.Replace( " ", "" );
+			T result;
+			if( !Enum.TryParse( value, true, out result ) || !Enum.IsDefined( typeof( T ), result ) )
+				return defaultValue;
+
+			return result;
+		}
+
+		/// <summary>
 		/// Converts all possible enum values to list.
 		/// </summary>
 		/// <typeparam name="T">Type of enum</typeparam>
