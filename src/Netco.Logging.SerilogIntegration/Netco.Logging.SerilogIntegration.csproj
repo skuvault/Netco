@@ -5,6 +5,17 @@
     <PackageVersion>2.0.0</PackageVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\netco.snk</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>Netco.Serilog</Title>
+    <Authors>SkuVault Inc</Authors>
+    <Description>Serilog .net wrapper for Netco</Description>
+    <Copyright>SkuVault Inc (C) 2021</Copyright>
+    <PackageProjectUrl>https://github.com/skuvault/Netco</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/skuvault/Netco/blob/master/License.txt</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/skuvault/Netco</RepositoryUrl>
+    <PackageId>Netco.Serilog</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Serilog" Version="1.5.14" />
@@ -14,5 +25,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Netco\Netco.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\netco.snk">
+      <Link>netco.snk</Link>
+    </None>
   </ItemGroup>
 </Project>

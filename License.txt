@@ -1,4 +1,4 @@
-﻿Copyright (c) Agile Harbor LLC
+﻿Copyright (c) SkuVault Inc 2021
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without 

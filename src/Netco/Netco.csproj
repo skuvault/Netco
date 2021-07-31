@@ -5,8 +5,23 @@
     <PackageVersion>2.0.0</PackageVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\netco.snk</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>Netco</Title>
+    <Authors>SkuVault Inc</Authors>
+    <Description>Collection of helper .net libraries</Description>
+    <Copyright>SkuVault Inc (C) 2021</Copyright>
+    <PackageProjectUrl>https://github.com/skuvault/Netco</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/skuvault/Netco/blob/master/License.txt</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/skuvault/Netco</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CuttingEdge.Conditions" Version="1.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\netco.snk">
+      <Link>netco.snk</Link>
+    </None>
   </ItemGroup>
 </Project>
