@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [ assembly : AssemblyProduct( "Netco" ) ]
-[ assembly : AssemblyCompany( "Agile Harbor LLC" ) ]
-[ assembly : AssemblyCopyright( "Copyright © Agile Harbor LLC." ) ]
+[ assembly : AssemblyCompany( "SkuVault Inc" ) ]
+[ assembly : AssemblyCopyright( "Copyright ï¿½ SkuVault Inc" ) ]
 [ assembly : AssemblyTrademark( "" ) ]
 [ assembly : AssemblyCulture( "" ) ]
 
@@ -27,4 +27,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 
-[ assembly : AssemblyVersion( "1.5.2.0" ) ]
+[ assembly : AssemblyVersion( "2.0.0.0" ) ]

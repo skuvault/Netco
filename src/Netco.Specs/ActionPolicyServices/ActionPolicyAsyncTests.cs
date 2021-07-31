@@ -50,7 +50,7 @@ namespace Netco.Specs.ActionPolicyServices
 		}
 
 		[ Test ]
-		public async void PolicyThrowsOnExceededRetries()
+		public async Task PolicyThrowsOnExceededRetries()
 		{
 			//------------ Arrange
 			var callNumber = 0;

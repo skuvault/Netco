@@ -41,7 +41,7 @@ namespace Netco.Specs.ActionPolicyServices
 					callNumber ++;
 					if( callNumber < 5 )
 						throw new Exception( "test" );
-				} ) ).ShouldThrow< Exception >().WithMessage( "test" );
+				} ) ).Should().Throw< Exception >().WithMessage( "test" );
 			//------------ Assert					
 			retried.Should().BeTrue();
 		}

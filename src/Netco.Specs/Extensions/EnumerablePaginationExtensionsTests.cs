@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using Netco.Extensions;
@@ -73,7 +74,7 @@ namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
 		public class ProcessWithPagesAsyncMethod : EnumerablePaginationExtensionsTests
 		{
 			[ Test ]
-			public async void SeveralPagesWithSameValueProcessor_ResultsUnioned()
+			public async Task SeveralPagesWithSameValueProcessor_ResultsUnioned()
 			{
 				//------------ Arrange
 				var items = this.f.CreateMany< int >();
@@ -84,7 +85,7 @@ namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
 			}
 
 			[ Test ]
-			public async void SeveralPagesWithConstantValueProcessor_ResultsUnioned()
+			public async Task SeveralPagesWithConstantValueProcessor_ResultsUnioned()
 			{
 				//------------ Arrange
 				var items = this.f.CreateMany< int >( 8 );
@@ -96,7 +97,7 @@ namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
 			}
 
 			[ Test ]
-			public async void PageSmallerThanOnePage_NormalProcessing()
+			public async Task PageSmallerThanOnePage_NormalProcessing()
 			{
 				//------------ Arrange
 				var items = this.f.CreateMany< int >( 8 );
@@ -108,7 +109,7 @@ namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
 			}
 
 			[ Test ]
-			public async void ProcessorReturnsNullForPage_NullResultIgnored()
+			public async Task ProcessorReturnsNullForPage_NullResultIgnored()
 			{
 				//------------ Arrange
 				var items = this.f.CreateMany< int >( 8 );
@@ -164,7 +165,7 @@ namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
 		public class DoWithPagesMethodAsync : EnumerablePaginationExtensionsTests
 		{
 			[ Test ]
-			public async void SeveralPagesWithSameValueProcessor_ResultsUnioned()
+			public async Task SeveralPagesWithSameValueProcessor_ResultsUnioned()
 			{
 				//------------ Arrange
 				var items = this.f.CreateMany< int >();
@@ -176,7 +177,7 @@ namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
 			}
 
 			[ Test ]
-			public async void SeveralPagesWithConstantValueProcessor_ResultsUnioned()
+			public async Task SeveralPagesWithConstantValueProcessor_ResultsUnioned()
 			{
 				//------------ Arrange
 				var items = this.f.CreateMany< int >( 8 );
@@ -189,7 +190,7 @@ namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
 			}
 
 			[ Test ]
-			public async void PageSmallerThanOnePage_NormalProcessing()
+			public async Task PageSmallerThanOnePage_NormalProcessing()
 			{
 				//------------ Arrange
 				var items = this.f.CreateMany< int >( 8 );

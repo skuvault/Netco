@@ -240,20 +240,6 @@ namespace Netco.Extensions
 		/// <summary>
 		/// Converts the enumerable to <see cref="HashSet{T}"/>
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <returns>hashset instance</returns>
-		public static HashSet< T > ToHashSet< T >( this IEnumerable< T > enumerable )
-		{
-			if( enumerable == null )
-				throw new ArgumentNullException( "enumerable" );
-
-			return new HashSet< T >( enumerable );
-		}
-
-		/// <summary>
-		/// Converts the enumerable to <see cref="HashSet{T}"/>
-		/// </summary>
 		/// <typeparam name="TKey">The type of the key.</typeparam>
 		/// <typeparam name="TItem">The type of the item.</typeparam>
 		/// <param name="enumerable">The enumerable.</param>
