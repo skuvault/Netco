@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <LangVersion>9</LangVersion>
     <PackageVersion>2.0.0</PackageVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
@@ -23,5 +23,10 @@
     <None Include="..\netco.snk">
       <Link>netco.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 </Project>
