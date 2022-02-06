@@ -16,8 +16,8 @@ namespace Netco.Monads
 		/// </summary>
 		public object this[ object metaKey ]
 		{
-			get { return this._data[ metaKey ]; }
-			set { this._data[ metaKey ] = value; }
+			get => this._data[ metaKey ];
+			set => this._data[ metaKey ] = value;
 		}
 
 		/// <summary>
@@ -40,8 +40,7 @@ namespace Netco.Monads
 		/// Otherwise empty Maybe is returned.</returns>
 		public Maybe< TMetaValue > TryGetValue< TMetaValue >( object metaKey )
 		{
-			object value;
-			if( this._data.TryGetValue( metaKey, out value ) )
+			if( this._data.TryGetValue( metaKey, out var value ) )
 			{
 				if( value is TMetaValue )
 					return ( TMetaValue )value;

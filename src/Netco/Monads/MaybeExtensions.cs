@@ -55,8 +55,7 @@ namespace Netco.Monads
 		/// with the specified key.</returns>
 		public static Maybe< TValue > TryGetValue< TKey, TValue >( this IDictionary< TKey, TValue > dictionary, TKey key )
 		{
-			TValue value;
-			return dictionary.TryGetValue( key, out value ) ? value : Maybe< TValue >.Empty;
+			return dictionary.TryGetValue( key, out var value ) ? value : Maybe< TValue >.Empty;
 		}
 	}
 }

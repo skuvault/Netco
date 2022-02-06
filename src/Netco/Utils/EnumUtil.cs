@@ -1,5 +1,4 @@
 using System;
-using CuttingEdge.Conditions;
 
 namespace Netco.Utils
 {
@@ -17,7 +16,10 @@ namespace Netco.Utils
 		/// <exception cref="ArgumentNullException">If <paramref name="value"/> is null</exception>
 		public static TEnum Parse< TEnum >( string value ) where TEnum : struct, IComparable
 		{
-			Condition.Requires( value, "value" ).IsNotNull();
+			if( value is null )
+			{
+				throw new ArgumentNullException( nameof(value) );
+			}
 			return Parse< TEnum >( value, true );
 		}
 
@@ -31,13 +33,15 @@ namespace Netco.Utils
 		/// <exception cref="ArgumentNullException">If <paramref name="value"/> is null</exception>
 		public static TEnum Parse< TEnum >( string value, bool ignoreCase ) where TEnum : struct, IComparable
 		{
-			Condition.Requires( value, "value" ).IsNotNull();
+			if( value is null )
+			{
+				throw new ArgumentNullException( nameof(value) );
+			}
 
 			var dict = ignoreCase ? EnumUtil< TEnum >.IgnoreCaseDict : EnumUtil< TEnum >.CaseDict;
 
-			TEnum @enum;
-			if( !dict.TryGetValue( value, out @enum ) )
-				throw new ArgumentException( string.Format( "Can't find enum for '{0}'", value ) );
+			if( !dict.TryGetValue( value, out var @enum ) )
+				throw new ArgumentException( $"Can't find enum for '{value}'" );
 			return @enum;
 		}
 

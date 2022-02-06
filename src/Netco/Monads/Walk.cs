@@ -25,7 +25,7 @@ namespace Netco.Monads
 		/// <see href="http://davidhayden.com/blog/dave/archive/2006/11/26/IsTypeNullableTypeConverter.aspx"/>
 		private static bool IsNullable( this Type theType )
 		{
-			return ( theType.IsGenericType && theType.GetGenericTypeDefinition().Equals( typeof( Nullable< > ) ) );
+			return ( theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof( Nullable< > ) );
 		}
 
 		private static readonly MethodInfo _maybeMethod;

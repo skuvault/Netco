@@ -66,10 +66,7 @@ namespace Netco.Monads
 		/// <seealso cref="decimal.TryParse(string,out decimal)" />
 		public static Maybe< decimal > Decimal( string value )
 		{
-			decimal result;
-			if( !decimal.TryParse( value, out result ) )
-				return Maybe< decimal >.Empty;
-			return result;
+			return decimal.TryParse( value, out var result ) ? result : Maybe< decimal >.Empty;
 		}
 
 		/// <summary>
@@ -91,10 +88,7 @@ namespace Netco.Monads
 			NumberStyles numberStyles,
 			IFormatProvider formatProvider )
 		{
-			decimal result;
-			if( !decimal.TryParse( value, numberStyles, formatProvider, out result ) )
-				return Maybe< decimal >.Empty;
-			return result;
+			return decimal.TryParse( value, numberStyles, formatProvider, out var result ) ? result : Maybe< decimal >.Empty;
 		}
 
 		/// <summary>
@@ -121,10 +115,7 @@ namespace Netco.Monads
 		/// <seealso cref="System.Int32.TryParse(string,out int)" />
 		public static Maybe< Int32 > Int32( string value )
 		{
-			Int32 result;
-			if( !System.Int32.TryParse( value, out result ) )
-				return Maybe< Int32 >.Empty;
-			return result;
+			return int.TryParse( value, out var result ) ? result : Maybe< Int32 >.Empty;
 		}
 
 		/// <summary>
@@ -146,10 +137,7 @@ namespace Netco.Monads
 			NumberStyles numberStyles,
 			IFormatProvider formatProvider )
 		{
-			Int32 result;
-			if( !System.Int32.TryParse( value, numberStyles, formatProvider, out result ) )
-				return Maybe< Int32 >.Empty;
-			return result;
+			return int.TryParse( value, numberStyles, formatProvider, out var result ) ? result : Maybe< Int32 >.Empty;
 		}
 
 		/// <summary>
@@ -161,7 +149,7 @@ namespace Netco.Monads
 		/// 	either parsed Int32 or an empty result
 		/// </returns>
 		/// <seealso cref="System.Int32.TryParse(string,System.Globalization.NumberStyles,System.IFormatProvider,out int)" />
-		public static Maybe< Int32 > Int32Invariant( string value )
+		public static Maybe< int > Int32Invariant( string value )
 		{
 			return Int32( value, NumberStyles.Integer, CultureInfo.InvariantCulture );
 		}
@@ -175,12 +163,9 @@ namespace Netco.Monads
 		/// 	either parsed Int64 or an empty result
 		/// </returns>
 		/// <seealso cref="System.Int64.TryParse(string,out long)" />
-		public static Maybe< Int64 > Int64( string value )
+		public static Maybe< long > Int64( string value )
 		{
-			Int64 result;
-			if( !System.Int64.TryParse( value, out result ) )
-				return Maybe< Int64 >.Empty;
-			return result;
+			return long.TryParse( value, out var result ) ? result : Maybe< long >.Empty;
 		}
 
 		/// <summary>
@@ -202,10 +187,7 @@ namespace Netco.Monads
 			NumberStyles numberStyles,
 			IFormatProvider formatProvider )
 		{
-			Int64 result;
-			if( !System.Int64.TryParse( value, numberStyles, formatProvider, out result ) )
-				return Maybe< Int64 >.Empty;
-			return result;
+			return long.TryParse( value, numberStyles, formatProvider, out var result ) ? result : Maybe< long >.Empty;
 		}
 
 		/// <summary>
@@ -217,7 +199,7 @@ namespace Netco.Monads
 		/// 	either parsed Int64 or an empty result
 		/// </returns>
 		/// <seealso cref="System.Int64.TryParse(string,System.Globalization.NumberStyles,System.IFormatProvider,out long)" />
-		public static Maybe< Int64 > Int64Invariant( string value )
+		public static Maybe< long > Int64Invariant( string value )
 		{
 			return Int64( value, NumberStyles.Integer, CultureInfo.InvariantCulture );
 		}
@@ -231,12 +213,9 @@ namespace Netco.Monads
 		/// 	either parsed Double or an empty result
 		/// </returns>
 		/// <seealso cref="System.Double.TryParse(string,out double)" />
-		public static Maybe< Double > Double( string value )
+		public static Maybe< double > Double( string value )
 		{
-			Double result;
-			if( !System.Double.TryParse( value, out result ) )
-				return Maybe< Double >.Empty;
-			return result;
+			return double.TryParse( value, out var result ) ? result : Maybe< double >.Empty;
 		}
 
 		/// <summary>
@@ -254,14 +233,11 @@ namespace Netco.Monads
 		/// 	either parsed Double or an empty result
 		/// </returns>
 		/// <seealso cref="System.Double.TryParse(string,System.Globalization.NumberStyles,System.IFormatProvider,out double)" />
-		public static Maybe< Double > Double( string value,
+		public static Maybe< double > Double( string value,
 			NumberStyles numberStyles,
 			IFormatProvider formatProvider )
 		{
-			Double result;
-			if( !System.Double.TryParse( value, numberStyles, formatProvider, out result ) )
-				return Maybe< Double >.Empty;
-			return result;
+			return double.TryParse( value, numberStyles, formatProvider, out var result ) ? result : Maybe< double >.Empty;
 		}
 
 		/// <summary>
@@ -290,12 +266,9 @@ namespace Netco.Monads
 		/// 	either parsed Single or an empty result
 		/// </returns>
 		/// <seealso cref="System.Single.TryParse(string,out float)" />
-		public static Maybe< Single > Single( string value )
+		public static Maybe< float > Single( string value )
 		{
-			Single result;
-			if( !System.Single.TryParse( value, out result ) )
-				return Maybe< Single >.Empty;
-			return result;
+			return float.TryParse( value, out var result ) ? result : Maybe< float >.Empty;
 		}
 
 		/// <summary>
@@ -313,14 +286,11 @@ namespace Netco.Monads
 		/// 	either parsed Single or an empty result
 		/// </returns>
 		/// <seealso cref="System.Single.TryParse(string,System.Globalization.NumberStyles,System.IFormatProvider,out float)" />
-		public static Maybe< Single > Single( string value,
+		public static Maybe< float > Single( string value,
 			NumberStyles numberStyles,
 			IFormatProvider formatProvider )
 		{
-			Single result;
-			if( !System.Single.TryParse( value, numberStyles, formatProvider, out result ) )
-				return Maybe< Single >.Empty;
-			return result;
+			return float.TryParse( value, numberStyles, formatProvider, out var result ) ? result : Maybe< float >.Empty;
 		}
 
 		/// <summary>

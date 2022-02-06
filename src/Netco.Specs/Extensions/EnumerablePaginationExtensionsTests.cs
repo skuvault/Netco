@@ -3,12 +3,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoFixture;
 using FluentAssertions;
 using NUnit.Framework;
 using Netco.Extensions;
-using Ploeh.AutoFixture;
 
-namespace Netco.Specs.Extensions.EnumerablePaginationExtensionsTestsContainer
+namespace Netco.Specs.Extensions
 {
 	[ TestFixture ]
 	public class EnumerablePaginationExtensionsTests
