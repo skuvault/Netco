@@ -2,23 +2,23 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>9</LangVersion>
-    <PackageVersion>2.0.2</PackageVersion>
-    <AssemblyVersion>2.0.2.0</AssemblyVersion>
-    <FileVersion>2.0.2.0</FileVersion>
+    <PackageVersion>2.0.3</PackageVersion>
+    <AssemblyVersion>2.0.3.0</AssemblyVersion>
+    <FileVersion>2.0.3.0</FileVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\netco.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Netco.Serilog</Title>
     <Authors>SkuVault Inc</Authors>
     <Description>Serilog .net wrapper for Netco</Description>
-    <Copyright>SkuVault Inc (C) 2021</Copyright>
+    <Copyright>SkuVault Inc (C) 2022</Copyright>
     <PackageProjectUrl>https://github.com/skuvault/Netco</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/skuvault/Netco/blob/master/License.txt</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/skuvault/Netco</RepositoryUrl>
     <PackageId>Netco.Serilog</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="1.5.14" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties" />
