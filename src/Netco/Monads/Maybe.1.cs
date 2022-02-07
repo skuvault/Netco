@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Netco.Monads
 {
 	/// <summary>
-	///     Helper class that indicates nullable value in a good-citizenship code
+	/// Helper class that indicates nullable value in a good-citizenship code
 	/// </summary>
 	/// <typeparam name="T">underlying type</typeparam>
 	[ Serializable ]
@@ -28,30 +28,30 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Default empty instance.
+		/// Default empty instance.
 		/// </summary>
 		/// <remarks>Not static anymore to correctly support meta data for empty maybe.</remarks>
 		public static Maybe< T > Empty => new(default, false);
 
 		/// <summary>
-		///     Gets a value indicating whether this instance has NO value.
+		/// Gets a value indicating whether this instance has NO value.
 		/// </summary>
 		/// <value><c>true</c> if this instance has NO value; otherwise, <c>false</c>.</value>
 		public bool HasNothing => !this.HasValue;
 
 		/// <summary>
-		///     Gets a value indicating whether this instance has value.
+		/// Gets a value indicating whether this instance has value.
 		/// </summary>
 		/// <value><c>true</c> if this instance has value; otherwise, <c>false</c>.</value>
 		public bool HasValue{ get; }
 
 		/// <summary>
-		///     Gets the meta data.
+		/// Gets the meta data.
 		/// </summary>
 		public MetaData MetaData => this._metaData ??= new MetaData();
 
 		/// <summary>
-		///     Gets the underlying value.
+		/// Gets the underlying value.
 		/// </summary>
 		/// <value>The value.</value>
 		public T Value
@@ -66,7 +66,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Implements the operator ==.
+		/// Implements the operator ==.
 		/// </summary>
 		/// <param name="left">The left.</param>
 		/// <param name="right">The right.</param>
@@ -77,7 +77,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Performs an explicit conversion from <see cref="Maybe{T}" /> to <typeparamref name="T" />.
+		/// Performs an explicit conversion from <see cref="Maybe{T}" /> to <typeparamref name="T" />.
 		/// </summary>
 		/// <param name="item">The item.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -93,7 +93,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Performs an implicit conversion from <typeparamref name="T" /> to <see cref="Maybe{T}" />.
+		/// Performs an implicit conversion from <typeparamref name="T" /> to <see cref="Maybe{T}" />.
 		/// </summary>
 		/// <param name="item">The item.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -102,12 +102,11 @@ namespace Netco.Monads
 			if( item == null )
 				throw new ArgumentNullException( nameof(item) );
 
-
 			return new Maybe< T >( item );
 		}
 
 		/// <summary>
-		///     Implements the operator !=.
+		/// Implements the operator !=.
 		/// </summary>
 		/// <param name="left">The left.</param>
 		/// <param name="right">The right.</param>
@@ -118,7 +117,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Adds the meta data regardless if there's value or not.
+		/// Adds the meta data regardless if there's value or not.
 		/// </summary>
 		/// <param name="key">The key.</param>
 		/// <param name="value">The value.</param>
@@ -130,7 +129,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Applies the specified action to the value, if it is present.
+		/// Applies the specified action to the value, if it is present.
 		/// </summary>
 		/// <param name="action">The action.</param>
 		/// <returns>same instance for inlining</returns>
@@ -143,7 +142,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Applies the specified action to the value with it's current meta data, if it is present.
+		/// Applies the specified action to the value with it's current meta data, if it is present.
 		/// </summary>
 		/// <param name="action">The action.</param>
 		/// <returns>same instance for inlining</returns>
@@ -156,7 +155,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Applies the meta data if there's value.
+		/// Applies the meta data if there's value.
 		/// </summary>
 		/// <param name="key">The key.</param>
 		/// <param name="value">The value.</param>
@@ -171,7 +170,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Binds value to the specified function.
+		/// Binds value to the specified function.
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
 		/// <param name="function">The function to bind to (pipeline function).</param>
@@ -182,7 +181,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Binds value to the specified function, providing metadata.
+		/// Binds value to the specified function, providing metadata.
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
 		/// <param name="function">The function to bind to (pipeline function).</param>
@@ -193,8 +192,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Converts this instance to <see cref="Maybe{T}" />,
-		///     while applying <paramref name="converter" /> if there is a value.
+		/// Converts this instance to <see cref="Maybe{T}" />,
+		/// while applying <paramref name="converter" /> if there is a value.
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
 		/// <param name="converter">The converter.</param>
@@ -205,8 +204,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Converts this instance to <see cref="Maybe{T}" />,
-		///     while applying <paramref name="converter" /> if there is a value.
+		/// Converts this instance to <see cref="Maybe{T}" />,
+		/// while applying <paramref name="converter" /> if there is a value.
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
 		/// <param name="converter">The converter.</param>
@@ -217,8 +216,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Retrieves converted value, using a
-		///     <paramref name="defaultValue" /> if it is absent.
+		/// Retrieves converted value, using a
+		/// <paramref name="defaultValue" /> if it is absent.
 		/// </summary>
 		/// <typeparam name="TTarget">type of the conversion target</typeparam>
 		/// <param name="converter">The converter.</param>
@@ -230,8 +229,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Retrieves converted value, using a
-		///     <paramref name="defaultValue" /> if it is absent.
+		/// Retrieves converted value, using a
+		/// <paramref name="defaultValue" /> if it is absent.
 		/// </summary>
 		/// <typeparam name="TTarget">type of the conversion target</typeparam>
 		/// <param name="converter">The converter.</param>
@@ -243,8 +242,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Retrieves converted value, using a
-		///     <paramref name="defaultValue" /> if it is absent.
+		/// Retrieves converted value, using a
+		/// <paramref name="defaultValue" /> if it is absent.
 		/// </summary>
 		/// <typeparam name="TTarget">type of the conversion target</typeparam>
 		/// <param name="converter">The converter.</param>
@@ -256,8 +255,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Retrieves converted value, using a
-		///     <paramref name="defaultValue" /> if it is absent.
+		/// Retrieves converted value, using a
+		/// <paramref name="defaultValue" /> if it is absent.
 		/// </summary>
 		/// <typeparam name="TTarget">type of the conversion target</typeparam>
 		/// <param name="converter">The converter.</param>
@@ -269,7 +268,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Determines whether the specified <see cref="Maybe{T}" /> is equal to the current <see cref="Maybe{T}" />.
+		/// Determines whether the specified <see cref="Maybe{T}" /> is equal to the current <see cref="Maybe{T}" />.
 		/// </summary>
 		/// <param name="maybe">The <see cref="Maybe" /> to compare with.</param>
 		/// <returns>true if the objects are equal</returns>
@@ -288,16 +287,16 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Determines whether the specified <see cref="T:System.Object" /> is equal to the current
-		///     <see cref="T:System.Object" />.
+		/// Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+		/// <see cref="T:System.Object" />.
 		/// </summary>
 		/// <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.</param>
 		/// <returns>
-		///     true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
-		///     otherwise, false.
+		/// true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+		/// otherwise, false.
 		/// </returns>
 		/// <exception cref="T:System.NullReferenceException">
-		///     The <paramref name="obj" /> parameter is null.
+		/// The <paramref name="obj" /> parameter is null.
 		/// </exception>
 		public override bool Equals( object obj )
 		{
@@ -313,7 +312,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Exposes the specified exception if maybe does not have value.
+		/// Exposes the specified exception if maybe does not have value.
 		/// </summary>
 		/// <param name="exception">The exception.</param>
 		/// <returns>actual value</returns>
@@ -327,7 +326,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Throws the exception if maybe does not have value.
+		/// Throws the exception if maybe does not have value.
 		/// </summary>
 		/// <returns>actual value</returns>
 		/// <exception cref="InvalidOperationException">if maybe does not have value</exception>
@@ -343,10 +342,10 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Serves as a hash function for this instance.
+		/// Serves as a hash function for this instance.
 		/// </summary>
 		/// <returns>
-		///     A hash code for the current <see cref="Maybe{T}" />.
+		/// A hash code for the current <see cref="Maybe{T}" />.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -360,7 +359,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Gets the meta data.
+		/// Gets the meta data.
 		/// </summary>
 		/// <typeparam name="TMeta">The type of the meta.</typeparam>
 		/// <param name="metaKey">The meta key.</param>
@@ -376,8 +375,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Retrieves value from this instance, using a
-		///     <paramref name="defaultValue" /> if it is absent.
+		/// Retrieves value from this instance, using a
+		/// <paramref name="defaultValue" /> if it is absent.
 		/// </summary>
 		/// <param name="defaultValue">The default value.</param>
 		/// <returns>value</returns>
@@ -387,8 +386,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Retrieves value from this instance, using a
-		///     <paramref name="defaultValue" /> if it is absent.
+		/// Retrieves value from this instance, using a
+		/// <paramref name="defaultValue" /> if it is absent.
 		/// </summary>
 		/// <param name="defaultValue">The default value.</param>
 		/// <returns>value</returns>
@@ -398,8 +397,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Retrieves value from this instance, using a <paramref name="defaultValue" />
-		///     factory, if it is absent
+		/// Retrieves value from this instance, using a <paramref name="defaultValue" />
+		/// factory, if it is absent
 		/// </summary>
 		/// <param name="defaultValue">The default value to provide.</param>
 		/// <returns>maybe value</returns>
@@ -409,8 +408,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Retrieves value from this instance, using a <paramref name="defaultValue" />
-		///     if it is absent
+		/// Retrieves value from this instance, using a <paramref name="defaultValue" />
+		/// if it is absent
 		/// </summary>
 		/// <param name="defaultValue">The default value to provide.</param>
 		/// <returns>maybe value</returns>
@@ -420,7 +419,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Executes the specified action, if the value is absent
+		/// Executes the specified action, if the value is absent
 		/// </summary>
 		/// <param name="action">The action.</param>
 		/// <returns>same instance for inlining</returns>
@@ -433,8 +432,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Converts maybe into result, using the specified error as the failure
-		///     descriptor
+		/// Converts maybe into result, using the specified error as the failure
+		/// descriptor
 		/// </summary>
 		/// <typeparam name="TError">The type of the failure.</typeparam>
 		/// <param name="error">The error.</param>
@@ -447,8 +446,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Converts maybe into result, using the specified error as the failure
-		///     descriptor
+		/// Converts maybe into result, using the specified error as the failure
+		/// descriptor
 		/// </summary>
 		/// <returns>result describing current maybe</returns>
 		public Result< T > JoinMessage( string error )
@@ -459,10 +458,10 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
 		/// <returns>
-		///     A <see cref="System.String" /> that represents this instance.
+		/// A <see cref="System.String" /> that represents this instance.
 		/// </returns>
 		public override string ToString()
 		{
@@ -473,13 +472,13 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Attempts to get meta data.
+		/// Attempts to get meta data.
 		/// </summary>
 		/// <typeparam name="TMeta">The type of the meta.</typeparam>
 		/// <param name="metaKey">The meta key.</param>
 		/// <returns>
-		///     Maybe with the specified meta data if meta data was found and successfully casted to the specified type.
-		///     Otherwise empty Maybe is returned.
+		/// Maybe with the specified meta data if meta data was found and successfully casted to the specified type.
+		/// Otherwise empty Maybe is returned.
 		/// </returns>
 		public Maybe< TMeta > TryGetMeta< TMeta >( object metaKey )
 		{

@@ -3,7 +3,7 @@ using System;
 namespace Netco.Monads
 {
 	/// <summary>
-	///     Improved version of the Result[T], that could serve as a basis for it.
+	/// Improved version of the Result[T], that could serve as a basis for it.
 	/// </summary>
 	/// <typeparam name="TValue">The type of the value.</typeparam>
 	/// <typeparam name="TError">The type of the error.</typeparam>
@@ -21,7 +21,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Error message associated with this failure
+		/// Error message associated with this failure
 		/// </summary>
 		public TError Error
 		{
@@ -34,13 +34,13 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Gets a value indicating whether this result is valid.
+		/// Gets a value indicating whether this result is valid.
 		/// </summary>
 		/// <value><c>true</c> if this result is valid; otherwise, <c>false</c>.</value>
 		public bool IsSuccess{ get; }
 
 		/// <summary>
-		///     item associated with this result
+		/// item associated with this result
 		/// </summary>
 		public TValue Value
 		{
@@ -53,7 +53,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Creates the error result.
+		/// Creates the error result.
 		/// </summary>
 		/// <param name="error">The error.</param>
 		/// <returns>result encapsulating the error value</returns>
@@ -67,7 +67,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Creates the success result.
+		/// Creates the success result.
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>result encapsulating the success value</returns>
@@ -81,7 +81,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Performs an implicit conversion from <typeparamref name="TValue" /> to <see cref="Result{TValue,TError}" />.
+		/// Performs an implicit conversion from <typeparamref name="TValue" /> to <see cref="Result{TValue,TError}" />.
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -94,7 +94,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Performs an implicit conversion from <typeparamref name="TError" /> to <see cref="Result{TValue,TError}" />.
+		/// Performs an implicit conversion from <typeparamref name="TError" /> to <see cref="Result{TValue,TError}" />.
 		/// </summary>
 		/// <param name="error">The error.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -107,8 +107,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Applies the specified <paramref name="action" />
-		///     to this <see cref="Result{T}" />, if it has value.
+		/// Applies the specified <paramref name="action" />
+		/// to this <see cref="Result{T}" />, if it has value.
 		/// </summary>
 		/// <param name="action">The action to apply.</param>
 		/// <returns>returns same instance for inlining</returns>
@@ -125,8 +125,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Combines this <see cref="Result{T}" /> with the result returned
-		///     by <paramref name="converter" />.
+		/// Combines this <see cref="Result{T}" /> with the result returned
+		/// by <paramref name="converter" />.
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
 		/// <param name="converter">The converter.</param>
@@ -140,8 +140,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Converts value of this instance
-		///     using the provided <paramref name="converter" />
+		/// Converts value of this instance
+		/// using the provided <paramref name="converter" />
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
 		/// <param name="converter">The converter.</param>
@@ -156,11 +156,11 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Indicates whether the current object is equal to another object of the same type.
+		/// Indicates whether the current object is equal to another object of the same type.
 		/// </summary>
 		/// <param name="other">An object to compare with this object.</param>
 		/// <returns>
-		///     true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
+		/// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
 		/// </returns>
 		public bool Equals( Result< TValue, TError > other )
 		{
@@ -172,16 +172,16 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Determines whether the specified <see cref="T:System.Object" /> is equal to the current
-		///     <see cref="T:System.Object" />.
+		/// Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+		/// <see cref="T:System.Object" />.
 		/// </summary>
 		/// <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.</param>
 		/// <returns>
-		///     true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
-		///     otherwise, false.
+		/// true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+		/// otherwise, false.
 		/// </returns>
 		/// <exception cref="T:System.NullReferenceException">
-		///     The <paramref name="obj" /> parameter is null.
+		/// The <paramref name="obj" /> parameter is null.
 		/// </exception>
 		public override bool Equals( object obj )
 		{
@@ -195,7 +195,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Exposes result failure as the exception (providing compatibility, with the exception -expecting code).
+		/// Exposes result failure as the exception (providing compatibility, with the exception -expecting code).
 		/// </summary>
 		/// <param name="exception">The function to generate exception, provided the error string.</param>
 		/// <returns>result value</returns>
@@ -211,10 +211,10 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Serves as a hash function for a particular type.
+		/// Serves as a hash function for a particular type.
 		/// </summary>
 		/// <returns>
-		///     A hash code for the current <see cref="T:System.Object" />.
+		/// A hash code for the current <see cref="T:System.Object" />.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -232,7 +232,7 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Handles the specified handler.
+		/// Handles the specified handler.
 		/// </summary>
 		/// <param name="handler">The handler.</param>
 		/// <returns>same instance for the inlining</returns>
@@ -248,14 +248,14 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Converts this <see cref="Result{T}" /> to <see cref="Maybe{T}" />,
-		///     using the <paramref name="converter" /> to perform the value conversion.
+		/// Converts this <see cref="Result{T}" /> to <see cref="Maybe{T}" />,
+		/// using the <paramref name="converter" /> to perform the value conversion.
 		/// </summary>
 		/// <typeparam name="TTarget">The type of the target.</typeparam>
 		/// <param name="converter">The reflector.</param>
 		/// <returns>
-		///     <see cref="Maybe{T}" /> that represents the original value behind the <see cref="Result{T}" /> after the
-		///     conversion
+		/// <see cref="Maybe{T}" /> that represents the original value behind the <see cref="Result{T}" /> after the
+		/// conversion
 		/// </returns>
 		public Maybe< TTarget > ToMaybe< TTarget >( Func< TValue, TTarget > converter )
 		{
@@ -266,8 +266,8 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Converts this <see cref="Result{T}" /> to <see cref="Maybe{T}" />,
-		///     with the original value reference, if there is any.
+		/// Converts this <see cref="Result{T}" /> to <see cref="Maybe{T}" />,
+		/// with the original value reference, if there is any.
 		/// </summary>
 		/// <returns><see cref="Maybe{T}" /> that represents the original value behind the <see cref="Result{T}" />.</returns>
 		public Maybe< TValue > ToMaybe()
@@ -276,10 +276,10 @@ namespace Netco.Monads
 		}
 
 		/// <summary>
-		///     Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
 		/// <returns>
-		///     A <see cref="System.String" /> that represents this instance.
+		/// A <see cref="System.String" /> that represents this instance.
 		/// </returns>
 		public override string ToString()
 		{

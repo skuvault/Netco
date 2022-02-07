@@ -6,21 +6,21 @@ using Netco.Syntaxis;
 namespace Netco.ActionPolicyServices
 {
 	/// <summary>
-	///     Policy that could be applied to delegates to
-	///     augment their behavior (i.e. to retry on problems)
+	/// Policy that could be applied to delegates to
+	/// augment their behavior (i.e. to retry on problems)
 	/// </summary>
 	[ Serializable ]
 	public class ActionPolicyAsync
 	{
 		/// <summary>
-		///     Action policy that does not do anything
+		/// Action policy that does not do anything
 		/// </summary>
 		public static readonly ActionPolicyAsync Null = new(action => action());
 
 		private readonly Func< Func< Task >, Task > _policy;
 
 		/// <summary>
-		///     Initializes a new instance of the <see cref="ActionPolicyAsync" /> class.
+		/// Initializes a new instance of the <see cref="ActionPolicyAsync" /> class.
 		/// </summary>
 		/// <param name="policy">The policy.</param>
 		public ActionPolicyAsync( Func< Func< Task >, Task > policy )
@@ -29,9 +29,9 @@ namespace Netco.ActionPolicyServices
 		}
 
 		/// <summary>
-		///     Starts building <see cref="ActionPolicyAsync" />
-		///     that can handle exceptions, as determined by
-		///     <paramref name="doWeHandle" /> function
+		/// Starts building <see cref="ActionPolicyAsync" />
+		/// that can handle exceptions, as determined by
+		/// <paramref name="doWeHandle" /> function
 		/// </summary>
 		/// <param name="doWeHandle"> function that returns <em>true</em> if we can hande the specified exception.</param>
 		/// <returns>syntax</returns>
@@ -49,8 +49,8 @@ namespace Netco.ActionPolicyServices
 		}
 
 		/// <summary>
-		///     Starts building simple <see cref="ActionPolicyAsync" />
-		///     that can handle <typeparamref name="TException" />
+		/// Starts building simple <see cref="ActionPolicyAsync" />
+		/// that can handle <typeparamref name="TException" />
 		/// </summary>
 		/// <typeparam name="TException">The type of the exception to handle.</typeparam>
 		/// <returns>syntax</returns>
@@ -60,8 +60,8 @@ namespace Netco.ActionPolicyServices
 		}
 
 		/// <summary>
-		///     Starts building simple <see cref="ActionPolicyAsync" />
-		///     that can handle <typeparamref name="TEx1" /> or <typeparamref name="TEx1" />
+		/// Starts building simple <see cref="ActionPolicyAsync" />
+		/// that can handle <typeparamref name="TEx1" /> or <typeparamref name="TEx1" />
 		/// </summary>
 		/// <typeparam name="TEx1">The type of the exception to handle.</typeparam>
 		/// <typeparam name="TEx2">The type of the exception to handle.</typeparam>
@@ -72,8 +72,8 @@ namespace Netco.ActionPolicyServices
 		}
 
 		/// <summary>
-		///     Starts building simple <see cref="ActionPolicyAsync" />
-		///     that can handle <typeparamref name="TEx1" /> or <typeparamref name="TEx1" />
+		/// Starts building simple <see cref="ActionPolicyAsync" />
+		/// that can handle <typeparamref name="TEx1" /> or <typeparamref name="TEx1" />
 		/// </summary>
 		/// <typeparam name="TEx1">The first type of the exception to handle.</typeparam>
 		/// <typeparam name="TEx2">The second of the exception to handle.</typeparam>
@@ -85,9 +85,9 @@ namespace Netco.ActionPolicyServices
 		}
 
 		/// <summary>
-		///     Starts building <see cref="ActionPolicyAsync" />
-		///     that can handle exceptions, as determined by
-		///     <paramref name="handler" />
+		/// Starts building <see cref="ActionPolicyAsync" />
+		/// that can handle exceptions, as determined by
+		/// <paramref name="handler" />
 		/// </summary>
 		/// <param name="handler">The exception handler.</param>
 		/// <returns>syntax</returns>
@@ -100,7 +100,7 @@ namespace Netco.ActionPolicyServices
 		}
 
 		/// <summary>
-		///     Performs the specified action within the policy.
+		/// Performs the specified action within the policy.
 		/// </summary>
 		/// <param name="action">The action to perform.</param>
 		[ DebuggerNonUserCode ]
@@ -110,7 +110,7 @@ namespace Netco.ActionPolicyServices
 		}
 
 		/// <summary>
-		///     Performs the specified action within the policy and returns the result
+		/// Performs the specified action within the policy and returns the result
 		/// </summary>
 		/// <typeparam name="TResult">The type of the result.</typeparam>
 		/// <param name="action">The action to perform.</param>

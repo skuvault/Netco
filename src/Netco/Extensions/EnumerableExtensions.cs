@@ -8,12 +8,12 @@ using Netco.Monads;
 namespace Netco.Extensions
 {
 	/// <summary>
-	///     Provides extensions for <see cref="IEnumerable{T}" />
+	/// Provides extensions for <see cref="IEnumerable{T}" />
 	/// </summary>
 	public static class EnumerableExtensions
 	{
 		/// <summary>
-		///     Applies the specified action to the target <paramref name="enumerable" />.
+		/// Applies the specified action to the target <paramref name="enumerable" />.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="enumerable">The enumerable.</param>
@@ -35,13 +35,13 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Applies the specified action to the target <paramref name="enumerable" />.
+		/// Applies the specified action to the target <paramref name="enumerable" />.
 		/// </summary>
 		/// <typeparam name="TSource">Type of the elements in <paramref name="enumerable" /></typeparam>
 		/// <param name="enumerable">The enumerable.</param>
 		/// <param name="action">
-		///     The action to execute against every item; second
-		///     parameter represents the index.
+		/// The action to execute against every item; second
+		/// parameter represents the index.
 		/// </param>
 		/// <returns>enumerator</returns>
 		/// <exception cref="ArgumentNullException">when one of the values is null</exception>
@@ -63,7 +63,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Clumps items into same size lots.
+		/// Clumps items into same size lots.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="source">The source list of items.</param>
@@ -81,15 +81,15 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Returns <em>True</em> as soon as the first member of <paramref name="enumerable" />
-		///     matches <paramref name="predicate" />
+		/// Returns <em>True</em> as soon as the first member of <paramref name="enumerable" />
+		/// matches <paramref name="predicate" />
 		/// </summary>
 		/// <typeparam name="TSource">Type of the elements in <paramref name="enumerable" /></typeparam>
 		/// <param name="enumerable">The enumerable</param>
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>
-		///     true if the <paramref name="enumerable" /> contains any elements
-		///     matching <paramref name="predicate" />
+		/// true if the <paramref name="enumerable" /> contains any elements
+		/// matching <paramref name="predicate" />
 		/// </returns>
 		public static bool Exists< TSource >( this IEnumerable< TSource > enumerable, Predicate< TSource > predicate )
 		{
@@ -103,7 +103,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Checks if the provided enumerable has anything
+		/// Checks if the provided enumerable has anything
 		/// </summary>
 		/// <typeparam name="TSource">Type of the elements in <paramref name="enumerable" /></typeparam>
 		/// <param name="enumerable">The enumerable.</param>
@@ -117,7 +117,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Retrieves first value from the <paramref name="sequence" />
+		/// Retrieves first value from the <paramref name="sequence" />
 		/// </summary>
 		/// <typeparam name="TSource">The type of the source sequence.</typeparam>
 		/// <param name="sequence">The source.</param>
@@ -139,7 +139,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Retrieves first value from the <paramref name="sequence" />
+		/// Retrieves first value from the <paramref name="sequence" />
 		/// </summary>
 		/// <typeparam name="TSource">The type of the source sequence.</typeparam>
 		/// <param name="sequence">The source.</param>
@@ -155,7 +155,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Performs the specified <see cref="Action{T}" /> against every element of <see cref="IEnumerable{T}" />
+		/// Performs the specified <see cref="Action{T}" /> against every element of <see cref="IEnumerable{T}" />
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="enumerable">Enumerable to extend</param>
@@ -177,7 +177,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Performs the specified <see cref="Action{T}" /> on each element in the source sequence.
+		/// Performs the specified <see cref="Action{T}" /> on each element in the source sequence.
 		/// </summary>
 		/// <typeparam name="T">The type of the elements in the sequence</typeparam>
 		/// <param name="enumerable">The sequence of elements</param>
@@ -193,7 +193,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Gets the enumerable hash code computed based on the items in enumerable.
+		/// Gets the enumerable hash code computed based on the items in enumerable.
 		/// </summary>
 		/// <param name="enumerable">The enumerable.</param>
 		/// <returns>Hash code computed based on the items in enumerable</returns>
@@ -213,7 +213,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Gets the enumerable hash code.
+		/// Gets the enumerable hash code.
 		/// </summary>
 		/// <param name="enumerable">The enumerable.</param>
 		/// <returns>Hash code computed based on the items in enumerable</returns>
@@ -223,7 +223,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Gets the specific page.
+		/// Gets the specific page.
 		/// </summary>
 		/// <typeparam name="T">Type of the elements in <paramref name="enumerable" /></typeparam>
 		/// <param name="enumerable">The source.</param>
@@ -236,7 +236,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Checks whether two enumerables are equal, even if they're null.
+		/// Checks whether two enumerables are equal, even if they're null.
 		/// </summary>
 		/// <typeparam name="TSource">The type of the source.</typeparam>
 		/// <param name="first">The first.</param>
@@ -252,7 +252,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Selects the values from a sequence of optionals.
+		/// Selects the values from a sequence of optionals.
 		/// </summary>
 		/// <typeparam name="TValue">The type of the value.</typeparam>
 		/// <param name="sequence">The sequence.</param>
@@ -311,7 +311,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Performs lazy splitting of the provided collection into collections of <paramref name="sliceLength" />
+		/// Performs lazy splitting of the provided collection into collections of <paramref name="sliceLength" />
 		/// </summary>
 		/// <typeparam name="TItem">The type of the item.</typeparam>
 		/// <param name="source">The source.</param>
@@ -341,7 +341,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Converts the enumerable to <see cref="HashSet{T}" />
+		/// Converts the enumerable to <see cref="HashSet{T}" />
 		/// </summary>
 		/// <typeparam name="TKey">The type of the key.</typeparam>
 		/// <typeparam name="TItem">The type of the item.</typeparam>
@@ -360,20 +360,20 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Enumerates and returns a mapping that associated the items with their respective
-		///     indices (positions) within the enumeration.
+		/// Enumerates and returns a mapping that associated the items with their respective
+		/// indices (positions) within the enumeration.
 		/// </summary>
 		/// <typeparam name="TSource">The type of the source.</typeparam>
 		/// <param name="source">The source.</param>
 		/// <returns>a dictionary</returns>
 		/// <remarks>
 		///     <para>
-		///         Typical usage is <c>coll.ToIndex()["foo"]</c> that returns
-		///         the position of the item <c>"foo"</c> in the initial collection.
+		///     Typical usage is <c>coll.ToIndex()["foo"]</c> that returns
+		///     the position of the item <c>"foo"</c> in the initial collection.
 		///     </para>
 		///     <para>
-		///         if multiple similar entries are present in the original collection,
-		///         index of the first entry is recorded.
+		///     if multiple similar entries are present in the original collection,
+		///     index of the first entry is recorded.
 		///     </para>
 		/// </remarks>
 		public static IDictionary< TSource, int > ToIndexDictionary< TSource >( this IEnumerable< TSource > source )
@@ -394,7 +394,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Applies the integral indexer to the sequence in a lazy manner
+		/// Applies the integral indexer to the sequence in a lazy manner
 		/// </summary>
 		/// <typeparam name="TSource">The type of the source.</typeparam>
 		/// <param name="source">The sequence.</param>
@@ -414,7 +414,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Converts collection of collections to jagged array
+		/// Converts collection of collections to jagged array
 		/// </summary>
 		/// <typeparam name="T">type of the items in collection</typeparam>
 		/// <param name="collection">The collection.</param>
@@ -459,7 +459,7 @@ namespace Netco.Extensions
 
 		#region Async
 		/// <summary>
-		///     Processes elements asynchronously the in batch of the specified size.
+		/// Processes elements asynchronously the in batch of the specified size.
 		/// </summary>
 		/// <typeparam name="TInput">The type of the input.</typeparam>
 		/// <typeparam name="TResult">The type of the result.</typeparam>
@@ -467,8 +467,8 @@ namespace Netco.Extensions
 		/// <param name="batchSize">Size of the batch.</param>
 		/// <param name="processor">The processor.</param>
 		/// <param name="ignoreNull">
-		///     if set to <c>true</c> and <paramref name="processor" /> returns <c>null</c> the result is
-		///     ignored.
+		/// if set to <c>true</c> and <paramref name="processor" /> returns <c>null</c> the result is
+		/// ignored.
 		/// </param>
 		/// <returns>Result of processing.</returns>
 		public static async Task< IEnumerable< TResult > > ProcessInBatchAsync< TInput, TResult >( this IEnumerable< TInput > inputEnumerable, int batchSize, Func< TInput, Task< TResult > > processor, bool ignoreNull = true )
@@ -500,7 +500,7 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Performs an asynchronous action on each element of enumerable in a batch.
+		/// Performs an asynchronous action on each element of enumerable in a batch.
 		/// </summary>
 		/// <typeparam name="TInput">The type of the input.</typeparam>
 		/// <param name="inputEnumerable">The input enumerable.</param>
@@ -548,7 +548,7 @@ namespace Netco.Extensions
 	}
 
 	/// <summary>
-	///     Indexing wrapper that contains value and its integral position.
+	/// Indexing wrapper that contains value and its integral position.
 	/// </summary>
 	/// <typeparam name="TSource">type of the underlying item</typeparam>
 	public struct Indexer< TSource >
@@ -561,19 +561,19 @@ namespace Netco.Extensions
 		}
 
 		/// <summary>
-		///     Gets the integral position of the item.
+		/// Gets the integral position of the item.
 		/// </summary>
 		/// <value>The integral position of the item.</value>
 		public int Index{ get; }
 
 		/// <summary>
-		///     Gets a value indicating whether this instance is first.
+		/// Gets a value indicating whether this instance is first.
 		/// </summary>
 		/// <value><c>true</c> if this instance is first; otherwise, <c>false</c>.</value>
 		public bool IsFirst{ get; }
 
 		/// <summary>
-		///     Gets the value.
+		/// Gets the value.
 		/// </summary>
 		/// <value>The value.</value>
 		public TSource Value{ get; }

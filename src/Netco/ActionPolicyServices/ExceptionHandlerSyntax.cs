@@ -6,8 +6,8 @@ using Netco.Syntaxis;
 namespace Netco.ActionPolicyServices
 {
 	/// <summary>
-	///     Fluent API for defining <see cref="ActionPolicy" />
-	///     that allows to handle exceptions.
+	/// Fluent API for defining <see cref="ActionPolicy" />
+	/// that allows to handle exceptions.
 	/// </summary>
 	public static class ExceptionHandlerSyntax
 	{
@@ -15,16 +15,16 @@ namespace Netco.ActionPolicyServices
 
 		/// <summary>
 		///     <para>
-		///         Builds the policy that will "break the circuit" after <paramref name="countBeforeBreaking" />
-		///         exceptions that could be handled by the <paramref name="syntax" /> being built. The circuit
-		///         stays broken for the <paramref name="duration" />. Any attempt to
-		///         invoke method within the policy, while the circuit is broken, will immediately re-throw
-		///         the last exception.
+		///     Builds the policy that will "break the circuit" after <paramref name="countBeforeBreaking" />
+		///     exceptions that could be handled by the <paramref name="syntax" /> being built. The circuit
+		///     stays broken for the <paramref name="duration" />. Any attempt to
+		///     invoke method within the policy, while the circuit is broken, will immediately re-throw
+		///     the last exception.
 		///     </para>
 		///     <para>
-		///         If the action fails within the policy after the block period, then the breaker
-		///         is blocked again for the next <paramref name="duration" />.
-		///         It will be reset, otherwise.
+		///     If the action fails within the policy after the block period, then the breaker
+		///     is blocked again for the next <paramref name="duration" />.
+		///     It will be reset, otherwise.
 		///     </para>
 		/// </summary>
 		/// <param name="syntax">The syntax.</param>
@@ -50,8 +50,8 @@ namespace Netco.ActionPolicyServices
 #endif
 
 		/// <summary>
-		///     Builds <see cref="ActionPolicy" /> that will retry exception handling
-		///     for a couple of times before giving up.
+		/// Builds <see cref="ActionPolicy" /> that will retry exception handling
+		/// for a couple of times before giving up.
 		/// </summary>
 		/// <param name="syntax">The syntax.</param>
 		/// <param name="retryCount">The retry count.</param>
@@ -70,14 +70,14 @@ namespace Netco.ActionPolicyServices
 		}
 
 		/// <summary>
-		///     Builds <see cref="ActionPolicy" /> that will retry exception handling
-		///     for a couple of times before giving up.
+		/// Builds <see cref="ActionPolicy" /> that will retry exception handling
+		/// for a couple of times before giving up.
 		/// </summary>
 		/// <param name="syntax">The syntax.</param>
 		/// <param name="retryCount">The retry count.</param>
 		/// <param name="onRetry">
-		///     The action to perform on retry (i.e.: write to log).
-		///     First parameter is the exception and second one is its number in sequence.
+		/// The action to perform on retry (i.e.: write to log).
+		/// First parameter is the exception and second one is its number in sequence.
 		/// </param>
 		/// <returns>reusable policy instance </returns>
 		public static ActionPolicy Retry( this Syntax< ExceptionHandler > syntax, int retryCount, Action< Exception, int > onRetry )
@@ -117,16 +117,16 @@ namespace Netco.ActionPolicyServices
 
 		/// <summary>
 		///     <para>
-		///         Builds the policy that will keep retrying as long as
-		///         the exception could be handled by the <paramref name="syntax" /> being
-		///         built and <paramref name="sleepDurations" /> is providing the sleep intervals.
+		///     Builds the policy that will keep retrying as long as
+		///     the exception could be handled by the <paramref name="syntax" /> being
+		///     built and <paramref name="sleepDurations" /> is providing the sleep intervals.
 		///     </para>
 		/// </summary>
 		/// <param name="syntax">The syntax.</param>
 		/// <param name="sleepDurations">The sleep durations.</param>
 		/// <param name="onRetry">
-		///     The action to perform on retry (i.e.: write to log).
-		///     First parameter is the exception and second one is the planned sleep duration.
+		/// The action to perform on retry (i.e.: write to log).
+		/// First parameter is the exception and second one is the planned sleep duration.
 		/// </param>
 		/// <returns>new policy instance</returns>
 		public static ActionPolicy WaitAndRetry( this Syntax< ExceptionHandler > syntax, IEnumerable< TimeSpan > sleepDurations, Action< Exception, TimeSpan > onRetry )
@@ -150,9 +150,9 @@ namespace Netco.ActionPolicyServices
 
 		/// <summary>
 		///     <para>
-		///         Builds the policy that will keep retrying as long as
-		///         the exception could be handled by the <paramref name="syntax" /> being
-		///         built and <paramref name="sleepDurations" /> is providing the sleep intervals.
+		///     Builds the policy that will keep retrying as long as
+		///     the exception could be handled by the <paramref name="syntax" /> being
+		///     built and <paramref name="sleepDurations" /> is providing the sleep intervals.
 		///     </para>
 		/// </summary>
 		/// <param name="syntax">The syntax.</param>
