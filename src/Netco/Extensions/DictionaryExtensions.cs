@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CuttingEdge.Conditions;
 
 namespace Netco.Extensions
 {
@@ -18,7 +17,7 @@ namespace Netco.Extensions
 		/// <param name="key">The key.</param>
 		/// <param name="defaultValue">The default value.</param>
 		/// <returns>Gets the value from dictionary, or <paramref name="defaultValue"/> if there's no value for specified <paramref name="key"/>.</returns>
-		public static TValue GetValue< TKey, TValue >( this Dictionary< TKey, TValue > dictionary, TKey key, TValue defaultValue = default( TValue ) )
+		public static TValue GetValue< TKey, TValue >( this Dictionary< TKey, TValue > dictionary, TKey key, TValue defaultValue = default(TValue) )
 		{
 			if( dictionary == null )
 				return defaultValue;
@@ -38,12 +37,15 @@ namespace Netco.Extensions
 		/// <returns>Gets the value from dictionary, or value produced by <paramref name="defaultValueFactory"/> if there's no value for specified <paramref name="key"/>.</returns>	
 		public static TValue GetValue< TKey, TValue >( this Dictionary< TKey, TValue > dictionary, TKey key, Func< TValue > defaultValueFactory )
 		{
-			Condition.Requires( defaultValueFactory, "defaultValueFactory" ).IsNotNull();
+			if( defaultValueFactory is null )
+			{
+				throw new ArgumentNullException( nameof(defaultValueFactory) );
+			}
+
 			if( dictionary == null )
 				return defaultValueFactory();
 
-			TValue value;
-			return dictionary.TryGetValue( key, out value ) ? value : defaultValueFactory();
+			return dictionary.TryGetValue( key, out var value ) ? value : defaultValueFactory();
 		}
 	}
 }

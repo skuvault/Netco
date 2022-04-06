@@ -1,32 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <LangVersion>9</LangVersion>
-    <PackageVersion>2.0.2</PackageVersion>
-    <AssemblyVersion>2.0.2.0</AssemblyVersion>
-    <FileVersion>2.0.2.0</FileVersion>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\netco.snk</AssemblyOriginatorKeyFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Title>Netco</Title>
-    <Authors>SkuVault Inc</Authors>
-    <Description>Collection of helper .net libraries</Description>
-    <Copyright>SkuVault Inc (C) 2021</Copyright>
-    <PackageProjectUrl>https://github.com/skuvault/Netco</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/skuvault/Netco/blob/master/License.txt</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/skuvault/Netco</RepositoryUrl>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="CuttingEdge.Conditions" Version="1.2.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\netco.snk">
-      <Link>netco.snk</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <PackageVersion>3.0.0</PackageVersion>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
+        <FileVersion>3.0.0.0</FileVersion>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>..\netco.snk</AssemblyOriginatorKeyFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Netco</Title>
+        <Authors>SkuVault Inc</Authors>
+        <Description>Collection of helper .net libraries</Description>
+        <Copyright>SkuVault Inc (C) 2022</Copyright>
+        <PackageProjectUrl>https://github.com/skuvault/Netco</PackageProjectUrl>
+        <PackageLicenseFile>License.txt</PackageLicenseFile>
+        <RepositoryUrl>https://github.com/skuvault/Netco</RepositoryUrl>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\netco.snk">
+            <Link>netco.snk</Link>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="..\..\License.txt" Pack="true" PackagePath="">
+        <Link>License.txt</Link>
+      </None>
+    </ItemGroup>
 </Project>

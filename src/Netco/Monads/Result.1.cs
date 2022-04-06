@@ -1,5 +1,4 @@
 using System;
-using CuttingEdge.Conditions;
 
 namespace Netco.Monads
 {
@@ -7,7 +6,7 @@ namespace Netco.Monads
 	/// Helper class that allows to pass out method call results without using exceptions
 	/// </summary>
 	/// <typeparam name="T">type of the associated data</typeparam>
-	public sealed class Result< T > : IEquatable< Result< T > >
+	public sealed class Result< T >: IEquatable< Result< T > >
 	{
 		private readonly T _value;
 		private readonly string _error;
@@ -23,10 +22,7 @@ namespace Netco.Monads
 		/// Error message associated with this failure
 		/// </summary>
 		[ Obsolete( "Use Error instead" ) ]
-		public string ErrorMessage
-		{
-			get { return this._error; }
-		}
+		public string ErrorMessage => this._error;
 
 		/// <summary>  Creates failure result </summary>
 		/// <param name="errorFormatString">format string for the error message</param>
@@ -35,7 +31,10 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException">if format string is null</exception>
 		public static Result< T > CreateError( string errorFormatString, params object[] args )
 		{
-			Condition.Requires( errorFormatString, "errorFormatString" ).IsNotNull();
+			if( string.IsNullOrWhiteSpace( errorFormatString ) )
+			{
+				throw new ArgumentNullException( nameof(errorFormatString) );
+			}
 
 			return CreateError( string.Format( errorFormatString, args ) );
 		}
@@ -48,12 +47,10 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException">if value is a null reference type</exception>
 		public static Result< T > CreateSuccess( T value )
 		{
-			// ReSharper disable CompareNonConstrainedGenericWithNull
 			if( value == null )
-				throw new ArgumentNullException( "value" );
-			// ReSharper restore CompareNonConstrainedGenericWithNull
+				throw new ArgumentNullException( nameof(value) );
 
-			return new Result< T >( true, value, default( string ) );
+			return new Result< T >( true, value, default(string) );
 		}
 
 		/// <summary>
@@ -66,11 +63,12 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException"> if <paramref name="converter"/> is null</exception>
 		public Result< TTarget > Convert< TTarget >( Func< T, TTarget > converter )
 		{
-			Condition.Requires( converter, "converter" ).IsNotNull();
-			if( !this.IsSuccess )
-				return Result< TTarget >.CreateError( this._error );
+			if( converter is null )
+			{
+				throw new ArgumentNullException( nameof(converter) );
+			}
 
-			return converter( this._value );
+			return this.IsSuccess ? converter( this._value ) : Result< TTarget >.CreateError( this._error );
 		}
 
 		/// <summary>
@@ -81,9 +79,12 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException">if error is null</exception>
 		public static Result< T > CreateError( string error )
 		{
-			Condition.Requires( error, "error" ).IsNotNull();
+			if( string.IsNullOrWhiteSpace( error ) )
+			{
+				throw new ArgumentNullException( nameof(error) );
+			}
 
-			return new Result< T >( false, default( T ), error );
+			return new Result< T >( false, default(T), error );
 		}
 
 		/// <summary>
@@ -94,10 +95,9 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException">if <paramref name="value"/> is a reference type that is null</exception>
 		public static implicit operator Result< T >( T value )
 		{
-			// ReSharper disable CompareNonConstrainedGenericWithNull
 			if( value == null )
-				throw new ArgumentNullException( "value" );
-			// ReSharper restore CompareNonConstrainedGenericWithNull
+				throw new ArgumentNullException( nameof(value) );
+
 			return new Result< T >( true, value, null );
 		}
 
@@ -179,7 +179,11 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException">if <paramref name="action"/> is null</exception>
 		public Result< T > Apply( Action< T > action )
 		{
-			Condition.Requires( action, "action" ).IsNotNull();
+			if( action is null )
+			{
+				throw new ArgumentNullException( nameof(action) );
+			}
+
 			if( this.IsSuccess )
 				action( this._value );
 
@@ -193,7 +197,10 @@ namespace Netco.Monads
 		/// <returns>same instance for the inlining</returns>
 		public Result< T > Handle( Action< string > handler )
 		{
-			Condition.Requires( handler, "handler" ).IsNotNull();
+			if( handler is null )
+			{
+				throw new ArgumentNullException( nameof(handler) );
+			}
 
 			if( !this.IsSuccess )
 				handler( this._error );
@@ -205,7 +212,7 @@ namespace Netco.Monads
 		/// Gets a value indicating whether this result is valid.
 		/// </summary>
 		/// <value><c>true</c> if this result is valid; otherwise, <c>false</c>.</value>
-		public bool IsSuccess { get; private set; }
+		public bool IsSuccess{ get; }
 
 		/// <summary>
 		/// item associated with this result
@@ -214,7 +221,8 @@ namespace Netco.Monads
 		{
 			get
 			{
-				Condition.WithExceptionOnFailure< InvalidOperationException >().Requires( this.IsSuccess, "IsSuccess" ).IsTrue( "Code should not access value when the result has failed." );
+				if( !this.IsSuccess )
+					throw new InvalidOperationException( "Code should not access value when the result has failed." );
 				return this._value;
 			}
 		}
@@ -226,7 +234,8 @@ namespace Netco.Monads
 		{
 			get
 			{
-				Condition.WithExceptionOnFailure< InvalidOperationException >().Requires( this.IsSuccess, "IsSuccess" ).IsFalse( "Code should not access error message when the result is valid." );
+				if( this.IsSuccess )
+					throw new InvalidOperationException( "Code should not access error message when the result is valid." );
 
 				return this._error;
 			}
@@ -241,11 +250,12 @@ namespace Netco.Monads
 		/// <returns><see cref="Maybe{T}"/> that represents the original value behind the <see cref="Result{T}"/> after the conversion</returns>
 		public Maybe< TTarget > ToMaybe< TTarget >( Func< T, TTarget > converter )
 		{
-			Condition.Requires( converter, "converter" ).IsNotNull();
-			if( !this.IsSuccess )
-				return Maybe< TTarget >.Empty;
+			if( converter is null )
+			{
+				throw new ArgumentNullException( nameof(converter) );
+			}
 
-			return converter( this._value );
+			return this.IsSuccess ? converter( this._value ) : Maybe< TTarget >.Empty;
 		}
 
 		/// <summary>
@@ -255,10 +265,7 @@ namespace Netco.Monads
 		/// <returns><see cref="Maybe{T}"/> that represents the original value behind the <see cref="Result{T}"/>.</returns>
 		public Maybe< T > ToMaybe()
 		{
-			if( !this.IsSuccess )
-				return Maybe< T >.Empty;
-
-			return this._value;
+			return this.IsSuccess ? this._value : Maybe< T >.Empty;
 		}
 
 		/// <summary>
@@ -268,11 +275,15 @@ namespace Netco.Monads
 		/// <returns>result value</returns>
 		public T ExposeException( Func< string, Exception > exception )
 		{
-			Condition.Requires( exception, "exception" ).IsNotNull();
+			if( exception is null )
+			{
+				throw new ArgumentNullException( nameof(exception) );
+			}
+
 			if( !this.IsSuccess )
 				throw exception( this.Error );
 
-			// abdullin: we can return value here, since failure chain ends here
+			// we can return value here, since failure chain ends here
 			return this.Value;
 		}
 
@@ -284,7 +295,11 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException">If value is a null reference type</exception>
 		public static implicit operator Result< T >( string error )
 		{
-			Condition.Requires( error, "error" ).IsNotNull();
+			if( string.IsNullOrWhiteSpace( error ) )
+			{
+				throw new ArgumentNullException( nameof(error) );
+			}
+
 			return CreateError( error );
 		}
 

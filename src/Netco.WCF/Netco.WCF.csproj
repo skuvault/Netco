@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <PackageVersion>3.0.0</PackageVersion>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
+        <FileVersion>3.0.0.0</FileVersion>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>..\netco.snk</AssemblyOriginatorKeyFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Netco</Title>
+        <Authors>SkuVault Inc</Authors>
+        <Description>Collection of helper .net libraries</Description>
+        <Copyright>SkuVault Inc (C) 2022</Copyright>
+        <PackageProjectUrl>https://github.com/skuvault/Netco</PackageProjectUrl>
+        <PackageLicenseFile>License.txt</PackageLicenseFile>
+        <RepositoryUrl>https://github.com/skuvault/Netco</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="System.Configuration" />
+        <Reference Include="System.ServiceModel" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Netco\Netco.csproj" />
+        <None Include="..\netco.snk">
+            <Link>netco.snk</Link>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\License.txt" Pack="true" PackagePath="">
+            <Link>License.txt</Link>
+        </None>
+    </ItemGroup>
+</Project>

@@ -30,10 +30,8 @@ namespace Netco.Monads
 		/// <exception cref="ArgumentNullException">if argument is a null reference</exception>
 		public static Maybe< TSource > From< TSource >( TSource item )
 		{
-			// ReSharper disable CompareNonConstrainedGenericWithNull
 			if( item == null )
-				throw new ArgumentNullException( "item" );
-			// ReSharper restore CompareNonConstrainedGenericWithNull
+				throw new ArgumentNullException( nameof(item) );
 
 			return new Maybe< TSource >( item );
 		}

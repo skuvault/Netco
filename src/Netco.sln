@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{49FC82
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netco.Logging.SerilogIntegration", "Netco.Logging.SerilogIntegration\Netco.Logging.SerilogIntegration.csproj", "{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netco.WCF", "Netco.WCF\Netco.WCF.csproj", "{4FE6CB91-D4A6-4418-96F8-2BC0478949B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netco.Task", "Netco.Task\Netco.Task.csproj", "{D36AC22E-5D1D-4464-9D1C-BB687327202A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,14 @@ Global
 		{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F0E351E-10A3-45A5-BAA1-E8E0B2DEF0D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FE6CB91-D4A6-4418-96F8-2BC0478949B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FE6CB91-D4A6-4418-96F8-2BC0478949B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FE6CB91-D4A6-4418-96F8-2BC0478949B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FE6CB91-D4A6-4418-96F8-2BC0478949B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D36AC22E-5D1D-4464-9D1C-BB687327202A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36AC22E-5D1D-4464-9D1C-BB687327202A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36AC22E-5D1D-4464-9D1C-BB687327202A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36AC22E-5D1D-4464-9D1C-BB687327202A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
